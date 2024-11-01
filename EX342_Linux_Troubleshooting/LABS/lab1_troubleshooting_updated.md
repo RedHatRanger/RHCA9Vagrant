@@ -1,28 +1,17 @@
 
-# Guided Exercise: Using the Scientific Method to Solve a Login Issue
+# Lab 1: Use the Scientific Method to Solve a Login Issue
 
-## Outcomes
+## Objective
 
-You should be able to troubleshoot a login issue by using the scientific method.
+- You should be able to troubleshoot a login issue by using the scientific method.
 
-## Before You Begin
+### Problem
 
-As the bob user on the workstation machine, use the lab command to prepare your system for this exercise.
+"Over the weekend, colleagues ran user account maintenance. This morning, the bob user reported that their SSH login no longer works on node1. The user states that their password is `redhat`, and that passwordless SSH normally works fine from his workstation."
 
-```bash
-[bob@workstation ~]$ lab start strategy-scientificmethod
-```
+- You verify that the user's expected settings are a home directory at `/home/bob`, the UID and GID should both be `1000`, and that this user's preferred shell is `bash`.
 
-This command prepares workstation and node1 for troubleshooting login issues.
-
-## Instructions
-### Problem Scenario
-
-Over the weekend, colleagues ran user account maintenance. This morning, the bob user reported that their bob login no longer works on node1. The user states that their password is `bob`, and that passwordless SSH normally works from the bob account on workstation.
-
-You verify that the user's expected settings are a home directory at `/home/bob`, the UID and GID should both be `1000`, and that this user's preferred shell is `bash`.
-
-This exercise is intentionally simple, and is designed for you to practice including the scientific method in your troubleshooting workflow.
+(This exercise is intentionally simple, and is designed for you to practice including the scientific method in your troubleshooting workflow.)
 
 ### Step 1: Reproduce the Problem and Collect Relevant Information
 
