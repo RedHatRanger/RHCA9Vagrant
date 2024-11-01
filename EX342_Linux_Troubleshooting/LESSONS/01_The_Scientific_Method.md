@@ -1,5 +1,5 @@
 
-# Using the Scientific Method for Troubleshooting
+# Lesson 1: Using the Scientific Method for Troubleshooting
 
 ## Objectives
 - Learn to troubleshoot systematically using the scientific method.
