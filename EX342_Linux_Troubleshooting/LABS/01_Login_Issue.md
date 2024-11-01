@@ -139,14 +139,4 @@ Return to workstation as the bob user.
 [bob@workstation ~]$
 ```
 
-### Finish the Lab
-
-On the workstation machine, use the lab command to complete this exercise. This is important to ensure that resources from previous exercises do not impact upcoming exercises.
-
-```bash
-[bob@workstation ~]$ lab finish strategy-scientificmethod
-```
-
----
-
-End of Guided Exercise.
+* Done!
