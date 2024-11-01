@@ -30,7 +30,7 @@ Connection to server closed.
 
 *"The messages indicate that authentication succeeded, but the connection was closed immediately after."*
 
-1.2. Open a console window to node1 and attempt to log in as `bob` with the password `bob`. What happens?
+1.2. Open a console window to node1 and attempt to log in as `bob` with the password `redhat`. What happens?
 
 *"The login proceeds without authentication error messages, but the session is closed immediately."*
 
