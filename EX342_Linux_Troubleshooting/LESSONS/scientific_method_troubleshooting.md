@@ -2,7 +2,7 @@
 # Using the Scientific Method for Troubleshooting
 
 ## Objectives
-Learn to troubleshoot systematically using the scientific method.
+- Learn to troubleshoot systematically using the scientific method.
 
 ## Overview of Troubleshooting as a Scientific Method
 Troubleshooting effectively involves using the scientific method, which relies on logic to test and verify solutions step-by-step. This process helps avoid wasting time on unproven guesses, particularly for unfamiliar problems. Instead, the scientific method helps you come up with logical theories and test them until you find a solution.
@@ -27,9 +27,9 @@ Troubleshooting effectively involves using the scientific method, which relies o
 ### Summary
 The scientific method involves collecting information, writing a clear problem statement, coming up with possible causes, testing them, recording results, and applying fixes. This structured approach helps solve even complex problems logically and systematically.
 
-## Example Problem Statements and Solutions
+## Sample Problem and Solution
 
-### Problem Statement 1
+### Problem Statement
 **Problem**: "Starting last Friday, all marketing department users are unable to launch the mail application. They receive an error message saying 'Data store XYZ is not available.' The issue can be consistently reproduced by selecting the mail icon from any marketing user's menu."
 
 ### Formulating Hypotheses
@@ -48,12 +48,12 @@ Based on the problem statement, possible hypotheses could include:
 ### Recording and Analyzing Test Results
 Upon testing, it was found that the network share is not reachable. This indicates that there might be an issue with the share setup or network permissions.
 
-### Fixing and Verifying
+### THE SOLUTION
 - **Fix**: Reconfigure the network share settings to make it available again to users.
 - **Verification**: After making the changes, test by having marketing users try to open the mail application. If they can open it successfully without error messages, then the problem is fixed.
 
-### Result for Problem 1
-**Solution**: "Currently, all marketing department users are able to successfully launch and use the mail application without any displayed error messages."
+### Results
+**Solution**: "Now, all marketing department users are able to successfully launch and use the mail application without any displayed error messages."
 
 ### Summary of the Example
 In this case, the scientific method helped identify the root cause of the problem systematically:
@@ -64,3 +64,6 @@ In this case, the scientific method helped identify the root cause of the proble
 5. **Fix**: The network share was reconfigured, and access was verified.
 
 This structured troubleshooting approach ensured the problem was solved efficiently and without unnecessary guesswork.
+
+
+
