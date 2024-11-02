@@ -7,7 +7,7 @@
 
 ### Problem
 
-"Over the weekend, colleagues ran user account maintenance. This morning, the bob user reported that their SSH login no longer works on node1. The user states that their password is `redhat`, and that passwordless SSH normally works fine from his workstation."
+"Over the weekend, colleagues ran user account maintenance. This morning, the `bob` user reported that their SSH login no longer works on node1. The user states that their password is `redhat`, and that passwordless SSH normally works fine from his workstation."
 
 - You verify that the user's expected settings are a home directory at `/home/bob`, the UID and GID should both be `1000`, and that this user's preferred shell is `bash`.
 
