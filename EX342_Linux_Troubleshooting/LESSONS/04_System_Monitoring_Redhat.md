@@ -56,6 +56,9 @@ The web console provides several tools to monitor system performance, including 
   - **Priority**: Set a minimum priority level (e.g., Error or Warning).
   - **Identifier**: Specify a `systemd` unit or service name.
   - **Text**: Enter keywords to search for specific log entries.
+ 
+![{57995833-DD64-495C-A9B5-6F7F4DC87DF5}](https://github.com/user-attachments/assets/d7a294c0-f20c-40b3-b69f-afd977463897)
+
 
 ### Installing Add-ons for Enhanced Functionality
 
