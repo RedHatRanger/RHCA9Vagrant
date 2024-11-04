@@ -46,9 +46,7 @@ The web console provides several tools to monitor system performance, including 
 
 - Navigate to the **Overview** page and click **View details and history** to access performance metrics. The **Performance Metrics** page displays historical data, events, errors, and graphical representations for resource utilization and saturation.
 
-![{64A21DDE-E26B-4721-BB3C-4AC1A9D91BEC}](https://github.com/user-attachments/assets/77e09b6a-797d-4069-aa7a-2d10dc93a1d8) \
-![{E470B6BB-DE05-4393-9B37-81FFA26E9482}](https://github.com/user-attachments/assets/8f76b551-d581-44d1-bd70-f6a5b4b504d9)
-
+![{64A21DDE-E26B-4721-BB3C-4AC1A9D91BEC}](https://github.com/user-attachments/assets/77e09b6a-797d-4069-aa7a-2d10dc93a1d8)
 
 
 ### Reviewing Logs in the Web Console
@@ -118,7 +116,8 @@ The **Session Recording** feature uses the `tlog` package to record and play bac
 
    - You can also configure session recording from the **Session Recording** page in the web console.
   
-![{3C5DEC8B-2E20-4211-A09F-38922DD73ABC}](https://github.com/user-attachments/assets/3717c5cc-1cf2-47f3-b9d0-35a7ba7aa487)
+![{3C5DEC8B-2E20-4211-A09F-38922DD73ABC}](https://github.com/user-attachments/assets/3717c5cc-1cf2-47f3-b9d0-35a7ba7aa487) \
+![{E470B6BB-DE05-4393-9B37-81FFA26E9482}](https://github.com/user-attachments/assets/a465360f-8cc6-457b-9887-74d1b164cabb)
 
 
 ### Replay Recorded Sessions
