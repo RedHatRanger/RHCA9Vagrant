@@ -78,3 +78,6 @@ To implement roles in a playbook:
 ```
 
 The roles are stored in `/usr/share/ansible/roles`, and each role includes documentation for use cases, parameters, and templates, available in both Markdown and HTML formats.
+
+![{0592F3A8-6A64-414D-8023-AEE38F521957}](https://github.com/user-attachments/assets/1a9078a5-a8b2-4240-a528-d085774e0a80)
+
