@@ -12,14 +12,14 @@
 
 ### Step 1: Log in to Server and Switch to Root User
 
-1. On the workstation as the student user, log in to `servera` and switch to the root user.
+1. On the workstation as the bob user, log in to `node1` and switch to the root user.
 
    ```bash
-   [student@workstation ~]$ ssh student@servera
+   [bob@workstation ~]$ ssh bob@node1
    ...output omitted...
-   [student@servera ~]$ sudo -i
-   [sudo] password for student: student
-   [root@servera ~]#
+   [bob@node1 ~]$ sudo -i
+   [sudo] password for bob: redhat
+   [root@node1 ~]#
    ```
 
 ### Step 2: Configure AIDE to Monitor File Integrity
@@ -27,7 +27,7 @@
 1. Initialize the AIDE database.
 
    ```bash
-   [root@servera ~]# aide -i
+   [root@node1 ~]# aide -i
    ```
 
    **Output:**
@@ -42,7 +42,7 @@
 2. Rename the newly created AIDE database to remove the "new" substring.
 
    ```bash
-   [root@servera ~]# mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+   [root@node1 ~]# mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
    ```
 
 ### Step 3: View Default Monitored Files and Rules
@@ -50,7 +50,7 @@
 1. View the `/etc/aide.conf` configuration file to learn the default monitored files and rules.
 
    ```bash
-   [root@servera ~]# cat /etc/aide.conf
+   [root@node1 ~]# cat /etc/aide.conf
    ```
 
    **Output (Partial):**
@@ -71,7 +71,7 @@
 1. Generate the AIDE file integrity report.
 
    ```bash
-   [root@servera ~]# aide --check
+   [root@node1 ~]# aide --check
    ```
 
    **Output:**
@@ -86,7 +86,7 @@
 2. Verify the report is recorded in the log file.
 
    ```bash
-   [root@servera ~]# cat /var/log/aide/aide.log
+   [root@node1 ~]# cat /var/log/aide/aide.log
    ```
 
 ### Step 5: Create Alert Script
@@ -94,7 +94,7 @@
 1. Create a shell script to send an email alert when changes are found in monitored files.
 
    ```bash
-   [root@servera ~]# vim /root/aide_mon.sh
+   [root@node1 ~]# vim /root/aide_mon.sh
    ```
 
    **Content:**
@@ -102,14 +102,14 @@
    ```bash
    if ! grep "Looks okay" /var/log/aide/aide.log &>/dev/null
    then
-     cat /var/log/aide/aide.log | /usr/bin/mail -s "AIDE Alert" student@servera.lab.example.com
+     cat /var/log/aide/aide.log | /usr/bin/mail -s "AIDE Alert" bob@node1.lab.example.com
    fi
    ```
 
 2. Make the script executable.
 
    ```bash
-   [root@servera ~]# chmod +x /root/aide_mon.sh
+   [root@node1 ~]# chmod +x /root/aide_mon.sh
    ```
 
 ### Step 6: Schedule AIDE Execution with cron
@@ -117,7 +117,7 @@
 1. Create the `/etc/cron.d/aide` file and add a cron job to run AIDE every two minutes.
 
    ```bash
-   [root@servera ~]# vim /etc/cron.d/aide
+   [root@node1 ~]# vim /etc/cron.d/aide
    ```
 
    **Content:**
@@ -132,7 +132,7 @@
 1. Verify that the integrity report is recorded in the log file, confirming no differences between the database and the file system.
 
    ```bash
-   [root@servera ~]# cat /var/log/aide/aide.log
+   [root@node1 ~]# cat /var/log/aide/aide.log
    ```
 
 ### Step 8: Trigger an Inconsistency by Adding a User
@@ -140,23 +140,23 @@
 1. Add a new user to trigger changes in the monitored account database.
 
    ```bash
-   [root@servera ~]# useradd user01
+   [root@node1 ~]# useradd user01
    ```
 
 ### Step 9: Check for AIDE Alert Email
 
-1. Switch to the `student` user on `servera` and check for AIDE alert emails.
+1. Switch to the `bob` user on `node1` and check for AIDE alert emails.
 
    ```bash
-   [root@servera ~]# exit
-   [student@servera ~]$ mail
+   [root@node1 ~]# exit
+   [bob@node1 ~]$ mail
    ```
 
    **Output:**
    
    ```
    Heirloom Mail version 12.5 7/5/10. Type ? for help.
-   "/var/spool/mail/student": 1 message 1 new
+   "/var/spool/mail/bob": 1 message 1 new
    >N 1 root Tue Sep 14 22:54 62/2250 "AIDE Alert"
    ```
 
@@ -165,38 +165,38 @@
 1. Switch back to the root user.
 
    ```bash
-   [student@servera ~]$ sudo -i
+   [bob@node1 ~]$ sudo -i
    ```
 
 2. Update the AIDE database.
 
    ```bash
-   [root@servera ~]# aide --update
+   [root@node1 ~]# aide --update
    ```
 
 3. Back up the current AIDE database.
 
    ```bash
-   [root@servera ~]# mv /var/lib/aide/aide.db.gz /var/lib/aide/aide.db.old.gz
+   [root@node1 ~]# mv /var/lib/aide/aide.db.gz /var/lib/aide/aide.db.old.gz
    ```
 
 4. Rename the new database.
 
    ```bash
-   [root@servera ~]# mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+   [root@node1 ~]# mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
    ```
 
 ### Step 11: Verify No New Alerts
 
-1. Switch to the student user and confirm no new alerts are present.
+1. Switch to the bob user and confirm no new alerts are present.
 
    ```bash
-   [root@servera ~]# exit
-   [student@servera ~]$ mail
+   [root@node1 ~]# exit
+   [bob@node1 ~]$ mail
    ```
 
 2. Verify that the integrity report shows no differences.
 
    ```bash
-   [student@servera ~]$ sudo cat /var/log/aide/aide.log
+   [bob@node1 ~]$ sudo cat /var/log/aide/aide.log
    ```
