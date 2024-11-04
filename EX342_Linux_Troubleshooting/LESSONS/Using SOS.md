@@ -58,7 +58,7 @@ Red Hat Enterprise Linux provides powerful tools for collecting diagnostic data 
 - The `redhat-support-tool` can be used to **create, modify, or close support cases**.
 - To open a support case:
   ```bash
-  redhat-support-tool opencase --product="Red Hat Enterprise Linux" --version="8.4"
+  redhat-support-tool opencase --product="Red Hat Enterprise Linux" --version="9.4"
   ```
   - You will be prompted for details like **summary, description**, and **severity** level.
   
