@@ -1,5 +1,5 @@
 
-# Lab 5: Monitoring Systems with Red Hat Tools
+# LESSON 4: Monitoring Systems with Red Hat Tools
 
 ## Objective
 
@@ -7,7 +7,7 @@
 
 ### Overview
 
-The Red Hat Enterprise Linux 8 web console, built with Cockpit technology, provides an easy-to-use, web-based interface to manage and monitor Linux hosts. It allows administrators to perform system monitoring without requiring extensive command-line tool knowledge. By default, many RHEL 8 deployments include the web console, but it can also be installed manually if needed.
+The Red Hat Enterprise Linux 9 web console, built with Cockpit technology, provides an easy-to-use, web-based interface to manage and monitor Linux hosts. It allows administrators to perform system monitoring without requiring extensive command-line tool knowledge. By default, many RHEL 9 deployments include the web console, but it can also be installed manually if needed.
 
 ### Initial Setup
 
@@ -123,6 +123,6 @@ The **Session Recording** feature uses the `tlog` package to record and play bac
 
 ### References
 
-- [Managing Systems Using the RHEL 8 Web Console Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/htmlsingle/managing_systems_using_the_rhel_8_web_console/index)
+- [Managing Systems Using the RHEL 9 Web Console Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/htmlsingle/managing_systems_using_the_rhel_8_web_console/index)
 - [Recording Sessions Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/htmlsingle/recording_sessions/index)
 - [Cockpit Project](http://www.cockpit-project.org)
