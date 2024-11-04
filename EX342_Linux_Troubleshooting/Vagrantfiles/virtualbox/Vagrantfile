@@ -4,10 +4,10 @@ $hostsfile = <<-SCRIPT
 # Create the hosts file for all nodes because we do not have DNS setup:
 echo "172.25.250.254   bastion.example.com   bastion" >> /etc/hosts
 echo "172.25.250.9     workstation.example.com   workstation" >> /etc/hosts
-echo "172.25.250.10    node1.example.com   servera" >> /etc/hosts
-echo "172.25.250.11    node2.example.com   serverb" >> /etc/hosts
+echo "172.25.250.10    node1.example.com   node1" >> /etc/hosts
+echo "172.25.250.11    node2.example.com   node2" >> /etc/hosts
 echo "172.25.250.17    utility.example.com   utility" >> /etc/hosts
-echo "172.25.254.254   classroom.example.com   classroom" >> /etc/hosts
+echo "172.25.254.254   content.example.com   content" >> /etc/hosts
 SCRIPT
 
 $user_setup = <<-SCRIPT
@@ -52,19 +52,19 @@ Vagrant.configure("2") do |config|
   end
 
   # Server A VM
-  config.vm.define "servera" do |servera|
-    servera.vm.hostname = "node1.example.com"
-    servera.vm.network "private_network", ip: "172.25.250.10"
-    servera.vm.provision "shell", inline: $hostsfile
-    servera.vm.provision "shell", inline: $user_setup
+  config.vm.define "node1" do |node1|
+    node1.vm.hostname = "node1.example.com"
+    node1.vm.network "private_network", ip: "172.25.250.10"
+    node1.vm.provision "shell", inline: $hostsfile
+    node1.vm.provision "shell", inline: $user_setup
   end
 
   # Server B VM
-  config.vm.define "serverb" do |serverb|
-    serverb.vm.hostname = "node2.example.com"
-    serverb.vm.network "private_network", ip: "172.25.250.11"
-    serverb.vm.provision "shell", inline: $hostsfile
-    serverb.vm.provision "shell", inline: $user_setup
+  config.vm.define "node2" do |node2|
+    node2.vm.hostname = "node2.example.com"
+    node2.vm.network "private_network", ip: "172.25.250.11"
+    node2.vm.provision "shell", inline: $hostsfile
+    node2.vm.provision "shell", inline: $user_setup
   end
 
   # Utility VM
@@ -75,11 +75,11 @@ Vagrant.configure("2") do |config|
     utility.vm.provision "shell", inline: $user_setup
   end
 
-  # Classroom VM (optional, since it provides content and materials)
-  config.vm.define "classroom" do |classroom|
-    classroom.vm.hostname = "classroom.example.com"
-    classroom.vm.network "private_network", ip: "172.25.254.254"
-    classroom.vm.provision "shell", inline: $hostsfile
-    classroom.vm.provision "shell", inline: $user_setup
+  # Content VM (optional, since it provides content and materials)
+  config.vm.define "content" do |content|
+    content.vm.hostname = "content.example.com"
+    content.vm.network "private_network", ip: "172.25.254.254"
+    content.vm.provision "shell", inline: $hostsfile
+    content.vm.provision "shell", inline: $user_setup
   end
 end
