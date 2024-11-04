@@ -1,4 +1,4 @@
-# Lab 6: Installing and Configuring the Web Console on node1
+# Lab 4: Installing and Configuring the Web Console on node1
 
 ## Objective
 
