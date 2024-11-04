@@ -7,7 +7,7 @@
 
 ### Instructions
 
-In this exercise, you will configure the workstation as an Ansible control node and install and configure the web service on the `servera` managed node.
+In this exercise, you will configure the workstation as an Ansible control node and install and configure the web service on the `node1` managed node.
 
 1. **Create a working directory on the workstation**
    
@@ -32,11 +32,11 @@ In this exercise, you will configure the workstation as an Ansible control node 
 
 3. **Create the inventory file**
    
-   Create an `inventory` file and set `servera` as the `web_prod` production web server:
+   Create an `inventory` file and set `node1` as the `web_prod` production web server:
    
    ```ini
    [webservers]
-   web_prod ansible_host=servera
+   web_prod ansible_host=node1
    ```
 
 4. **Verify connectivity with the managed node**
@@ -75,7 +75,10 @@ In this exercise, you will configure the workstation as an Ansible control node 
    - Use the templates as the web service configuration files.
    - Ensure that the firewall service is enabled for the web service.
 
-   #### Playbook Contents
+   #### Playbook Contents:
+   ```bash
+   vim mywebserver.yaml
+   ```
 
    ```yaml
    - name: Install and configure a customized web server
@@ -84,14 +87,11 @@ In this exercise, you will configure the workstation as an Ansible control node 
      tasks:
        - name: Install httpd package
          ansible.builtin.yum:
-           name: httpd
+           name:
+             - httpd
+             - firewalld
            state: latest
-
-       - name: Validate firewall
-         ansible.builtin.yum:
-           name: firewalld
-           state: present
-
+   
        - name: Template out httpd configuration file
          template:
            src: apache_httpdconf.j2
@@ -135,7 +135,7 @@ In this exercise, you will configure the workstation as an Ansible control node 
    playbook: mywebserver.yaml
    ```
 
-7. **Run the Ansible Playbook**
+8. **Run the Ansible Playbook**
 
    Run the playbook and verify its successful execution:
 
@@ -163,12 +163,12 @@ In this exercise, you will configure the workstation as an Ansible control node 
    rescued=0 ignored=0
    ```
 
-8. **Verify the web server**
+9. **Verify the web server**
 
    Verify that the web server can be accessed:
 
    ```bash
-   [bob@ansible]$ curl servera
+   [bob@ansible]$ curl node1
    <!-- ansible managed -->
    <html>
    <head><title>Apache is running!</title></head>
