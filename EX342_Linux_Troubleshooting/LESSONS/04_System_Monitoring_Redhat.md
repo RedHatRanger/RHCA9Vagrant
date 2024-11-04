@@ -130,9 +130,3 @@ The **Session Recording** feature uses the `tlog` package to record and play bac
    ```bash
    [user@host ~]$ tlog-play --file-path=tlog.log
    ```
-
-### References
-
-- [Managing Systems Using the RHEL 9 Web Console Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/htmlsingle/managing_systems_using_the_rhel_8_web_console/index)
-- [Recording Sessions Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/htmlsingle/recording_sessions/index)
-- [Cockpit Project](http://www.cockpit-project.org)
