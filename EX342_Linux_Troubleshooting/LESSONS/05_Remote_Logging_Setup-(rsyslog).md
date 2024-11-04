@@ -69,10 +69,6 @@
    ```bash
    [root@node2 ~]# vim /etc/rsyslog.conf
    
-   # Send all messages to the central log host using UDP:
-   *.info action(type="omfwd" target="node1" port="514" protocol="udp")
-
-   # Alternatively, use TCP for reliable delivery:
    *.* action(type="omfwd" target="node1" port="514" protocol="tcp")
    ```
 
