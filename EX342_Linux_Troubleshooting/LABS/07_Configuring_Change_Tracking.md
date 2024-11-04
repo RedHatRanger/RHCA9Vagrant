@@ -142,6 +142,12 @@
    ```bash
    [root@node1 ~]# useradd user01
    ```
+   
+* NOTE: Log in to the node1 machine in a separate terminal. Use the journalctl
+command to monitor the email that is sent to the student user.
+```bash
+[root@servera ~]# journalctl -f -u postfix --since today
+```
 
 ### Step 9: Check for AIDE Alert Email
 
