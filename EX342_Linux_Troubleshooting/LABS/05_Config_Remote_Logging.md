@@ -121,12 +121,4 @@
     Dec 11 00:44:40 node2 root: Test cron.crit message from node2
     ```
 
-### Cleanup
-
-12. **Close Sessions and Return to Workstation**
-
-    ```bash
-    [root@node1 ~]# exit
-    [bob@node1 ~]$ exit
-    [bob@workstation ~]$
-    ```
+* Done!!
