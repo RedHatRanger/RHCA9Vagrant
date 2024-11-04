@@ -140,8 +140,5 @@
    [root@node1 ~]# tlog-play -r journal -M TLOG_REC=<your-unique-host-id>
    ```
 
-### References
-
-- [rsyslog.conf(5) man page](http://man7.org/linux/man-pages/man5/rsyslog.conf.5.html)
-- [Recording Sessions Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/htmlsingle/recording_sessions/index)
+* Done!!
 
