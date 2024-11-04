@@ -137,12 +137,4 @@
 
 - "Now, the **bob** user reports that they are able to use the **scp** command to transfer the **/home/bob/document.txt** file from **node2** to **workstation**, without any error messages."
 
-### Step 7: Finish the Lab
-
-- On the **workstation** machine, use the lab command to complete this exercise:
-  
-  ```bash
-  [bob@workstation ~]$ lab finish strategy-review
-  ```
-
-  This ensures that resources from previous exercises do not impact upcoming exercises.
+* Done!!
