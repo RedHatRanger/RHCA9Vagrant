@@ -5,6 +5,12 @@
 
 - You should be able to troubleshoot a login issue by using the scientific method.
 
+### INITIAL SETUP:
+```
+# Set the shell for the student user to /bin/false to create the problem
+chsh -s /bin/false student
+```
+
 ### Problem
 
 "Over the weekend, colleagues ran user account maintenance. This morning, the `bob` user reported that their SSH login no longer works on node1. The user states that their password is `redhat`, and that passwordless SSH normally works fine from his workstation."
