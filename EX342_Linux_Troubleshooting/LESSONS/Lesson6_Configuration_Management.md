@@ -11,11 +11,11 @@ As an organization's IT infrastructure grows, manual system configuration can be
 
 ### Red Hat Satellite Server
 
-Red Hat Satellite is a system management solution that helps deploy, configure, and maintain systems across physical, virtual, and cloud environments. It centralizes provisioning, remote management, and monitoring of multiple Red Hat Enterprise Linux deployments. Satellite Server organizes lifecycle management through the concept of "organizations," which isolate content for different groups of hosts with specific needs.
+*Red Hat Satellite* is a system management solution that helps deploy, configure, and maintain systems across physical, virtual, and cloud environments. It centralizes provisioning, remote management, and monitoring of multiple Red Hat Enterprise Linux deployments. Satellite Server organizes lifecycle management through the concept of "organizations," which isolate content for different groups of hosts with specific needs.
 
 ### Red Hat Ansible Automation Platform
 
-Ansible Automation Platform is a simple, agentless automation language used to define IT infrastructure through playbooks. It pushes configurations to designated remote systems using SSH and provides scalability to large environments.
+*Ansible Automation Platform* is a simple, agentless automation language used to define IT infrastructure through playbooks. It pushes configurations to designated remote systems using SSH and provides scalability to large environments.
 
 Ansible Automation Platform also includes an automation controller (formerly known as Red Hat Ansible Tower), which provides a dashboard and graphical tools for managing automation. The automation controller can integrate with Red Hat Satellite to manage server inventory and host playbooks for configuration tasks.
 
