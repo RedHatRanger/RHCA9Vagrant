@@ -49,6 +49,14 @@ Ansible uses Jinja2 templates for configuration files, enabling dynamic variable
     dest: {{ remote_install_path }}/file.cfg
 ```
 
+The remote_install_path variable defines a file location, which might vary from one system to
+another.
+
+A playbook can disable fact gathering, with this syntax:
+```yaml
+- hosts: servers
+ gather_facts: no
+```
 ### RHEL System Roles
 
 Red Hat Enterprise Linux (RHEL) includes a collection of Ansible roles called RHEL System Roles to manage system configurations across different versions of RHEL. These roles are consistent and can be used for troubleshooting and maintaining desired configurations. Some of the key RHEL System Roles include:
