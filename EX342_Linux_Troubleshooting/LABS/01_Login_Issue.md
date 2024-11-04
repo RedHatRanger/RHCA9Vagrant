@@ -8,7 +8,7 @@
 ### INITIAL SETUP:
 ```
 # Set the shell for the student user to /bin/false to create the problem
-chsh -s /bin/false student
+chsh -s /bin/false bob
 ```
 
 ### Problem
