@@ -46,6 +46,9 @@ The web console provides several tools to monitor system performance, including 
 
 - Navigate to the **Overview** page and click **View details and history** to access performance metrics. The **Performance Metrics** page displays historical data, events, errors, and graphical representations for resource utilization and saturation.
 
+![{64A21DDE-E26B-4721-BB3C-4AC1A9D91BEC}](https://github.com/user-attachments/assets/77e09b6a-797d-4069-aa7a-2d10dc93a1d8)
+
+
 ### Reviewing Logs in the Web Console
 
 - The **Logs** page in the web console provides access to journal logs using the `journalctl` service. You can filter log entries by:
