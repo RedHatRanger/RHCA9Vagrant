@@ -180,6 +180,4 @@ In this exercise, you will configure the workstation as an Ansible control node 
    </html>
    ```
 
-   Return to the home directory:
-
-   ```bash
+* Done!!
