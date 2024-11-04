@@ -65,7 +65,7 @@
    7.1. Click **Session Recording** from the main menu, and then click the gear icon. Navigate to **SSSD Config** and select **Scope > Some**, and then define `bob` as **Users and Groups**.
 
 ![{41FC2331-257A-4612-98BF-50E84F1A6424}](https://github.com/user-attachments/assets/03cf8db2-fa3f-4259-af52-052c87e48ad9)
-
+## Change "consultant" to "bob" on both the user and the group boxes
 
    7.2. Click **Save** and click **Session Recording** at the top of the page.
 
@@ -105,8 +105,4 @@
 
    9.3. Play back the recorded session. Click **Play**.
 
-### References
-
-- [Managing Systems Using the RHEL 8 Web Console Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/htmlsingle/managing_systems_using_the_rhel_8_web_console/index)
-- [Recording Sessions Guide](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/htmlsingle/recording_sessions/index)
-- [Cockpit Project](http://www.cockpit-project.org)
+* Done!!
