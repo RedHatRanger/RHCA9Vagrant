@@ -115,7 +115,7 @@
 4.3. Extract the generated file:
 
    ```bash
-   [bob@workstation ~]$ tar xvf sosreport-node1-123456-2021-09-02-ytgpkbx.tar.xz
+   [bob@workstation ~]$ tar xvf sosreport-node1-123456-2024-10-31-ytgpkbx.tar.xz
    ```
 
 ### Step 5: Inspect the Extracted sos Report
@@ -123,22 +123,14 @@
 5.1. Inspect the extracted **sos report** by listing its contents:
 
    ```bash
-   [bob@workstation ~]$ cd sosreport-node1-123456-2021-09-02-ytgpkbx
-   [bob@workstation sosreport-node1-123456-2021-09-02-ytgpkbx]$ ls -l
+   [bob@workstation ~]$ cd sosreport-node1-123456-2024-10-31-ytgpkbx
+   [bob@workstation sosreport-node1-123456-2024-10-31-ytgpkbx]$ ls -l
    ```
 
 5.2. Confirm the use of the **xfs** plug-in by inspecting the **xfs** configuration of **node1**:
 
    ```bash
-   [bob@workstation sosreport-node1-123456-2021-09-02-ytgpkbx]$ cat sos_commands/xfs/xfs_info
+   [bob@workstation sosreport-node1-123456-2024-10-31-ytgpkbx]$ cat sos_commands/xfs/xfs_info
    ```
 
-### Step 6: Finish the Lab
-
-- On the **workstation** machine, use the lab command to complete this exercise:
-  
-  ```bash
-  [bob@workstation ~]$ lab finish strategy-redhatresources
-  ```
-
-  This ensures that resources from previous exercises do not impact upcoming exercises.
+* Done!!
