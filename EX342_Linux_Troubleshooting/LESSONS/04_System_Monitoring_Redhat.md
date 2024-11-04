@@ -115,6 +115,9 @@ The **Session Recording** feature uses the `tlog` package to record and play bac
    ```
 
    - You can also configure session recording from the **Session Recording** page in the web console.
+  
+![{3C5DEC8B-2E20-4211-A09F-38922DD73ABC}](https://github.com/user-attachments/assets/3717c5cc-1cf2-47f3-b9d0-35a7ba7aa487)
+
 
 ### Replay Recorded Sessions
 
