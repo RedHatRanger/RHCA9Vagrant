@@ -5,10 +5,12 @@
 - You should be able to use log files to troubleshoot a web server issue.
 
 ### INITIAL SETUP:
-```
+```bash
+ssh bob@node1
+sudo su
 # Create the test file with incorrect permissions and SELinux context
 mkdir -p /var/www/html
-cat <<EOT > /var/www/html/test.html
+cat <<EOF > /var/www/html/test.html
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html><head>
 <title>403 Forbidden</title>
@@ -16,7 +18,7 @@ cat <<EOT > /var/www/html/test.html
 <h1>Forbidden</h1>
 <p>You don't have permission to access this resource.</p>
 </body></html>
-EOT
+EOF
 chmod 600 /var/www/html/test.html
 chcon -t samba_share_t /var/www/html/test.html
 systemctl restart httpd
@@ -25,11 +27,6 @@ systemctl restart httpd
 ### Problem
 
 "The `bob` user reported that the file `http://node1.example.com/test.html` is not accessible from a web browser. The testing manager did not provide further details."
-
-- To test the file from the command line, use:
-  ```bash
-  curl http://node1.example.com/test.html
-  ```
 
 ### Step 1: Reproduce the Problem
 
