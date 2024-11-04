@@ -1,5 +1,5 @@
 
-# Lab 6: Configuring Remote Logging to a Central Log Host
+# Lab 5: Configuring Remote Logging to a Central Log Host
 
 ## Objective
 
