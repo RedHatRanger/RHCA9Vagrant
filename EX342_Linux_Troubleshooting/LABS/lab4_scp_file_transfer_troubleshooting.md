@@ -1,0 +1,148 @@
+
+# Lab 4: Introducing Troubleshooting Strategy
+
+## Objective
+
+- You should be able to solve an SCP file transfer issue by using the scientific method.
+
+### Initial Setup
+
+1. Log in to **node2** as the **bob** user and switch to the root user:
+
+   ```bash
+   [bob@workstation ~]$ ssh bob@node2
+   [bob@node2 ~]$ sudo -i
+   [sudo] password for bob: redhat
+   [root@node2 ~]#
+   ```
+
+2. Create the file **/home/bob/document.txt** with incorrect permissions to simulate the problem:
+
+   ```bash
+   [root@node2 ~]# touch /home/bob/document.txt
+   [root@node2 ~]# chown root:root /home/bob/document.txt
+   [root@node2 ~]# chmod 640 /home/bob/document.txt
+   ```
+
+### Problem Scenario
+
+- The **bob** user on **workstation** reported that they are unable to copy a file from **node2** by using SCP.
+- The user provided the following information:
+  - The file they are trying to copy is **/home/bob/document.txt**.
+  - They are trying to copy the file to the **bob** user's home directory on **workstation**.
+  - They are connecting to **node2** as the **bob** user.
+
+### Step 1: Collect Relevant Information
+
+1.1. Log in to **node2** and switch to the root user:
+
+   ```bash
+   [bob@workstation ~]$ ssh bob@node2
+   [bob@node2 ~]$ sudo -i
+   [sudo] password for bob: redhat
+   [root@node2 ~]#
+   ```
+
+1.2. Gather information about the **sshd** service, as SCP relies on **sshd** to function:
+
+   ```bash
+   [root@node2 ~]# systemctl status sshd.service
+   ```
+   - Ensure the service is **active (running)** and check for any recent errors.
+
+1.3. Gather information about the file **/home/bob/document.txt**:
+
+   ```bash
+   [root@node2 ~]# ls -l /home/bob/document.txt
+   ```
+
+1.4. Gather information about potential **SELinux** alerts:
+
+   ```bash
+   [root@node2 ~]# cat /var/log/messages | grep sealert
+   ```
+
+1.5. Return to **workstation** as the **bob** user:
+
+   ```bash
+   [root@node2 ~]# exit
+   [bob@node2 ~]$ exit
+   [bob@workstation ~]$
+   ```
+
+1.6. From **workstation**, attempt to re-create the issue:
+
+   ```bash
+   [bob@workstation ~]$ scp bob@node2:~/document.txt .
+   scp: /home/bob/document.txt: Permission denied
+   ```
+   - Observe the error message: **Permission denied**.
+
+### Step 2: Create a Problem Statement
+
+- "Today, the **bob** user reported that they are unable to copy the **/home/bob/document.txt** file from **node2** to **workstation** using the **scp** command. A permission denied error message can be consistently reproduced."
+
+### Step 3: Formulate Testable Hypotheses
+
+3.1. Formulate the following hypotheses:
+
+- **node2** is not reachable over the network. Test by accessing network interfaces with network tools.
+- The **sshd** process on **node2** is not running or is misconfigured. Test by using SSH to log in to the system.
+- **SELinux** on **node2** is preventing the file transfer. Test by temporarily disabling SELinux.
+- **/home/bob/document.txt** has incorrect file permissions. Test by adding read permissions.
+
+### Step 4: Test Each Hypothesis
+
+4.1. Test the hypothesis that **node2** cannot be reached over the network with network tools:
+
+   ```bash
+   [bob@workstation ~]$ ping node2
+   ```
+   - **Result**: The ping command succeeds, eliminating the hypothesis that **node2** is not reachable.
+
+4.2. Test the hypothesis that the **sshd** process on **node2** is not running properly by attempting to run a remote SSH command on the system:
+
+   ```bash
+   [bob@workstation ~]$ ssh bob@node2 echo "test message on node2"
+   test message on node2
+   ```
+   - **Result**: The SSH command succeeds, eliminating the hypothesis that the **sshd** process is not functioning.
+
+4.3. Test the hypothesis that **SELinux** on **node2** is preventing the file transfer by disabling SELinux:
+
+   ```bash
+   [bob@workstation ~]$ ssh root@node2 setenforce 0
+   [bob@workstation ~]$ scp bob@node2:~/document.txt .
+   scp: /home/bob/document.txt: Permission denied
+   [bob@workstation ~]$ ssh root@node2 setenforce 1
+   ```
+   - **Result**: Disabling SELinux did not resolve the issue. The hypothesis is eliminated, and SELinux was re-enabled immediately.
+
+4.4. Test the hypothesis that a file permission issue is preventing the file transfer:
+
+   ```bash
+   [bob@workstation ~]$ ssh root@node2 chown bob:bob /home/bob/document.txt
+   [bob@workstation ~]$ scp bob@node2:~/document.txt .
+   document.txt 100% 0 0.0KB/s 00:00
+   ```
+   - **Result**: The issue was resolved, indicating that incorrect file permissions were the root cause.
+
+### Step 5: Record and Analyze Test Results
+
+5.1. Based on the preceding tests, it can be determined that the issue was caused by **incorrect file permissions** on **/home/bob/document.txt**. If none of the tests had succeeded, then the scientific method would have to be repeated with new hypotheses, or the issue would need to be escalated.
+
+### Step 6: Fix and Verify Problem Resolution
+
+6.1. In this lab's case, no further fixes are required to resolve the issue permanently. The issue can be marked as resolved, given that the current state is the inverse of the problem statement:
+
+- "Now, the **bob** user reports that they are able to use the **scp** command to transfer the **/home/bob/document.txt** file from **node2** to **workstation**, without any error messages."
+
+### Step 7: Finish the Lab
+
+- On the **workstation** machine, use the lab command to complete this exercise:
+  
+  ```bash
+  [bob@workstation ~]$ lab finish strategy-review
+  ```
+
+  This ensures that resources from previous exercises do not impact upcoming exercises.
