@@ -4,7 +4,7 @@
 ## Objective
 - You should be able to use log files to troubleshoot a web server issue.
 
-### INITIAL SETUP:
+### INITIAL SETUP of ```node1```:
 ```bash
 ssh bob@node1
 sudo su
