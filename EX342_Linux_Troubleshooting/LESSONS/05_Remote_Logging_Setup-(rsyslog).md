@@ -64,7 +64,7 @@
 
 6. **Configure rsyslog on node2 to Send Logs to node1**
 
-   Add the following entries to the `/etc/rsyslog.conf` file on node2 to forward logs to the central log host (node1):
+   Add the following entries to the `/etc/rsyslog.conf` file on node2 to forward logs with "info and above" to the central log host (node1):
 
    ```bash
    [root@node2 ~]# vim /etc/rsyslog.conf
