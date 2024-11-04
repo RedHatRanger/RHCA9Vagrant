@@ -11,13 +11,7 @@ sudo su
 # Create the test file with incorrect permissions and SELinux context
 mkdir -p /var/www/html
 cat <<EOF > /var/www/html/test.html
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>403 Forbidden</title>
-</head><body>
-<h1>Forbidden</h1>
-<p>You don't have permission to access this resource.</p>
-</body></html>
+Node1
 EOF
 chmod 600 /var/www/html/test.html
 chcon -t samba_share_t /var/www/html/test.html
@@ -173,7 +167,7 @@ type=AVC msg=audit(09/02/2021 22:39:46.532:4380) : avc: denied { getattr } for p
 ```
 **Expected Output:**
 ```
-ServerA
+Node1
 ```
 *"The file is now accessible."*
 
