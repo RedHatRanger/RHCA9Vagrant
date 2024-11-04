@@ -64,6 +64,9 @@
 
    7.1. Click **Session Recording** from the main menu, and then click the gear icon. Navigate to **SSSD Config** and select **Scope > Some**, and then define `bob` as **Users and Groups**.
 
+![{41FC2331-257A-4612-98BF-50E84F1A6424}](https://github.com/user-attachments/assets/03cf8db2-fa3f-4259-af52-052c87e48ad9)
+
+
    7.2. Click **Save** and click **Session Recording** at the top of the page.
 
 ### Bob User Activity
