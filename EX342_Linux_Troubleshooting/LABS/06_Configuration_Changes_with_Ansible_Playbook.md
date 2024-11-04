@@ -11,11 +11,11 @@ In this exercise, you will configure the workstation as an Ansible control node 
 
 1. **Create a working directory on the workstation**
    
-   On the workstation, as the student user, create a directory called `workdir` and change into it:
+   On the workstation, as the bob user, create a directory called `ansible` and change into it:
    
    ```bash
-   [student@workstation ~]$ mkdir workdir
-   [student@workstation ~]$ cd workdir
+   [bob@workstation ~]$ mkdir ansible
+   [bob@workstation ~]$ cd ansible
    ```
 
 2. **Create the Ansible configuration file**
@@ -44,7 +44,7 @@ In this exercise, you will configure the workstation as an Ansible control node 
    Verify that the control node can communicate with the managed node by using the `ping` module:
    
    ```bash
-   [student@workdir]$ ansible web_prod -m ping
+   [bob@ansible]$ ansible web_prod -m ping
    web_prod | SUCCESS => {
      "ansible_facts": {
        "discovered_interpreter_python": "/usr/libexec/platform-python"
@@ -54,15 +54,15 @@ In this exercise, you will configure the workstation as an Ansible control node 
    }
    ```
 
-5. **Move the downloaded templates to the workdir**
+5. **Move the downloaded templates to the ansible**
    
-   Move the downloaded templates (`apache_httpdconf.j2` and `apache_indexhtml.j2`) to the `workdir` directory and view the included substitution variables:
+   Move the downloaded templates (`apache_httpdconf.j2` and `apache_indexhtml.j2`) to the `ansible` directory and view the included substitution variables:
    
    ```bash
-   [student@workdir]$ mv ~/apache_* .
-   [student@workdir]$ grep "{{" apache_httpdconf.j2
+   [bob@ansible]$ mv ~/apache_* .
+   [bob@ansible]$ grep "{{" apache_httpdconf.j2
    # {{ ansible_managed }}
-   [student@workdir]$ grep "{{" apache_indexhtml.j2
+   [bob@ansible]$ grep "{{" apache_indexhtml.j2
    <!-- {{ ansible_managed }} -->
    Hello from {{ inventory_hostname }}
    ```
@@ -131,7 +131,7 @@ In this exercise, you will configure the workstation as an Ansible control node 
    **Note**: You can verify the syntax of the playbook without implementing it by using:
 
    ```bash
-   [student@workdir]$ ansible-playbook --syntax-check mywebserver.yaml
+   [bob@ansible]$ ansible-playbook --syntax-check mywebserver.yaml
    playbook: mywebserver.yaml
    ```
 
@@ -140,7 +140,7 @@ In this exercise, you will configure the workstation as an Ansible control node 
    Run the playbook and verify its successful execution:
 
    ```bash
-   [student@workdir]$ ansible-playbook mywebserver.yaml
+   [bob@ansible]$ ansible-playbook mywebserver.yaml
    
    PLAY [Install and configure a customized web server] *********************
    TASK [Install httpd package] *********************************************
@@ -168,7 +168,7 @@ In this exercise, you will configure the workstation as an Ansible control node 
    Verify that the web server can be accessed:
 
    ```bash
-   [student@workdir]$ curl servera
+   [bob@ansible]$ curl servera
    <!-- ansible managed -->
    <html>
    <head><title>Apache is running!</title></head>
