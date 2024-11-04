@@ -49,7 +49,7 @@ Ansible uses Jinja2 templates for configuration files, enabling dynamic variable
     dest: {{ remote_install_path }}/file.cfg
 ```
 
-The remote_install_path variable defines a file location, which might vary from one system to
+The *remote_install_path* variable defines a file location, which might vary from one system to
 another.
 
 A playbook can disable fact gathering, with this syntax:
