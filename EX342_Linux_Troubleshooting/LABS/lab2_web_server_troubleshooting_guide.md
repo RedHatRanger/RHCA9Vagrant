@@ -16,6 +16,8 @@ EOF
 chmod 600 /var/www/html/test.html
 chcon -t samba_share_t /var/www/html/test.html
 systemctl restart httpd
+exit
+exit
 ```
 
 ### Problem
