@@ -1,0 +1,85 @@
+# Vagrantfile to create the required VMs for the exam lab environment
+
+$hostsfile = <<-SCRIPT
+# Create the hosts file for all nodes because we do not have DNS setup:
+echo "172.25.250.254   bastion.lab.example.com   bastion" >> /etc/hosts
+echo "172.25.250.9     workstation.lab.example.com   workstation" >> /etc/hosts
+echo "172.25.250.10    servera.lab.example.com   servera" >> /etc/hosts
+echo "172.25.250.11    serverb.lab.example.com   serverb" >> /etc/hosts
+echo "172.25.250.17    utility.lab.example.com   utility" >> /etc/hosts
+echo "172.25.254.254   classroom.lab.example.com   classroom" >> /etc/hosts
+SCRIPT
+
+$user_setup = <<-SCRIPT
+# Create the user 'bob' and assign the password 'redhat':
+useradd bob
+echo "bob:redhat" | chpasswd
+usermod -aG wheel bob
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansibleuser_bob
+
+# Enable PasswordAuthentication and disable root login:
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+systemctl restart sshd
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  # Default configuration for all VMs
+  config.vm.box = "generic/rhel8"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.cpus = 1
+  end
+
+  # Bastion VM
+  config.vm.define "bastion" do |bastion|
+    bastion.vm.hostname = "bastion.lab.example.com"
+    bastion.vm.network "private_network", ip: "172.25.250.254"
+    bastion.vm.provision "shell", inline: $hostsfile
+    bastion.vm.provision "shell", inline: $user_setup
+  end
+
+  # Workstation VM
+  config.vm.define "workstation" do |workstation|
+    workstation.vm.hostname = "workstation.lab.example.com"
+    workstation.vm.network "private_network", ip: "172.25.250.9"
+    workstation.vm.provider "virtualbox" do |vb|
+      vb.gui = true  # Enable GUI for the workstation VM
+      vb.memory = "2048"
+    end
+    workstation.vm.provision "shell", inline: $hostsfile
+    workstation.vm.provision "shell", inline: $user_setup
+  end
+
+  # Server A VM
+  config.vm.define "servera" do |servera|
+    servera.vm.hostname = "servera.lab.example.com"
+    servera.vm.network "private_network", ip: "172.25.250.10"
+    servera.vm.provision "shell", inline: $hostsfile
+    servera.vm.provision "shell", inline: $user_setup
+  end
+
+  # Server B VM
+  config.vm.define "serverb" do |serverb|
+    serverb.vm.hostname = "serverb.lab.example.com"
+    serverb.vm.network "private_network", ip: "172.25.250.11"
+    serverb.vm.provision "shell", inline: $hostsfile
+    serverb.vm.provision "shell", inline: $user_setup
+  end
+
+  # Utility VM
+  config.vm.define "utility" do |utility|
+    utility.vm.hostname = "utility.lab.example.com"
+    utility.vm.network "private_network", ip: "172.25.250.17"
+    utility.vm.provision "shell", inline: $hostsfile
+    utility.vm.provision "shell", inline: $user_setup
+  end
+
+  # Classroom VM (optional, since it provides content and materials)
+  config.vm.define "classroom" do |classroom|
+    classroom.vm.hostname = "classroom.lab.example.com"
+    classroom.vm.network "private_network", ip: "172.25.254.254"
+    classroom.vm.provision "shell", inline: $hostsfile
+    classroom.vm.provision "shell", inline: $user_setup
+  end
+end
