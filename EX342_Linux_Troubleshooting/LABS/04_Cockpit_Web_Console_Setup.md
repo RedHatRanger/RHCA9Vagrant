@@ -54,6 +54,9 @@
 
    6.3. Inspect the historical performance of the system. Click the **View details and history** link in the Usage box.
 
+![{93954FC6-9EAA-4273-9363-FF2F4F502574}](https://github.com/user-attachments/assets/2d130e6d-4cd9-42b1-ab91-8176df5d14cd)
+
+
 ### Session Recording in the Web Console
 
 7. **Configure the terminal session recording of the bob user**
