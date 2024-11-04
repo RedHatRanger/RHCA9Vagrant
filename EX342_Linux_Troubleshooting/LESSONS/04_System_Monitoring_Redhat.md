@@ -1,4 +1,3 @@
-
 # LESSON 4: Monitoring Systems with Red Hat Tools
 
 ## Objective
@@ -8,6 +7,8 @@
 ### Overview
 
 The Red Hat Enterprise Linux 9 web console, built with Cockpit technology, provides an easy-to-use, web-based interface to manage and monitor Linux hosts. It allows administrators to perform system monitoring without requiring extensive command-line tool knowledge. By default, many RHEL 9 deployments include the web console, but it can also be installed manually if needed.
+
+![{70E5CCBD-043E-4A69-998E-B77FF680E4C3}](https://github.com/user-attachments/assets/39ff3879-0248-434b-a499-0af230347beb)
 
 ### Initial Setup
 
