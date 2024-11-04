@@ -11,7 +11,7 @@
    ```bash
    [bob@workstation ~]$ ssh bob@node1
    [bob@node1 ~]$ sudo -i
-   [sudo] password for bob: bob
+   [sudo] password for bob: redhat
    [root@node1 ~]#
    ```
 
