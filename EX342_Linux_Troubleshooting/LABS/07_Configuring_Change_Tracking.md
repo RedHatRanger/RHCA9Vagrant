@@ -206,3 +206,5 @@ command to monitor the email that is sent to the student user.
    ```bash
    [bob@node1 ~]$ sudo cat /var/log/aide/aide.log
    ```
+
+* Done!!
