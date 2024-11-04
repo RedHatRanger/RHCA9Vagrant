@@ -103,6 +103,9 @@
 
    9.2. Click the recorded terminal session of the bob user.
 
+![{2840C697-554A-47C1-9E50-88FC30C98177}](https://github.com/user-attachments/assets/00d18f10-0b21-4704-8576-d4d0895fe4d9)
+
+
    9.3. Play back the recorded session. Click **Play**.
 
 * Done!!
