@@ -173,10 +173,4 @@ Node1
 ```
 *"The file is now accessible."*
 
-### Step 8: Finish the Lab
-
-- On the **workstation** machine, use the lab command to complete this exercise:
-  ```bash
-  [bob@workstation ~]$ lab finish strategy-collectinginfo
-  ```
-  This ensures that resources from previous exercises do not impact upcoming exercises.
+* Done!!
