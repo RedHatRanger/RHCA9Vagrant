@@ -46,7 +46,9 @@ The web console provides several tools to monitor system performance, including 
 
 - Navigate to the **Overview** page and click **View details and history** to access performance metrics. The **Performance Metrics** page displays historical data, events, errors, and graphical representations for resource utilization and saturation.
 
-![{64A21DDE-E26B-4721-BB3C-4AC1A9D91BEC}](https://github.com/user-attachments/assets/77e09b6a-797d-4069-aa7a-2d10dc93a1d8)
+![{64A21DDE-E26B-4721-BB3C-4AC1A9D91BEC}](https://github.com/user-attachments/assets/77e09b6a-797d-4069-aa7a-2d10dc93a1d8) \
+![{E470B6BB-DE05-4393-9B37-81FFA26E9482}](https://github.com/user-attachments/assets/8f76b551-d581-44d1-bd70-f6a5b4b504d9)
+
 
 
 ### Reviewing Logs in the Web Console
