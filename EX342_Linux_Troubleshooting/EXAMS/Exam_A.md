@@ -1,4 +1,4 @@
-# EXAM A: Test Your Knowledge Lab Exercise
+# EXAM A: Test Your Knowledge Lab Exercise for Labs 1-7
 
 ## Objective
 - Configure terminal session recording, central logging, and file integrity monitoring.
