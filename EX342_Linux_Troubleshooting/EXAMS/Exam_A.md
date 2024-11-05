@@ -21,7 +21,7 @@ In this lab exercise, you will use a combination of manual configuration via the
 
 ## Lab Exercise Questions
 
-###Instructions
+### Instructions
 
 Use the web console to configure terminal session recording for the consultant user. Configure workstation as a control node, and verify communication with servera and serverb as managed nodes. Use Ansible Playbooks to configure the managed nodes:
 
