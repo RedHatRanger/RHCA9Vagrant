@@ -79,7 +79,7 @@ node2
    - Click the bob user's recorded terminal session.
 
 ![image](https://github.com/user-attachments/assets/e707b651-1d1b-47bf-9475-f6e51a836008)
-
+("consultant" is actually "bob" here.)
 
 #### Step 2: Configure Workstation as Control Node and Verify Managed Nodes
 
