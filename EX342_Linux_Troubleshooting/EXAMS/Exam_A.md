@@ -128,6 +128,7 @@ node2
 1. Inside the `exam_a` directory, create the `mybaseline.yaml` Playbook for the
 rsyslog service configuration on `node1`:
    ```yaml
+   # To execute: ansible-playbook mybaseline.yaml
    ---
    - name: Configure central loghost
      hosts: central_loghost
