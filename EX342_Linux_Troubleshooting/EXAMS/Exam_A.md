@@ -29,12 +29,11 @@ node1
 node2
 - Install AIDE to report file and directory changes.
 - Configure node2 to send log messages to the central log host.
-
-1. Configure terminal session recording for the bob user.
-2. Configure workstation as a control node and node1 and node2 as managed nodes. Verify that the control node can reach both.
-3. Use an Ansible Playbook to configure node1 as a central log host. Use the provided configuration template.
-4. Use an Ansible Playbook to configure node2 as a remote log server, and configure AIDE to monitor file integrity. Use the provided configuration templates for each service.
-5. Run the playbook, and then view remote logging and file integrity on node2.
+- Configure terminal session recording for the bob user.
+- Configure workstation as a control node and node1 and node2 as managed nodes. Verify that the control node can reach both.
+- Use an Ansible Playbook to configure node1 as a central log host. Use the provided configuration template.
+- Use an Ansible Playbook to configure node2 as a remote log server, and configure AIDE to monitor file integrity. Use the provided configuration templates for each service.
+- Run the playbook, and then view remote logging and file integrity on node2.
 
 ### Lab Steps
 
