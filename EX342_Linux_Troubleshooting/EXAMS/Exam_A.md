@@ -54,23 +54,29 @@ node2
    - Click **Save** to apply the settings.
 
 3. On workstation, open another terminal and log into node1 as the bob user.
-RH342-RHEL8.4-en-4-20240626 87
-Chapter 2 | Configuring Baseline Data
-[student@workstation ~]$ ssh consultant@servera
-[consultant@servera ~]$
-1.5. Run some commands as the consultant user, such as ps auxf, top, and df -h.
-[consultant@servera ~]$ ps auxf
+```bash
+[bob@workstation ~]$ ssh bob@node1
+[bob@node1 ~]$
+```
+   - Run some commands as the bob user, such as ps auxf, top, and df -h.
+```bash
+[bob@node1 ~]$ ps auxf
 ...output omitted...
-[consultant@servera ~]$ top
+[bob@node1 ~]$ top
 ...output omitted...
-[consultant@servera ~]$ df -h
+[bob@node1 ~]$ df -h
 ...output omitted...
-1.6. Return to workstation as student.
-[consultant@servera ~]$ exit
+```
+
+4. Return to workstation as student.
+```bash
+[bob@node1 ~]$ exit
 [student@workstation ~]$
-1.7. Confirm the terminal session recording. In the web console of servera, click Session
-Recording. Refresh the page if necessary.
-1.8. Click the consultant user's recorded terminal session.
+```
+
+5. Confirm the terminal session recording. In the web console of node1, click Session Recording.
+   - Refresh the page if necessary.
+   - Click the bob user's recorded terminal session.
 
 #### Step 2: Configure Workstation as Control Node and Verify Managed Nodes
 
