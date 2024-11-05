@@ -48,9 +48,9 @@ node2
    - Use the username **bob** and password **redhat** to log in.
 
 2. Configure terminal session recording for the **bob** user.
-   - Navigate to **Session Recording** in the web console.
-   - Click the gear icon to modify the configuration.
-   - Set **Scope** to "Some" and specify **bob** as the users and groups to be monitored.
+   - From the left menu, click Session Recording, and then click the gear icon.
+   - Navigate to SSSD Config and select Scope > Some.
+   - Then, define "bob" as Users and Groups to be monitored.
    - Click **Save** to apply the settings.
 
 #### Step 2: Configure Workstation as Control Node and Verify Managed Nodes
