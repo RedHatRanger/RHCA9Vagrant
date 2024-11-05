@@ -23,11 +23,11 @@ In this lab exercise, you will use a combination of manual configuration via the
 
 ### Instructions
 
-Use the web console to configure terminal session recording for the consultant user. Configure workstation as a control node, and verify communication with servera and serverb as managed nodes. Use Ansible Playbooks to configure the managed nodes:
+1. **Use the web console to configure terminal session recording for the bob user. Configure workstation as a control node, and verify communication with node1 and node2 as managed nodes. Use Ansible Playbooks to configure the managed nodes:**
 
-servera
+node1
 
-Configure terminal session recording for the consultant user by using the web console.
+Configure terminal session recording for the bob user by using the web console.
 
 Configure the rsyslog service to serve as a central log host.
 
@@ -39,25 +39,25 @@ The template file configures syslog to create subdirectories, and to maintain a 
 
 Add the new log files to the log rotation schedule for size management.
 
-serverb
+node2
 
 Install AIDE to report file and directory changes.
 
-Configure serverb to send log messages to the central log host.
+Configure node2 to send log messages to the central log host.
 
-Configure terminal session recording for the consultant user.
+Configure terminal session recording for the bob user.
 
-Configure workstation as a control node and servera and serverb as managed nodes. Verify that the control node can reach both.
+Configure workstation as a control node and node1 and node2 as managed nodes. Verify that the control node can reach both.
 
-Use an Ansible Playbook to configure servera as a central log host. Use the provided configuration template.
+Use an Ansible Playbook to configure node1 as a central log host. Use the provided configuration template.
 
-Use an Ansible Playbook to configure serverb as a remote log server, and configure AIDE to monitor file integrity. Use the provided configuration templates for each service.
+Use an Ansible Playbook to configure node2 as a remote log server, and configure AIDE to monitor file integrity. Use the provided configuration templates for each service.
 
-Run the playbook, and then view remote logging and file integrity on serverb.
+Run the playbook, and then view remote logging and file integrity on node2.
 
 Lab Steps
 
-Step 1: Configure Terminal Session Recording for the Consultant User
+Step 1: Configure Terminal Session Recording for the bob User
 
 Log in to node1 via the web console.
 
