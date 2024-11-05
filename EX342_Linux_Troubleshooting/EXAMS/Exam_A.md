@@ -61,7 +61,7 @@ node2
      sudo yum install ansible
      ```
 
-2. Create an inventory file named `inventory` in a directory named `lab_playbooks` on **workstation**:
+2. Create an inventory file named `inventory` in a directory named `exam_a` on **workstation**:
    ```ini
    [webservers]
    node1 ansible_host=node1
@@ -72,12 +72,12 @@ node2
 
 3. Verify communication between the control node and managed nodes by running a ping command:
    ```bash
-   ansible all -m ping -i lab_playbooks/inventory
+   ansible all -m ping -i exam_a/inventory
    ```
 
 #### Step 3: Configure node1 as a Central Log Host
 
-1. Create an Ansible Playbook named `configure_central_log.yaml` in the `lab_playbooks` directory to configure **node1**:
+1. Create an Ansible Playbook named `configure_central_log.yaml` in the `exam_a` directory to configure **node1**:
    ```yaml
    - name: Configure node1 as central log host
      hosts: node1
@@ -119,7 +119,7 @@ node2
 To create the `rsyslog.conf.j2` file, use the following command on the workstation:
 
 ```bash
-cat << EOF > lab_playbooks/rsyslog.conf.j2
+cat << EOF > exam_a/rsyslog.conf.j2
 # rsyslog.conf.j2 - rsyslog configuration template
 
 module(load="imuxsock")    # provides support for local system logging
@@ -139,7 +139,7 @@ EOF
 
 #### Step 4: Configure node2 for Remote Logging and File Integrity Monitoring
 
-1. Create an Ansible Playbook named `configure_node2.yaml` in the `lab_playbooks` directory to configure **node2**:
+1. Create an Ansible Playbook named `configure_node2.yaml` in the `exam_a` directory to configure **node2**:
    ```yaml
    - name: Configure node2 for remote logging and AIDE
      hosts: node2
@@ -171,8 +171,8 @@ EOF
 
 1. Run the playbooks from **workstation** to configure **node1** and **node2**:
    ```bash
-   ansible-playbook -i lab_playbooks/inventory lab_playbooks/configure_central_log.yaml
-   ansible-playbook -i lab_playbooks/inventory lab_playbooks/configure_node2.yaml
+   ansible-playbook -i exam_a/inventory exam_a/configure_central_log.yaml
+   ansible-playbook -i exam_a/inventory exam_a/configure_node2.yaml
    ```
 
 2. Verify that **node2** is sending logs to **node1**:
