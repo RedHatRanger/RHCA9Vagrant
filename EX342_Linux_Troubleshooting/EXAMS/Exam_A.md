@@ -78,6 +78,9 @@ node2
    - Refresh the page if necessary.
    - Click the bob user's recorded terminal session.
 
+![image](https://github.com/user-attachments/assets/e707b651-1d1b-47bf-9475-f6e51a836008)
+
+
 #### Step 2: Configure Workstation as Control Node and Verify Managed Nodes
 
 1. On **workstation**, configure it as an Ansible control node.
