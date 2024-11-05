@@ -1,25 +1,27 @@
-# Test Your Knowledge: Lab Exercise
+# EXAM A: Test Your Knowledge Lab Exercise
+
 ## Objective
 
-Configure terminal session recording, central logging, and file integrity monitoring using both manual configurations and Ansible automation.
+- Configure terminal session recording, central logging, and file integrity monitoring.
+- Use both manual configurations and Ansible automation to configure these items.
 
-Lab Overview
+### Lab Overview
 
 In this lab exercise, you will use a combination of manual configuration via the web console and Ansible Playbooks to automate tasks across multiple servers.
 
-node1 will be set up as a central log host.
+- node1 will be set up as a central log host.
 
-node2 will be configured to send logs to node1.
+- node2 will be configured to send logs to node1.
 
-workstation will be used as the control node for executing Ansible Playbooks on the managed nodes (node1 and node2).
+- workstation will be used as the Ansible control node for executing Playbooks on the managed nodes (node1 and node2).
 
-Terminal session recording will be configured for a consultant user on node1.
+- Terminal session recording will be configured for the bob user on node1.
 
-AIDE will be used on node2 for monitoring file integrity.
+- AIDE will be used on node2 for monitoring file integrity.
 
-Lab Exercise Questions
+## Lab Exercise Questions
 
-Instructions
+###Instructions
 
 Use the web console to configure terminal session recording for the consultant user. Configure workstation as a control node, and verify communication with servera and serverb as managed nodes. Use Ansible Playbooks to configure the managed nodes:
 
