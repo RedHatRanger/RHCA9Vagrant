@@ -54,7 +54,7 @@ node2
    - Click **Save** to apply the settings.
 
 ![image](https://github.com/user-attachments/assets/0560c0e2-c329-40af-91db-417aa267e09c)
-("consultant" is actually "bob" here.)
+("bob" is actually "bob" here.)
 
 3. On workstation, open another terminal and log into node1 as the bob user.
 ```bash
@@ -71,10 +71,10 @@ node2
 ...output omitted...
 ```
 
-4. Return to workstation as student.
+4. Return to workstation as bob.
 ```bash
 [bob@node1 ~]$ exit
-[student@workstation ~]$
+[bob@workstation ~]$
 ```
 
 5. Confirm the terminal session recording. In the web console of node1, click Session Recording.
@@ -82,7 +82,7 @@ node2
    - Click the bob user's recorded terminal session.
 
 ![image](https://github.com/user-attachments/assets/e707b651-1d1b-47bf-9475-f6e51a836008)
-("consultant" is actually "bob" here.)
+("bob" is actually "bob" here.)
 
 6. Play back the recorded session by clicking Play.
 
@@ -96,7 +96,7 @@ node2
      sudo yum install ansible
      ```
 
-2. Create an inventory file named `inventory` in a directory named `exam_a` on **workstation**:
+2. Create an inventory file named `inventory` inside a directory named `exam_a` on **workstation**:
    ```ini
    [servers]
    central_loghost ansible_host=node1
@@ -121,6 +121,79 @@ node2
    ansible -m ping all
    ...output omitted...
    ```
+   
+4. Use the provided `rsyslog.conf.j2` template file, which will configure syslog to create subdirectories based on the originating hostname of each log message.
+
+#### rsyslog.conf.j2 Template
+
+To create the `rsyslog.conf.j2` file, use the following command on the workstation:
+
+```bash
+cat << EOF > rsyslog.conf.j2
+#### MODULES ####
+module(load="imuxsock")  # provides support for local system logging (e.g. via logger command)
+module(load="imklog")    # provides kernel logging support (previously done by rklogd)
+module(load="immark")    # provides --MARK-- message capability
+module(load="imtcp")
+input(type="imtcp" port="514")
+
+#### GLOBAL DIRECTIVES ####
+# Use default timestamp format
+global(exam_aectory="/var/spool/rsyslog")
+
+#### RULES ####
+# Log all kernel messages to the console.
+# Logging much else clutters up the screen.
+kern.* /dev/console
+
+# Log anything (except mail) of level info or higher.
+# Don't log private authentication messages!.
+*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+
+# The authpriv file has restricted access.
+authpriv.*                                              /var/log/secure
+
+# Log all the mail messages in one place.
+mail.*                                                  /var/log/maillog
+
+# Log cron stuff
+cron.*                                                  /var/log/cron
+
+# Everybody gets emergency messages
+*.emerg                                                 :omusrmsg:*
+
+# Save news errors of level crit and higher in a special file.
+uucp,news.crit                                          /var/log/spooler
+
+# Create dynamic directories for remote hosts
+$template HostTemplate,"/var/log/loghost/%HOSTNAME%/%syslogfacility-text%.log"
+*.* ?HostTemplate
+EOF
+```
+
+#### aide.conf.j2 Template
+
+5. Create the `aide.conf.j2` file, use the following command and content:
+```bash
+cat << EOF > aide.conf.j2
+@@define DBDIR /var/lib/aide
+@@define LOGDIR /var/log/aide
+@@define DBFILE "/var/lib/aide/aide.db.gz"
+@@define REPORTFILE "/var/log/aide/aide.log"
+@@define DATABASE_OUT "/var/lib/aide/aide.db.new.gz"
+
+# Set the rules for which files/directories to monitor
+/var/log p+i+n+u+g+s+m+c+acl+selinux+xattrs+sha512
+/etc p+i+n+u+g+s+m+c+acl+selinux+xattrs+sha512
+/bin p+i+n+u+g+s+m+c+acl+selinux+xattrs+sha512
+/sbin p+i+n+u+g+s+m+c+acl+selinux+xattrs+sha512
+/lib p+i+n+u+g+s+m+c+acl+selinux+xattrs+sha512
+/lib64 p+i+n+u+g+s+m+c+acl+selinux+xattrs+sha512
+
+# Report all changes in the monitored directories
+ALLXTRAHASHES = sha512
+EOF
+```
 
 #### Step 3: Use an Ansible Playbook to configure `node1` as a central log host.
 
@@ -203,6 +276,7 @@ rsyslog service configuration on `node1`:
          ansible.builtin.yum:
            name: aide
            state: present
+   
        - name: Template out AIDE configuration file
          ansible.builtin.template:
            src: aide.conf.j2
@@ -219,81 +293,50 @@ rsyslog service configuration on `node1`:
            tags: enable_aidedb
    ```
 
-3. Use the provided `rsyslog.conf.j2` template file, which will configure syslog to create subdirectories based on the originating hostname of each log message.
-
-#### rsyslog.conf.j2 Template
-
-To create the `rsyslog.conf.j2` file, use the following command on the workstation:
-
-```bash
-cat << EOF > exam_a/rsyslog.conf.j2
-# rsyslog.conf.j2 - rsyslog configuration template
-
-module(load="imuxsock")    # provides support for local system logging
-module(load="imklog")      # kernel logging support
-module(load="imtcp")       # TCP listener for remote logs
-
-input(type="imtcp" port="514")
-
-$template RemoteLogs, "/var/log/loghost/%HOSTNAME%/%syslogfacility-text%.log"
-
-*.* ?RemoteLogs
-
-# Include default rules
-include(file="/etc/rsyslog.d/*.conf")
-EOF
-```
-
-#### Step 4: Configure node2 for Remote Logging and File Integrity Monitoring
-
-1. Create an Ansible Playbook named `configure_node2.yaml` in the `exam_a` directory to configure **node2**:
-   ```yaml
-   - name: Configure node2 for remote logging and AIDE
-     hosts: node2
-     tasks:
-       - name: Install AIDE
-         yum:
-           name: aide
-           state: present
-
-       - name: Configure node2 to send logs to node1
-         lineinfile:
-           path: /etc/rsyslog.conf
-           line: '*.* action(type="omfwd" target="node1" port="514" protocol="tcp")'
-           create: yes
-
-       - name: Restart rsyslog
-         service:
-           name: rsyslog
-           state: restarted
-
-       - name: Initialize AIDE database
-         command: aide --init
-
-       - name: Rename AIDE database
-         command: mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
-   ```
-
 #### Step 5: Run the Playbooks and Verify Configurations
 
 1. Run the playbooks from **workstation** to configure **node1** and **node2**:
    ```bash
-   ansible-playbook -i exam_a/inventory exam_a/configure_central_log.yaml
-   ansible-playbook -i exam_a/inventory exam_a/configure_node2.yaml
+   [bob@workstation exam_a]$ ansible-playbook mybaseline.yaml
    ```
 
-2. Verify that **node2** is sending logs to **node1**:
-   - On **node1**, check the `/var/log/loghost/node2` directory for incoming log messages:
-     ```bash
-     ls /var/log/loghost/node2
-     ```
+2. On `workstation`, open another terminal and log into `node2` as the `bob` user:
+[bob@workstation exam_a]$ ssh bob@node2
+[bob@node2 ~]$
 
-3. Verify that AIDE is properly initialized and functioning on **node2**:
-   - Run an AIDE check on **node2**:
-     ```bash
-     aide --check
-     ```
-   - Check for any discrepancies between the file system and the AIDE database.
+3. Generate some syslog messages with different log facilities and priorities. Then, return
+to workstation as `bob`:
+```bash
+[bob@node2 ~]$ logger -p user.info "Test user.info message from node2"
+[bob@node2 ~]$ logger -p cron.crit "Test cron.crit message from node2"
+[bob@node2 ~]$ exit
+[bob@workstation exam_a]$
+```
+
+4. Log into node1 and use sudo to verify the remote logging. Use bob as
+password when prompted.
+```bash
+[bob@workstation exam_a]$ ssh bob@node1
+[bob@node1 ~]$ sudo grep bob /var/log/loghost/node2/user.log
+[sudo] password for bob: redhat
+Oct 31 00:09:37 node2 bob[39113]: Test user.info message from node2
+
+[bob@node1 ~]$ sudo grep bob /var/log/loghost/node2/cron.log
+Sep 22 00:09:56 node2 bob[39202]: Test cron.crit message from node2
+```
+
+5. Return to `workstation` as `bob`:
+```bash
+[bob@node1 ~]$ exit
+[bob@workstation exam_a]$
+```
+
+6. SSH to node2, using sudo to verify the integrity of the monitored files:
+```bash
+[bob@workstation exam_a]$ ssh bob@node2
+[bob@node2 ~]$ sudo aide --check
+...output omitted...
+```
 
 ### Completion
 You have successfully completed the lab exercise by configuring terminal session recording, setting up a central log server, and configuring a managed node to send log messages and monitor file integrity. Well done!
