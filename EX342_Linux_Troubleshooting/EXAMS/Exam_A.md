@@ -35,6 +35,10 @@ node2
 - Use an Ansible Playbook to configure node2 as a remote log server, and configure AIDE to monitor file integrity. Use the provided configuration templates for each service.
 - Run the playbook, and then view remote logging and file integrity on node2.
 
+(scroll down for an answer)
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
 ### Lab Steps
 
 #### Step 1: Configure Terminal Session Recording for the bob User
