@@ -84,6 +84,10 @@ node2
 ![image](https://github.com/user-attachments/assets/e707b651-1d1b-47bf-9475-f6e51a836008)
 ("consultant" is actually "bob" here.)
 
+6. Play back the recorded session by clicking Play.
+
+![image](https://github.com/user-attachments/assets/caa699e4-ae8f-462c-b849-399143566d79)
+
 #### Step 2: Configure Workstation as Control Node and Verify Managed Nodes
 
 1. On **workstation**, configure it as an Ansible control node.
@@ -94,13 +98,24 @@ node2
 
 2. Create an inventory file named `inventory` in a directory named `exam_a` on **workstation**:
    ```ini
-   [webservers]
-   node1 ansible_host=node1
-   
-   [logservers]
-   node2 ansible_host=node2
+   [servers]
+   central_loghost ansible_host=node1
+   remote_loghost ansible_host=node2
    ```
 
+3. Setup the `ansible.cfg` file:
+   ```bash
+   cd exam_a
+   vim ansible.cfg
+   ```
+
+   ```ini
+   [defaults]
+   inventory = inventory
+   remote_user = root
+   host_key_checking = False
+   deprecation_warnings = False
+   ```
 3. Verify communication between the control node and managed nodes by running a ping command:
    ```bash
    ansible all -m ping -i exam_a/inventory
