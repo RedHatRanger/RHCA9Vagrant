@@ -118,10 +118,13 @@ node2
    ```
 3. Verify communication between the control node and managed nodes by running a ping command:
    ```bash
-   ansible all -m ping -i exam_a/inventory
+   ansible -m ping all
+   ...output omitted...
    ```
 
-#### Step 3: Configure node1 as a Central Log Host
+#### Step 3: Use an Ansible Playbook to configure `node1` as a central log host.
+Inside the workdir directory, create the mybaseline.yaml Ansible Playbook for the
+rsyslog service configuration on servera.
 
 1. Create an Ansible Playbook named `configure_central_log.yaml` in the `exam_a` directory to configure **node1**:
    ```yaml
