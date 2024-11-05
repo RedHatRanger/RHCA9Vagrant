@@ -6,3 +6,14 @@ units.
 * The redhat-support-tool command interfaces with Red Hat support services.
 * The Red Hat Customer Portal provides tools to diagnose and troubleshoot issues.
 * The Red Hat Insights service provides system analytic and remediation strategies.
+
+## Summary from LESSON 2:
+* The web console provides system monitoring, administration, and session recording through a
+GUI.
+* The rsyslog service enables centralized local and remote logging.
+* The Red Hat Ansible Automation Platform improves the efficiency and stability of system
+deployments and configuration changes.
+* The aide utility tracks file and directory attributes to facilitate detecting unauthorized changes.
+* The auditctl command manages rules to select which security events are collected in the
+audit log.
+* The ausearch command queries the audit log and displays messages in readable form.
