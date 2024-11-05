@@ -53,6 +53,9 @@ node2
    - Then, define "bob" as Users and Groups to be monitored.
    - Click **Save** to apply the settings.
 
+![image](https://github.com/user-attachments/assets/0560c0e2-c329-40af-91db-417aa267e09c)
+("consultant" is actually "bob" here.)
+
 3. On workstation, open another terminal and log into node1 as the bob user.
 ```bash
 [bob@workstation ~]$ ssh bob@node1
