@@ -111,6 +111,29 @@ node2
 
 2. Use the provided `rsyslog.conf.j2` template file, which will configure syslog to create subdirectories based on the originating hostname of each log message.
 
+#### rsyslog.conf.j2 Template
+
+To create the `rsyslog.conf.j2` file, use the following command on the workstation:
+
+```bash
+cat << EOF > lab_playbooks/rsyslog.conf.j2
+# rsyslog.conf.j2 - rsyslog configuration template
+
+module(load="imuxsock")    # provides support for local system logging
+module(load="imklog")      # kernel logging support
+module(load="imtcp")       # TCP listener for remote logs
+
+input(type="imtcp" port="514")
+
+$template RemoteLogs, "/var/log/loghost/%HOSTNAME%/%syslogfacility-text%.log"
+
+*.* ?RemoteLogs
+
+# Include default rules
+include(file="/etc/rsyslog.d/*.conf")
+EOF
+```
+
 #### Step 4: Configure node2 for Remote Logging and File Integrity Monitoring
 
 1. Create an Ansible Playbook named `configure_node2.yaml` in the `lab_playbooks` directory to configure **node2**:
@@ -164,6 +187,3 @@ node2
 
 ### Completion
 You have successfully completed the lab exercise by configuring terminal session recording, setting up a central log server, and configuring a managed node to send log messages and monitor file integrity. Well done!
-
-
-
