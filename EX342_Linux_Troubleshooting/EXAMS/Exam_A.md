@@ -123,10 +123,10 @@ node2
    ```
 
 #### Step 3: Use an Ansible Playbook to configure `node1` as a central log host.
-Inside the workdir directory, create the mybaseline.yaml Ansible Playbook for the
-rsyslog service configuration on servera.
 
-1. Create an Ansible Playbook named `configure_central_log.yaml` in the `exam_a` directory to configure **node1**:
+
+1. Inside the `exam_a` directory, create the `mybaseline.yaml` Playbook for the
+rsyslog service configuration on `node1`:
    ```yaml
    - name: Configure node1 as central log host
      hosts: node1
