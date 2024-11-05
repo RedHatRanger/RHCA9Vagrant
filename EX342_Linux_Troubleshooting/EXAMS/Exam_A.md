@@ -128,40 +128,97 @@ node2
 1. Inside the `exam_a` directory, create the `mybaseline.yaml` Playbook for the
 rsyslog service configuration on `node1`:
    ```yaml
-   - name: Configure node1 as central log host
-     hosts: node1
+   ---
+   - name: Configure central loghost
+     hosts: central_loghost
+     gather_facts: False
      tasks:
        - name: Install rsyslog
-         yum:
+         ansible.builtin.yum:
            name: rsyslog
            state: present
+   
+       - name: Ensure that rsyslog is active and enabled
+         ansible.builtin.service:
+           name: rsyslog
+           state: started
+           enabled: True
        
-       - name: Enable TCP syslog reception
-         lineinfile:
-           path: /etc/rsyslog.conf
-           line: 'module(load="imtcp")\ninput(type="imtcp" port="514")'
-           create: yes
-
        - name: Copy rsyslog configuration template
          template:
            src: rsyslog.conf.j2
            dest: /etc/rsyslog.conf
            owner: root
            group: root
-           mode: '0644'
+           mode: '0444'
 
        - name: Restart rsyslog
          service:
            name: rsyslog
            state: restarted
 
-       - name: Add new log files to logrotate
+       - name: Open rsyslog firewalld port
+         firewalld:
+           port: 514/tcp
+           immediate: yes
+           permanent: yes
+           state: enabled
+
+       - name: Add entry for that the new logs have rotation
          lineinfile:
            path: /etc/logrotate.d/syslog
-           line: '/var/log/loghost/*/*.log'
+           line: /var/log/loghost/*/*.log
+
+   - name: Configure remote logging
+     hosts: remote_loghost
+     gather_facts: False
+     tasks:
+       - name: Install rsyslog
+         ansible.builtin.yum:
+           name: rsyslog
+           state: present
+   
+       - name: Ensure that rsyslog is active and enabled
+         ansible.builtin.service:
+           name: rsyslog
+           state: started
+           enabled: True
+   
+       - name: Add entry for redirecting logs
+         lineinfile:
+           path: /etc/rsyslog.conf
+           line: '*.* action(type="omfwd" target="node1" port="514" protocol="tcp")'
+
+       - name: Restart rsyslog service
+         ansible.builtin.service:
+           name: rsyslog
+           state: restarted
+
+   - name: Install AIDE
+     hosts: remote_loghost
+     gather_facts: False
+     tasks:
+       - name: Ensure that AIDE package is installed
+         ansible.builtin.yum:
+           name: aide
+           state: present
+       - name: Template out AIDE configuration file
+         ansible.builtin.template:
+           src: aide.conf.j2
+           dest: /etc/aide.conf
+           owner: root
+           group: root
+           mode: '0444'
+
+       - name: Init AIDE database
+         ansible.builtin.command: aide --init
+
+       - name: Enable AIDE database
+         ansible.builtin.command: mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+           tags: enable_aidedb
    ```
 
-2. Use the provided `rsyslog.conf.j2` template file, which will configure syslog to create subdirectories based on the originating hostname of each log message.
+3. Use the provided `rsyslog.conf.j2` template file, which will configure syslog to create subdirectories based on the originating hostname of each log message.
 
 #### rsyslog.conf.j2 Template
 
