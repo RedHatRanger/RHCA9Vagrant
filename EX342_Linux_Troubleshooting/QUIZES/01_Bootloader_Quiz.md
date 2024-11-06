@@ -33,7 +33,7 @@
 #### Answers:
 1. On which directory does the Anaconda installer mount the UEFI partition? \
    a. /boot/grub2  
-  This is a sentence with a <span style="border-radius: 50%; padding: 2px; border: 1px solid black;">b. /boot/efi</span> in it.
+   <span style="border-radius: 50%; padding: 2px; border: 1px solid black;">"b. /boot/efi"</span>
    c. /etc/default  
    d. /etc/grub.d/
 
