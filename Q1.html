@@ -3,22 +3,40 @@
 <head>
   <title>Interactive Quiz</title>
   <style>
+    body {
+      background-color: #1e3c72; /* Jeopardy blue */
+      color: #ffd700; /* Jeopardy yellow */
+      font-family: Arial, sans-serif;
+    }
     #timer {
       position: fixed;
       top: 10px;
       right: 10px;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
+      background-color: #00008b;
+      color: #ffd700;
       padding: 10px;
       border-radius: 5px;
-      font-family: Arial, sans-serif;
       font-size: 16px;
+      border: 2px solid #ffd700;
+    }
+    h3 {
+      color: #ffd700;
+    }
+    div {
+      margin: 20px;
+      padding: 10px;
+      border: 1px solid #ffd700;
+      background-color: #00008b;
+      border-radius: 15px; /* Increased chamfering for more rounded corners */
+    }
+    input[type="radio"] {
+      margin: 5px;
     }
   </style>
 </head>
 <body>
   <div id="timer"></div>
-  <h3>Resolving Boot Loader Issues on UEFI Systems - Quiz 1</h3>
+  <h3>Quiz 1 - Resolving Boot Loader Issues on UEFI Systems</h3>
 
   <!-- Question 1 -->
   <div>
@@ -58,6 +76,7 @@
 
   <script>
     let isTimeUp = false;
+    let correctAnswers = 0;
 
     function checkAnswer(questionId, correctAnswer) {
       if (isTimeUp) {
@@ -68,8 +87,17 @@
       let selectedValue = selectedOption.slice(selectedOption.length - 1); // Extracting the option letter (a, b, c, d)
       if (selectedValue === correctAnswer) {
         alert("Correct answer!");
+        correctAnswers++;
       } else {
         alert("Incorrect answer, try again.");
+      }
+      checkCompletion();
+    }
+
+    function checkCompletion() {
+      const totalQuestions = 4;
+      if (correctAnswers === totalQuestions) {
+        window.location.href = 'congratulations.html';
       }
     }
 
