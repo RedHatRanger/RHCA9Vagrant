@@ -21,7 +21,7 @@ A Secure Boot-capable system uses digital signatures on boot loaders, kernels, a
 - **shim.efi**: This application is signed with a key trusted by UEFI firmware. When executed, shim.efi attempts to load `grubx64.efi` through standard UEFI calls. If the signature does not verify, shim will attempt to load using other keys.
 - **shim and MokManager**: Alternative keys are either compiled into shim or read from a Machine Owner Key (MOK) stored in UEFI NVRAM. When trying to start a signed application without registered keys, `MokManager.efi` starts so that the user can register a personal key.
 
-If `shim.efi` is not registered, booting from the ESP partition will execute the `/boot/efi/EFI/BOOT/BOOTX64.efi` file, which will load `fallback.efi`, automatically register `shim.efi`, and boot the system.
+The shim.efi application registers an additional UEFI system call that uses GRUB2 to verify kernel signatures. If `shim.efi` is not registered, booting from the ESP partition will execute the `/boot/efi/EFI/BOOT/BOOTX64.efi` file, which will load `fallback.efi`, automatically register `shim.efi`, and boot the system.
 
 ## **Key Differences in GRUB2 Between BIOS and UEFI**
 
