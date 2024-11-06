@@ -40,7 +40,7 @@
 2. Which directory stores the GRUB2 configuration files and the UEFI firmware applications?
    - [ ] a. /boot/grub2  
    - [ ] b. /etc/default  
-   - [x] c. /boot/efi/EFI/redhat*  
+   - [x] c. /boot/efi/EFI/redhat
    - [ ] d. /boot/loader  
 
 3. Which packages are needed to reinstall deleted files from /boot/efi on UEFI-based systems?
