@@ -160,7 +160,7 @@ Change the `After` line for the `httpd` service to `Before`. Then reload `system
    [bob@workstation ~]$ ssh bob@node1
    ...output omitted...
    [bob@node1 ~]$ sudo -i
-   [sudo] password for bob: bob
+   [sudo] password for bob: redhat
    [root@node1 ~]#
    ```
 
