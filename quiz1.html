@@ -27,7 +27,7 @@
       padding: 10px;
       border: 1px solid #ffd700;
       background-color: #00008b;
-      border-radius: 5px;
+      border-radius: 15px; /* Increased chamfering for more rounded corners */
     }
     input[type="radio"] {
       margin: 5px;
@@ -76,6 +76,7 @@
 
   <script>
     let isTimeUp = false;
+    let correctAnswers = 0;
 
     function checkAnswer(questionId, correctAnswer) {
       if (isTimeUp) {
@@ -86,8 +87,17 @@
       let selectedValue = selectedOption.slice(selectedOption.length - 1); // Extracting the option letter (a, b, c, d)
       if (selectedValue === correctAnswer) {
         alert("Correct answer!");
+        correctAnswers++;
       } else {
         alert("Incorrect answer, try again.");
+      }
+      checkCompletion();
+    }
+
+    function checkCompletion() {
+      const totalQuestions = 4;
+      if (correctAnswers === totalQuestions) {
+        alert("CONGRATULATIONS! You've completed the quiz.");
       }
     }
 
@@ -113,3 +123,4 @@
   </script>
 </body>
 </html>
+
