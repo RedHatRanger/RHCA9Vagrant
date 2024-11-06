@@ -12,11 +12,7 @@
 
 ### Manual Lab Setup:
 
-1. **Environment Setup**:
-   - You will need a virtual machine or a physical system to act as **node1**.
-   - Ensure it has Red Hat Enterprise Linux 9 (or a compatible version) installed with BIOS boot.
-
-2. **Simulate the Boot Issue**:
+1. **Simulate the Boot Issue**:
    - Log in to the **node1** machine and ensure you have root privileges.
    - Create a faulty boot entry by running the following command:
 
@@ -24,10 +20,10 @@
    [root@node1 ~]# grubby --copy-default --make-default --args="server"
    ```
 
-3. **Boot with Incorrect Kernel**:
+2. **Boot with Incorrect Kernel**:
    - Restart the machine and try booting with the incorrect kernel entry to see the error messages.
 
-4. **Manually Fix the Boot Issue**:
+3. **Manually Fix the Boot Issue**:
    - Follow the steps outlined in the lab instructions below.
 
 ## **Instructions**
