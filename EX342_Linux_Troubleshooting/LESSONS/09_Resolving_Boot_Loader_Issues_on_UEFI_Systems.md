@@ -59,9 +59,9 @@ RHEL 9 provides the `efibootmgr` utility to manage available boot targets and lo
   ```
 
 - **Selecting a Temporary Boot Target: Use the -n option to override the regular boot order for the current boot. For example, the following command forces the system to boot with entry 0x0002.
-```bash
-[root@host ~]# efibootmgr -n 2
-```
+  ```bash
+  [root@host ~]# efibootmgr -n 2
+  ```
 
 ## **Using grubby for UEFI Firmware**
 
