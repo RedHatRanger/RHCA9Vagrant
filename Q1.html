@@ -2,8 +2,22 @@
 <html>
 <head>
   <title>Interactive Quiz</title>
+  <style>
+    #timer {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
+  <div id="timer"></div>
   <h3>Resolving Boot Loader Issues on UEFI Systems - Quiz 1</h3>
 
   <!-- Question 1 -->
@@ -55,17 +69,7 @@
 
     // Create a 5-minute countdown timer
     let timer = 300;
-    const timerElement = document.createElement('div');
-    timerElement.style.position = 'fixed';
-    timerElement.style.bottom = '10px';
-    timerElement.style.right = '10px';
-    timerElement.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    timerElement.style.color = 'white';
-    timerElement.style.padding = '10px';
-    timerElement.style.borderRadius = '5px';
-    timerElement.style.fontFamily = 'Arial, sans-serif';
-    timerElement.style.fontSize = '16px';
-    document.body.appendChild(timerElement);
+    const timerElement = document.getElementById('timer');
 
     function updateTimer() {
       const minutes = Math.floor(timer / 60);
@@ -83,4 +87,3 @@
   </script>
 </body>
 </html>
-
