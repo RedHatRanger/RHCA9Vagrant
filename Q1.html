@@ -57,7 +57,13 @@
   </div>
 
   <script>
+    let isTimeUp = false;
+
     function checkAnswer(questionId, correctAnswer) {
+      if (isTimeUp) {
+        alert("Time's up! You can no longer select answers.");
+        return;
+      }
       let selectedOption = document.querySelector(`input[name="${questionId}"]:checked`).id;
       let selectedValue = selectedOption.slice(selectedOption.length - 1); // Extracting the option letter (a, b, c, d)
       if (selectedValue === correctAnswer) {
@@ -80,6 +86,8 @@
         setTimeout(updateTimer, 1000);
       } else {
         timerElement.textContent = 'Time is up!';
+        alert("TIME'S UP!");
+        isTimeUp = true;
       }
     }
 
