@@ -32,10 +32,10 @@
 
 #### Answers:
 1. On which directory does the Anaconda installer mount the UEFI partition? \
-   a. /boot/grub2  
+   - [ ] a. /boot/grub2  
    - [x] b. /boot/efi
-   c. /etc/default  
-   d. /etc/grub.d/
+   - [ ] c. /etc/default  
+   - [ ] d. /etc/grub.d/
 
 2. Which directory stores the GRUB2 configuration files and the UEFI firmware applications? \
    a. /boot/grub2  
