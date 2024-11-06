@@ -69,6 +69,9 @@ When viewing units with large dependency chains, a graphical dependency represen
   - Dark grey = Wants
   - Red = Conflicts
   - Green = After
+ 
+![{85B5722D-E1FF-487F-BA30-24C40D903E18}](https://github.com/user-attachments/assets/8c026e6d-7282-4dec-beda-0eb6e30d76e2)
+
 
 ### Failing Dependency Scenarios
 
