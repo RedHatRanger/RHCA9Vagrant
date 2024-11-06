@@ -2,8 +2,40 @@
 <html>
 <head>
   <title>Interactive Quiz</title>
+  <style>
+    body {
+      background-color: #1e3c72; /* Jeopardy blue */
+      color: #ffd700; /* Jeopardy yellow */
+      font-family: Arial, sans-serif;
+    }
+    #timer {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background-color: #00008b;
+      color: #ffd700;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      border: 2px solid #ffd700;
+    }
+    h3 {
+      color: #ffd700;
+    }
+    div {
+      margin: 20px;
+      padding: 10px;
+      border: 1px solid #ffd700;
+      background-color: #00008b;
+      border-radius: 5px;
+    }
+    input[type="radio"] {
+      margin: 5px;
+    }
+  </style>
 </head>
 <body>
+  <div id="timer"></div>
   <h3>Resolving Boot Loader Issues on UEFI Systems - Quiz 1</h3>
 
   <!-- Question 1 -->
@@ -43,7 +75,13 @@
   </div>
 
   <script>
+    let isTimeUp = false;
+
     function checkAnswer(questionId, correctAnswer) {
+      if (isTimeUp) {
+        alert("Time's up! You can no longer select answers.");
+        return;
+      }
       let selectedOption = document.querySelector(`input[name="${questionId}"]:checked`).id;
       let selectedValue = selectedOption.slice(selectedOption.length - 1); // Extracting the option letter (a, b, c, d)
       if (selectedValue === correctAnswer) {
@@ -52,6 +90,26 @@
         alert("Incorrect answer, try again.");
       }
     }
+
+    // Create a 5-minute countdown timer
+    let timer = 300;
+    const timerElement = document.getElementById('timer');
+
+    function updateTimer() {
+      const minutes = Math.floor(timer / 60);
+      const seconds = timer % 60;
+      timerElement.textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      timer--;
+      if (timer >= 0) {
+        setTimeout(updateTimer, 1000);
+      } else {
+        timerElement.textContent = 'Time is up!';
+        alert("TIME'S UP!");
+        isTimeUp = true;
+      }
+    }
+
+    updateTimer();
   </script>
 </body>
 </html>
