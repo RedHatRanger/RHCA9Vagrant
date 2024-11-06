@@ -13,12 +13,13 @@
 To prepare your system for this exercise, create the necessary drop-in configuration files for `httpd` and `vsftpd` services using the following commands:
 
 ```bash
-[student@workstation ~]$ ssh student@servera
+[bob@workstation ~]$ ssh bob@node1
 ...output omitted...
-[student@servera ~]$ sudo -i
-[sudo] password for student: student
-[root@servera ~]# mkdir -p /etc/systemd/system/httpd.service.d
-[root@servera ~]# mkdir -p /etc/systemd/system/vsftpd.service.d
+[bob@node1 ~]$ sudo -i
+[sudo] password for bob: redhat
+[root@node1 ~]# yum install httpd vsftpd -y
+[root@node1 ~]# mkdir -p /etc/systemd/system/httpd.service.d
+[root@node1 ~]# mkdir -p /etc/systemd/system/vsftpd.service.d
 
 cat << EOF > /etc/systemd/system/httpd.service.d/10-dependencies.conf
 [Unit]
@@ -32,55 +33,55 @@ After=httpd.service
 Requires=httpd.service
 EOF
 
-[root@servera ~]# systemctl daemon-reload
+[root@node1 ~]# systemctl daemon-reload
 ```
 
 ## Instructions
 
-Your servera machine is set up to serve both web and FTP content with the `httpd` and `vsftpd` services. The specification states that both daemons should operate simultaneously on the same system. Your colleague attempted to meet this requirement, but now both services fail to start at boot time. You are asked to resolve this issue. You are only required to ensure that both services start. You do not need to verify or configure that both services always operate simultaneously.
+Your `node1` machine is set up to serve both web and FTP content with the `httpd` and `vsftpd` services. The specification states that both daemons should operate simultaneously on the same system. Your colleague attempted to meet this requirement, but now both services fail to start at boot time. You are asked to resolve this issue. You are only required to ensure that both services start. You do not need to verify or configure that both services always operate simultaneously.
 
 ### Step 1: Check the Status of Services
 
-1. Log in to the `servera` system and switch to the root user:
+1. Log in to the `node1` system and switch to the root user:
 
    ```bash
-   [student@workstation ~]$ ssh student@servera
+   [bob@workstation ~]$ ssh bob@node1
    ...output omitted...
-   [student@servera ~]$ sudo -i
-   [sudo] password for student: student
-   [root@servera ~]#
+   [bob@node1 ~]$ sudo -i
+   [sudo] password for bob: redhat
+   [root@node1 ~]#
    ```
 
 2. Check the status of the `httpd` service. Use the `-l` option to display full status lines:
 
    ```bash
-   [root@servera ~]# systemctl status -l httpd
+   [root@node1 ~]# systemctl status -l httpd
    ● httpd.service - The Apache HTTP Server
    Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
    Drop-In: /etc/systemd/system/httpd.service.d
             └─10-dependencies.conf
    Active: inactive (dead)
    Docs: man:httpd.service(8)
-   Sep 24 21:50:42 servera.lab.example.com systemd[1]: httpd.service: Found ordering cycle on vsftpd.service/start
-   Sep 24 21:50:42 servera.lab.example.com systemd[1]: httpd.service: Found dependency on httpd.service/start
-   Sep 24 21:50:42 servera.lab.example.com systemd[1]: httpd.service: Unable to break cycle starting with httpd.service/start
-   Sep 24 21:50:42 servera.lab.example.com systemd[1]: vsftpd.service: Found ordering cycle on httpd.service/start
-   Sep 24 21:50:42 servera.lab.example.com systemd[1]: vsftpd.service: Found dependency on vsftpd.service/start
-   Sep 24 21:50:42 servera.lab.example.com systemd[1]: vsftpd.service: Unable to break cycle starting with vsftpd.service/start
+   Sep 24 21:50:42 node1.example.com systemd[1]: httpd.service: Found ordering cycle on vsftpd.service/start
+   Sep 24 21:50:42 node1.example.com systemd[1]: httpd.service: Found dependency on httpd.service/start
+   Sep 24 21:50:42 node1.example.com systemd[1]: httpd.service: Unable to break cycle starting with httpd.service/start
+   Sep 24 21:50:42 node1.example.com systemd[1]: vsftpd.service: Found ordering cycle on httpd.service/start
+   Sep 24 21:50:42 node1.example.com systemd[1]: vsftpd.service: Found dependency on vsftpd.service/start
+   Sep 24 21:50:42 node1.example.com systemd[1]: vsftpd.service: Unable to break cycle starting with vsftpd.service/start
    ...output omitted...
    ```
 
 3. Check the status of the `vsftpd` service:
 
    ```bash
-   [root@servera ~]# systemctl status -l vsftpd
+   [root@node1 ~]# systemctl status -l vsftpd
    ● vsftpd.service - Vsftpd ftp daemon
    Loaded: loaded (/usr/lib/systemd/system/vsftpd.service; enabled; vendor preset: disabled)
    Drop-In: /etc/systemd/system/vsftpd.service.d
             └─10-dependencies.conf
    Active: inactive (dead)
    ...output omitted...
-   Sep 24 21:50:42 servera.lab.example.com systemd[1]: httpd.service: Unable to break cycle starting with httpd.service/start
+   Sep 24 21:50:42 node1.example.com systemd[1]: httpd.service: Unable to break cycle starting with httpd.service/start
    ...output omitted...
    ```
 
@@ -96,12 +97,12 @@ Both services have start dependencies on each other. The `systemctl status` comm
 2. View the contents of these two files:
 
    ```bash
-   [root@servera ~]# cat /etc/systemd/system/httpd.service.d/10-dependencies.conf
+   [root@node1 ~]# cat /etc/systemd/system/httpd.service.d/10-dependencies.conf
    [Unit]
    After=vsftpd.service
    Requires=vsftpd.service
    
-   [root@servera ~]# cat /etc/systemd/system/vsftpd.service.d/10-dependencies.conf
+   [root@node1 ~]# cat /etc/systemd/system/vsftpd.service.d/10-dependencies.conf
    [Unit]
    After=httpd.service
    Requires=httpd.service
@@ -132,41 +133,41 @@ Change the `After` line for the `httpd` service to `Before`. Then reload `system
 2. Reload the active `systemd` configuration:
 
    ```bash
-   [root@servera ~]# systemctl daemon-reload
+   [root@node1 ~]# systemctl daemon-reload
    ```
 
 3. Start the `httpd.service` and `vsftpd.service` services:
 
    ```bash
-   [root@servera ~]# systemctl start httpd.service vsftpd.service
-   [root@servera ~]#
+   [root@node1 ~]# systemctl start httpd.service vsftpd.service
+   [root@node1 ~]#
    ```
 
 ### Step 6: Verify Services at Boot
 
-1. Reboot `servera`:
+1. Reboot `node1`:
 
    ```bash
-   [root@servera ~]# reboot
-   Connection to servera closed by remote host.
-   Connection to servera closed.
-   [student@workstation ~]$
+   [root@node1 ~]# reboot
+   Connection to node1 closed by remote host.
+   Connection to node1 closed.
+   [bob@workstation ~]$
    ```
 
-2. Log in to `servera` and switch to the root user:
+2. Log in to `node1` and switch to the root user:
 
    ```bash
-   [student@workstation ~]$ ssh student@servera
+   [bob@workstation ~]$ ssh bob@node1
    ...output omitted...
-   [student@servera ~]$ sudo -i
-   [sudo] password for student: student
-   [root@servera ~]#
+   [bob@node1 ~]$ sudo -i
+   [sudo] password for bob: bob
+   [root@node1 ~]#
    ```
 
 3. Check that the `httpd` and `vsftpd` services are active:
 
    ```bash
-   [root@servera ~]# systemctl status httpd.service vsftpd.service
+   [root@node1 ~]# systemctl status httpd.service vsftpd.service
    ● httpd.service - The Apache HTTP Server
    Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
    Drop-In: /etc/systemd/system/httpd.service.d
