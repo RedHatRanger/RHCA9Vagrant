@@ -1,4 +1,4 @@
-# EXAM B: Troubleshooting Boot Issues
+# EXAM B: Test Your Knowledge Lab Exercise for Labs 8-11
 
 ## Objective
 
