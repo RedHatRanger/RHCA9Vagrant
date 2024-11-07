@@ -72,7 +72,7 @@ This method for resetting a root password consists of these steps:
 7. **Force SELinux to Relabel**
    - Force SELinux to relabel during the next boot.
      ```bash
-     sh-4.2# touch /.autorelabel
+     touch /.autorelabel
      ```
 
    **Important:** The SELinux relabel in this method is required. SELinux detects whether an alternative access sequence occurred because the SELinux contexts are no longer present on the modified files. To trust the system again, SELinux will not boot until all files are properly relabeled.
@@ -117,7 +117,7 @@ In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root passwor
 5. **Reset the Root Password**
    - Set a new root password by executing:
      ```bash
-     passwd root
+     echo "root:newpassword" | chpasswd
      ```
    - Follow the prompts to enter and confirm the new password.
 
