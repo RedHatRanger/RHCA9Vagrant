@@ -7,33 +7,33 @@
 You should be able to identify your system's hardware and view hardware errors with `rasdaemon`.
 
 ### Before You Begin
-As the student user on the workstation machine, use the lab command to prepare your system for this exercise.
+As the bob user on the workstation machine, use the lab command to prepare your system for this exercise.
 
 ```bash
-[student@workstation ~]$ lab start hardware-identify
+[bob@workstation ~]$ lab start hardware-identify
 ```
 
 This command verifies that your systems are reachable and generates the necessary files for this exercise.
 
 ### Instructions
-You collect hardware information from `servera`, and list hardware errors that `rasdaemon` reports. Use the `/root/systeminfo.txt` file on `servera` to record hardware information.
+You collect hardware information from `node1`, and list hardware errors that `rasdaemon` reports. Use the `/root/systeminfo.txt` file on `node1` to record hardware information.
 
-1. **Login to `servera` and switch to the root user**.
+1. **Login to `node1` and switch to the root user**.
 
    ```bash
-   [student@workstation ~]$ ssh student@servera
+   [bob@workstation ~]$ ssh bob@node1
    ...output omitted...
-   [student@servera ~]$ sudo -i
-   [sudo] password for student: student
-   [root@servera ~]#
+   [bob@node1 ~]$ sudo -i
+   [sudo] password for bob: redhat
+   [root@node1 ~]#
    ```
 
-2. **Record `servera` hardware information**.
+2. **Record `node1` hardware information**.
 
    2.1. View which boot image was last used.
 
    ```bash
-   [root@servera ~]# dmesg | grep BOOT_IMAGE
+   [root@node1 ~]# dmesg | grep BOOT_IMAGE
    [    0.000000] Command line: BOOT_IMAGE=(hd0,gpt3)/boot/vmlinuz-4.18.0-305.el8.x86_64 root=/dev/vda3 ro no_timer_check net.ifnames=0 crashkernel=auto
    [    0.000000] Kernel command line: BOOT_IMAGE=(hd0,gpt3)/boot/vmlinuz-4.18.0-305.el8.x86_64 root=/dev/vda3 ro no_timer_check net.ifnames=0 crashkernel=auto
    ```
@@ -48,7 +48,7 @@ You collect hardware information from `servera`, and list hardware errors that `
    2.3. View the CPU model name.
 
    ```bash
-   [root@servera ~]# lscpu
+   [root@node1 ~]# lscpu
    Architecture: x86_64
    CPU op-mode(s): 32-bit, 64-bit
    Byte Order: Little Endian
@@ -74,7 +74,7 @@ You collect hardware information from `servera`, and list hardware errors that `
    2.5. View the size and form factor of the memory devices.
 
    ```bash
-   [root@servera ~]# dmidecode -t memory
+   [root@node1 ~]# dmidecode -t memory
    # dmidecode 3.2
    Getting SMBIOS data from sysfs.
    SMBIOS 2.8 present.
@@ -98,7 +98,7 @@ You collect hardware information from `servera`, and list hardware errors that `
    2.7. View the devices that are connected via any USB bus.
 
    ```bash
-   [root@servera ~]# lsusb
+   [root@node1 ~]# lsusb
    Bus 001 Device 002: ID 0627:0001 Adomax Technology Co., Ltd
    Bus 001 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
    ```
@@ -114,7 +114,7 @@ You collect hardware information from `servera`, and list hardware errors that `
    2.9. View the devices that are connected via the PCI bus.
 
    ```bash
-   [root@servera ~]# lspci
+   [root@node1 ~]# lspci
    00:00.0 Host bridge: Intel Corporation 440FX - 82441FX PMC [Natoma] (rev 02)
    00:01.0 ISA bridge: Intel Corporation 82371SB PIIX3 ISA [Natoma/Triton II]
    ...output omitted...
@@ -134,21 +134,21 @@ You collect hardware information from `servera`, and list hardware errors that `
    3.1. Install the `rasdaemon` package.
 
    ```bash
-   [root@servera ~]# yum install rasdaemon
+   [root@node1 ~]# yum install rasdaemon
    ...output omitted...
    ```
 
    3.2. Start and enable the `rasdaemon` service.
 
    ```bash
-   [root@servera ~]# systemctl enable --now rasdaemon
+   [root@node1 ~]# systemctl enable --now rasdaemon
    Created symlink /etc/systemd/system/multi-user.target.wants/rasdaemon.service → /usr/lib/systemd/system/rasdaemon.service.
    ```
 
    3.3. View a summary of all hardware errors.
 
    ```bash
-   [root@servera ~]# ras-mc-ctl --errors
+   [root@node1 ~]# ras-mc-ctl --errors
    No Memory errors.
    No PCIe AER errors.
    No Extlog errors.
@@ -165,12 +165,12 @@ You collect hardware information from `servera`, and list hardware errors that `
    No MCE errors.
    ```
 
-4. **Return to `workstation` as the student user**.
+4. **Return to `workstation` as the bob user**.
 
    ```bash
-   [root@servera ~]# exit
-   [student@servera ~]$ exit
-   [student@workstation ~]$
+   [root@node1 ~]# exit
+   [bob@node1 ~]$ exit
+   [bob@workstation ~]$
    ```
 
 
