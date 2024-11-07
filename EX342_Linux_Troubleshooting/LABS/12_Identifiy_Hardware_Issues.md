@@ -6,15 +6,6 @@
 ### Outcomes
 You should be able to identify your system's hardware and view hardware errors with `rasdaemon`.
 
-### Before You Begin
-As the bob user on the workstation machine, use the lab command to prepare your system for this exercise.
-
-```bash
-[bob@workstation ~]$ lab start hardware-identify
-```
-
-This command verifies that your systems are reachable and generates the necessary files for this exercise.
-
 ### Instructions
 You collect hardware information from `node1`, and list hardware errors that `rasdaemon` reports. Use the `/root/systeminfo.txt` file on `node1` to record hardware information.
 
@@ -173,4 +164,4 @@ You collect hardware information from `node1`, and list hardware errors that `ra
    [bob@workstation ~]$
    ```
 
-
+* Done!!
