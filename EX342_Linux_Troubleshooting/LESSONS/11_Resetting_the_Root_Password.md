@@ -109,7 +109,7 @@ In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root passwor
      ```
 
 7. **Reboot the System**
-   - Type `exec /sbin/init` to continue the boot process.
+   - Type `exec /sbin/reboot -f` to continue the boot process.
    - The system will reboot and perform an SELinux relabeling, which may take some time.
 
 8. **Verify the New Root Password**
