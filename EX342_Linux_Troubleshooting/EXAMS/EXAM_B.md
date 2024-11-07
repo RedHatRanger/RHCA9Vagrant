@@ -1,4 +1,4 @@
-# Lab 9: Troubleshooting Boot Issues
+# EXAM B: Troubleshooting Boot Issues
 
 ## Objective
 
