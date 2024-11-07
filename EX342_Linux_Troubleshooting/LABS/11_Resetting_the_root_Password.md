@@ -100,6 +100,8 @@ In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root passwor
      ```
      rw init=/bin/bash
      ```
+   ![{D3150F2A-19FF-48B0-85B3-D2DE878B309A}](https://github.com/user-attachments/assets/369f1bd7-d030-4a62-b227-8b1e78334d9c)
+
    - Press **Ctrl+x** to boot with the modified parameters.
 
 3. **Access the Root Shell**
