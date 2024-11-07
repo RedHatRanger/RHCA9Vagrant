@@ -23,13 +23,16 @@ This method for resetting a root password consists of these steps:
 
 2. **Edit the GRUB Boot Parameters**
    - Find the entry that is normally booted, and change it so that it halts execution during the initial ramdisk startup sequence.
-   - Use the cursor keys to highlight the entry that would normally be booted, and press **e**.
+   - Use the cursor keys to highlight the entry that would normally be booted, and press **e**. \
+   ![{85C2949A-91EC-444D-BF95-45DABA2BF78E}](https://github.com/user-attachments/assets/be371bea-352a-4f04-ab7d-3614e3f7d835)
    - Use the cursor keys to move to the line that has the kernel and the kernel arguments. This line normally starts with `linux`.
    - At the end of this line, add the following parameters:
      ```
      rw.break
      ```
      
+   ![{E351477F-C3F8-4E05-B1A9-591896C4352F}](https://github.com/user-attachments/assets/3efaa849-7d98-4bb4-88fe-3391f6cb89ed)
+
    - Press **Ctrl+x** to boot with the modified parameters.
 
 3. **Access the Root Shell**
@@ -77,13 +80,16 @@ In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root passwor
    - During the boot process, when the GRUB menu appears, press any key (except **Enter**) to interrupt the automatic boot sequence.
 
 2. **Edit the GRUB Boot Parameters**
-   - Use the arrow keys to highlight the default boot entry.
-   - Press **e** to edit the selected boot entry.
+   - Use the arrow keys to highlight the default boot entry. \
+   ![{85C2949A-91EC-444D-BF95-45DABA2BF78E}](https://github.com/user-attachments/assets/be371bea-352a-4f04-ab7d-3614e3f7d835)
+   - Press **e** to edit the selected boot entry. 
    - Locate the line that starts with `linux` and contains the kernel parameters.
    - At the end of this line, add the following parameters:
      ```
      rw init=/bin/bash
      ```
+   ![{D3150F2A-19FF-48B0-85B3-D2DE878B309A}](https://github.com/user-attachments/assets/369f1bd7-d030-4a62-b227-8b1e78334d9c)
+
    - Press **Ctrl+x** to boot with the modified parameters.
 
 3. **Access the Root Shell**
@@ -109,7 +115,8 @@ In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root passwor
      ```
 
 7. **Reboot the System**
-    ![{7943B733-79E6-4A4F-9CC9-FAF8D1B495D9}](https://github.com/user-attachments/assets/cb19eda4-7fac-436d-b729-f65d945365ce)
+   ![{7943B733-79E6-4A4F-9CC9-FAF8D1B495D9}](https://github.com/user-attachments/assets/cb19eda4-7fac-436d-b729-f65d945365ce)
+
    - Type `exec /sbin/reboot -f` to continue the boot process.
    - The system will reboot and perform an SELinux relabeling, which may take some time.
 
@@ -122,3 +129,4 @@ In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root passwor
 
 For more detailed information, refer to Red Hat's official documentation on resetting the root password in RHEL 8 and RHEL 9.
 
+SUCCESS!!
