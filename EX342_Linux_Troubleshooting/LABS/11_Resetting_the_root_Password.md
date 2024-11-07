@@ -42,6 +42,9 @@ This method for resetting a root password consists of these steps:
      ```
      rw.break
      ```
+     
+   ![{E351477F-C3F8-4E05-B1A9-591896C4352F}](https://github.com/user-attachments/assets/3efaa849-7d98-4bb4-88fe-3391f6cb89ed) \
+
    - Press **Ctrl+x** to boot with the modified parameters.
 
 3. **Access the Root Shell**
