@@ -70,7 +70,7 @@ This method for resetting a root password consists of these steps:
 <br/><br/><br/><br/><br/><br/>
 
 ### Resetting the Root Password (RHEL 9):
-In Red Hat Enterprise Linux (RHEL) 9.4, the process for resetting the root password has been updated to enhance system security. The traditional method using `rd.break` may not function as expected in this version. Instead, you can reset the root password by modifying the kernel parameters during the boot process. Here's how:
+In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root password has been updated to enhance system security. The traditional method using `rd.break` may not function as expected in this version. Instead, you can reset the root password by modifying the kernel parameters during the boot process. Here's how:
 
 1. **Reboot the System**
    - Restart your system.
