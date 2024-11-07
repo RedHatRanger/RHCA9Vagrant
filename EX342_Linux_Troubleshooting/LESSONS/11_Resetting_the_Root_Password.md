@@ -128,5 +128,3 @@ In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root passwor
 - Always follow your organization's security policies and procedures when performing password resets.
 
 For more detailed information, refer to Red Hat's official documentation on resetting the root password in RHEL 8 and RHEL 9.
-
-SUCCESS!!
