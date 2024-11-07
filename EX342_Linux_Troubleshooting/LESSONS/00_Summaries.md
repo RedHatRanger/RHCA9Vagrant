@@ -17,7 +17,7 @@ deployments and configuration changes.
 * The auditctl command manages rules to select which security events are collected in the
 audit log.
 * The ausearch command queries the audit log and displays messages in readable form.
-* 
+  
 ## Summary from Chapter 3:
 • The RHEL 8 & 9 boot process flow and the purpose of the GRUB2 bootloader.
 • The `grubby` command manipulates bootloader configuration files.
