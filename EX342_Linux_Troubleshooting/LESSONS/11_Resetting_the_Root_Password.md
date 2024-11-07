@@ -98,7 +98,7 @@ In Red Hat Enterprise Linux (RHEL) 9, the process for resetting the root passwor
 5. **Reset the Root Password**
    - Set a new root password by executing:
      ```bash
-     passwd
+     passwd root
      ```
    - Follow the prompts to enter and confirm the new password.
 
