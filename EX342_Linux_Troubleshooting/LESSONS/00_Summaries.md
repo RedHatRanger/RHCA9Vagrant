@@ -22,7 +22,6 @@ audit log.
 • The RHEL 8 & 9 boot process flow and the purpose of the GRUB2 bootloader.
 • The `grubby` command manipulates bootloader configuration files.
 • The `efibootmgr` command manages the boot order and boot targets on UEFI systems.
-• The `systemctl list-dependencies` and `systemd-analyze` commands show a systemd
-unit's dependencies.
+• The `systemctl list-dependencies` and `systemd-analyze` commands show a systemd unit's dependencies.
 • The `debug-shell` service grants early root access to a system as it boots.
 • The root user's password is reset by adding `rd.break` or `rw init=/bin/bash` to the kernel options at boot.
