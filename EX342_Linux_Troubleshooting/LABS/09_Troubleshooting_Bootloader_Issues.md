@@ -50,9 +50,6 @@ Someone decided to shorten the boot process of the `node1` system. During this p
 
    2.2. Use the GRUB menu to boot another working entry.
 
-   - Reboot the system, interrupt the GRUB boot process by pressing any key, and edit the boot entry.
-   - Remove the `broken_parameter` from the kernel line by pressing `e` to edit the boot entry and then `Ctrl+x` to boot with the modified parameters.
-
 3. **Permanently Fix the Issue**
    3.1. Log in to the `node1` system and switch to the root user.
 
