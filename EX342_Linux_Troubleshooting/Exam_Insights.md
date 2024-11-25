@@ -4,7 +4,7 @@
 This repository is built to help you as beginner to understand Linux Diagnostics and Troubleshooting, And
 walk you through EX342 study Topics from setting up a lab to mastry and ensure that you're ready for the EX342 exam.
 
-Repository contains Study-Guide and exercises preparing for EX294 exam. the readers need to keep in mind that none of them was taken from the actual test. They were created based on the study point available at RedHat's website.
+Repository contains Study-Guide and exercises preparing for EX342 exam. the readers need to keep in mind that none of them was taken from the actual test. They were created based on the study point available at RedHat's website.
 
 
 ## About the EX342 Exam
