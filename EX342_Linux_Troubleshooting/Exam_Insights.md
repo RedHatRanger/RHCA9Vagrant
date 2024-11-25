@@ -1,8 +1,8 @@
 <a href="https://www.computernetworkingnotes.com/linux-tutorials/rhce-practice-lab-setup-in-vmware-and-in-virtualbox.html">HOW TO GUIDE HERE FOR LAB SETUP with Virtualbox and VMWare</a> (If you opt for not using Vagrant)
 
-# RHCE_EX294 Study Guide & Exam Prep
-This repository is built to help you as beginner to Understand Ansible, And
-walk you through RHCE_EX294 study Topics from setting up a lab to mastry in Ansible, and ensure that you're ready for the RHCE EX294 exam.
+# EX342 Study Guide & Exam Prep
+This repository is built to help you as beginner to understand Linux Diagnostics and Troubleshooting, And
+walk you through EX342 study Topics from setting up a lab to mastry and ensure that you're ready for the EX342 exam.
 
 Repository contains Study-Guide and exercises preparing for EX294 exam. the readers need to keep in mind that none of them was taken from the actual test. They were created based on the study point available at RedHat's website.
 
