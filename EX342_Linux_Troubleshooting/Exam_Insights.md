@@ -10,7 +10,7 @@ Repository contains Study-Guide and exercises preparing for EX294 exam. the read
 ## About the EX342 Exam
  - [EX342 Exam Objectives](https://www.redhat.com/en/services/training/ex342-red-hat-certified-specialist-linux-diagnostics-and-troubleshooting?section=objectives)
  - [Purchase the EX342 Exam](https://www.redhat.com/en/services/training/ex294-red-hat-certified-engineer-rhce-exam-red-hat-enterprise-linux-9)
- - [Schedule RHCE EX294 Exam](https://rhtapps.redhat.com/ies/external/dashboard)
+ - [Schedule EX342 Exam](https://rhtapps.redhat.com/ies/external/dashboard)
  - [Download the Remote Exam ISO](https://red.ht/rhrex)
  - [View Your Current Certifications](https://rhtapps.redhat.com/certifications)
 
