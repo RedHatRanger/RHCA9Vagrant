@@ -31,6 +31,7 @@
 
    Ensure the `kubectl` command is configured to use k3s:
    ```bash
+   sudo chown $(whoami): /etc/rancher/k3s/k3s.yaml
    export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
    ```
 
