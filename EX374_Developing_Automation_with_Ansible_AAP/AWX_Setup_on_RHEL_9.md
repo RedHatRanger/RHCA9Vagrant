@@ -20,11 +20,14 @@
    ```
    Validate the installation:
    ```bash
+   kubectl version
+   ```
+   ```bash
    kubectl get nodes
    ```
    This should show your node in a `Ready` state.
 
-4. **Verify k3s Configuration**
+5. **Verify k3s Configuration**
 
    Ensure the `kubectl` command is configured to use k3s:
    ```bash
