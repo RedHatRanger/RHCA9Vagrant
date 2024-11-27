@@ -1,89 +1,86 @@
-# Ascender Installation and Updating on K3s for Rocky 9 or RHEL 9
+# AWX Ascender Installation and Updating on K3s for Rocky 9 or RHEL 9
 
 ## General Prerequisites
 
-If you have not done so already, be sure to follow the general prerequisites found in the Ascender-Install main README.
+Make sure you have completed the general prerequisites outlined in the main README of the Ascender-Install repository.
 
 ## K3s-specific Prerequisites
 
-**Note**: The K3s install of Ascender is not yet meant for production, but rather as a sandbox to try Ascender. The installer expects a single-node K3s cluster, which will act as both master and worker node.
+**Note**: The Ascender K3s setup is primarily intended for sandbox or testing purposes and is not production-ready. This installation is intended for a single-node K3s cluster that serves as both the master and worker node.
 
-- **Operating System Requirements**: The OS Family must be the same as Rocky Linux (indicated by the `ansible_os_family` Ansible fact), and the major version must be 8 or 9. The installer is primarily tested with **Rocky Linux**.
-- **Minimal System Requirements**:
-  - **CPUs**: 2
-  - **Memory**: 8GB (if installing both Ascender and Ledger)
-  - **Disk Space**: 20GB of free disk space (for Ascender and Ledger Volumes)
-- These instructions accommodate an existing K3s cluster or will set up a new one if necessary. This behavior is determined by the variable `kube_install`:
-  - If `kube_install` is set to **true**, the installer will set up K3s on the `ascender_host` in the inventory file (`ascender_host` can be localhost).
-  - If `kube_install` is set to **false**, the installer will not perform a K3s installation.
-- **SSL Certificate and Key**: To enable HTTPS, you need to provide the Ascender installer with an **SSL Certificate** file and a **Private Key** file. These can be self-signed or issued by a trusted Certificate Authority (e.g., **Let's Encrypt**).
-  - Once you have the Certificate and Private Key file, specify their locations in the default config file (`tls_crt_path` and `tls_key_path`). The installer will use these to create a Kubernetes TLS Secret for HTTPS enablement.
+- **Operating System Requirements**: The OS family must be similar to **Rocky Linux** (based on the `ansible_os_family` fact), and the version must be 8 or 9. The installer has primarily been tested with **Rocky Linux**.
+- **Minimum System Requirements**:
+  - **CPU**: 2 cores
+  - **Memory**: 8GB (required if installing both Ascender and Ledger)
+  - **Storage**: At least 20GB of free disk space (for Ascender and Ledger volumes)
+- The installer can either set up a new K3s cluster or use an existing one, based on the value of the `kube_install` variable:
+  - Set **`kube_install` to `true`** if you want the installer to set up a new K3s cluster on the target host.
+  - Set **`kube_install` to `false`** if you already have K3s running.
+- **SSL Certificate and Key**: For enabling HTTPS, you need to provide an **SSL certificate** and **private key**. These can be self-signed or issued by a trusted authority, such as **Let's Encrypt**. Specify the certificate and key locations in the default configuration file (`tls_crt_path` and `tls_key_path`). The installer will use them to create a Kubernetes TLS secret.
 
-## Install and Upgrade Instructions
+## Installation and Upgrade Instructions
 
-### Obtain the Sources
+### Step 1: Obtain the Installer Sources
 
 1. **Clone the Ascender Installer Repository**
    ```bash
    git clone https://github.com/ctrliq/ascender-install.git
    ```
-   This will create a directory named `ascender-install` in your present working directory.
+   This will create a directory named `ascender-install` in your current working directory.
 
-2. **Change Directories**
+2. **Change Directory to the Installer Folder**
    ```bash
    cd ascender-install
    ```
 
-### Set the Configuration Variables for a K3s Install
+### Step 2: Configure Variables for K3s Installation
 
-1. **Run the Config Vars Script**
+1. **Run the Configuration Script**
    ```bash
    ./config_vars.sh
    ```
-   The script will take you through a series of questions to populate the variables file required to install Ascender. This variables file will be created at `./custom.config.yml`.
+   This script will prompt you for input to populate the necessary configuration variables, which will be saved in `custom.config.yml`.
 
 2. **Edit the Configuration Manually** (Optional)
-   - You can manually edit the `custom.config.yml` file if you want to adjust variables before (re)installing Ascender.
+   - You can manually adjust the settings in `custom.config.yml` as needed before reinstalling or upgrading Ascender.
 
-3. **Examples of Configuration Files**
-   - Example configuration files for traditional installation (`k3s.default.config.yml`) and offline installation (`k3s.offline.default.config.yml`) can be found in this directory.
+3. **Example Configuration Files**
+   - Sample configuration files for online and offline installations (`k3s.default.config.yml` and `k3s.offline.default.config.yml`) can be found in this directory.
 
-### Run the Setup Script
+### Step 3: Run the Setup Script
 
-1. **Run the Setup Script**
+1. **Run the Setup Script with Administrative Privileges**
    ```bash
    sudo ./setup.sh
    ```
-   The setup must run as a user with **Administrative** or **sudo** privileges. Once the setup is completed successfully, you should see a final output similar to:
+   After completing the setup successfully, you should see output similar to:
    ```
    ASCENDER SUCCESSFULLY SETUP
    ```
 
-## Offline Installation
+## Offline Installation Instructions
 
 To perform an offline installation of Ascender on K3s:
 
-1. **Run the `create_bundle.yml` Playbook** on a machine with internet access.
-2. **Copy the `offline` Folder** into your `ascender-install` folder on the machine you would like to install from.
-3. **Set Variables for Offline Install**:
-   - When setting the variables in your `config_vars.sh`, be sure to set `k8s_platform` to **k3s** and `k8s_offline` to **true**. This will instruct the installer to use archived container images rather than pulling from a container registry.
+1. **Run `create_bundle.yml` Playbook** on a machine with internet access to create the necessary bundle.
+2. **Copy the `offline` Folder** into your `ascender-install` directory on the target machine.
+3. **Set Offline Variables**:
+   - In `config_vars.sh`, set `k8s_platform` to **k3s** and `k8s_offline` to **true** to indicate that archived container images should be used instead of pulling from a container registry.
 
-The installer will copy the archived images to the K3s server, import them into K3s, and set the `imagePullPolicy` for all K3s images to **Never** to prevent internet access during installation.
+The installer will import these images into the K3s server and set `imagePullPolicy` to **Never** to ensure no external connections are attempted during the installation.
 
-## Offline Ascender Upgrade
+## Offline Upgrade Instructions
 
 To upgrade an offline installation of Ascender on K3s:
 
-1. **Re-run the `create_bundle.yml` Playbook** on a machine with internet access, using the new release/tag indicated by the `ASCENDER_VERSION` variable in `custom.config.yml` or `default.config.yml`.
-2. **Copy the `offline` Folder** into your `ascender-install` folder.
-3. **Set Variables for Offline Upgrade**:
+1. **Re-run `create_bundle.yml` Playbook** on a machine with internet access, specifying the release or tag (`ASCENDER_VERSION`) that you want to upgrade to in the configuration file (`custom.config.yml` or `default.config.yml`).
+2. **Copy the `offline` Folder** into your `ascender-install` directory on the target machine.
+3. **Set Offline Variables for Upgrade**:
    - Set `k8s_platform` to **k3s** and `k8s_offline` to **true**.
 
 ## Connecting to Ascender Web UI
 
-To connect to your new Ascender installation:
-
-1. **Get the Cluster IP**
+1. **Get the Cluster IP Address**
    ```bash
    export ASCENDER_WEB_INTERNAL_IP=$(kubectl -n ascender get service/ascender-app-service -o jsonpath='{.spec.clusterIP}')
    ```
@@ -93,39 +90,39 @@ To connect to your new Ascender installation:
    echo $ASCENDER_WEB_INTERNAL_IP
    ```
 
-3. **SSH Forwarding to Connect to Ascender**
+3. **SSH Port Forwarding to Access Ascender**
    ```bash
    ssh -L 80:<ASCENDER_WEB_INTERNAL_IP>:80 user@<ASCENDER_SERVER_IP>
    ```
-   For example, if `ASCENDER_WEB_INTERNAL_IP` is `10.43.9.224` and `ASCENDER_SERVER_IP` is `1.2.3.4`, the full command to connect as the root user will be:
+   For example, if the `ASCENDER_WEB_INTERNAL_IP` is `10.43.9.224` and `ASCENDER_SERVER_IP` is `1.2.3.4`, use the following command:
    ```bash
    ssh -L 80:10.43.9.224:80 root@1.2.3.4
    ```
 
 4. **Access the Web Interface**
-   - After port forwarding, you can access the Ascender instance by navigating to `https://localhost` in your browser.
-   - The default username is **admin**, and the password can be found in `<ASCENDER-INSTALL-SOURCE>/default.config.yml` under the `ASCENDER_ADMIN_PASSWORD` variable.
+   - After forwarding, open your browser and go to `https://localhost`.
+   - The default username is **admin**. The password can be found in `<ASCENDER-INSTALL-SOURCE>/default.config.yml` under the `ASCENDER_ADMIN_PASSWORD` variable.
 
-## Uninstall
+## Uninstall Instructions
 
 1. **Delete Kubernetes Manifests**
-   - After running `setup.sh`, `tmp_dir` (default: `{{ playbook_dir }}/../ascender_install_artifacts`) will contain timestamped Kubernetes manifests for:
+   - After running `setup.sh`, the `tmp_dir` (default: `{{ playbook_dir }}/../ascender_install_artifacts`) will contain timestamped Kubernetes manifests:
      - `ascender-deployment-{{ k8s_platform }}.yml`
      - `ledger-{{ k8s_platform }}.yml` (if Ledger was installed)
      - `kustomization.yml`
 
-2. **Remove the Timestamp from the Filename** and then run the following commands from within `tmp_dir`:
+2. **Remove the Timestamp and Run the Following Commands** from within `tmp_dir`:
    ```bash
    kubectl delete -f ascender-deployment-{{ k8s_platform }}.yml
-   kubectl delete -f ledger-{{ k8s_platform }}.yml  # optional if Ledger was installed
+   kubectl delete -f ledger-{{ k8s_platform }}.yml  # Optional if Ledger was installed
    kubectl delete -k .
    ```
 
-Running the Ascender deletion steps will remove all related deployments and stateful sets. However, **persistent volumes and secrets** will remain. To enforce secret removal, use `ascender_garbage_collect_secrets: true` in the `default.config.yml` file.
+Running these commands will remove all related deployments and stateful sets. However, **persistent volumes and secrets** will remain. To remove secrets, set `ascender_garbage_collect_secrets: true` in `default.config.yml`.
 
 ## Conclusion
 
-Using the **Ascender Installer** with **K3s** on **Rocky 9 or RHEL 9** provides an efficient way to set up a sandbox environment for testing the Ascender Automation Platform. This guide helps you configure Ascender for both online and offline environments, connect to its web UI, and uninstall it if necessary.
+The **Ascender Installer** with **K3s** on **Rocky 9 or RHEL 9** provides an efficient and easy way to set up a sandbox environment for exploring the Ascender Automation Platform. This guide outlines steps for both online and offline installations, connecting to the web UI, and clean uninstallation.
 
 [Tutorial Here:](https://www.youtube.com/watch?v=lswN7Ct1cjE)
 [Documentaton on K3S Here:](https://docs.k3s.io/quick-start)
