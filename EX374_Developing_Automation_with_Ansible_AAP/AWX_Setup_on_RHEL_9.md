@@ -115,4 +115,4 @@
 Using Ascender with **k3s** is the easiest and most efficient way to deploy AWX on Rocky 9 or RHEL 9. It simplifies the setup process, automates complex configurations, and provides a reliable solution without requiring deep Kubernetes knowledge.
 [Tutorial Here:](https://www.youtube.com/watch?v=lswN7Ct1cjE)
 [Documentaton on K3S Here:](https://docs.k3s.io/quick-start)
-[Documentation for Ascender here:](https://github.com/ctrliq/ascender-install?tab=readme-ov-file#installation-instructions-by-kubernetes-platform)
+[Documentation for Ascender here:](https://github.com/ctrliq/ascender-install/blob/main/docs/k3s/README.md#k3s-specific-prerequisites)
