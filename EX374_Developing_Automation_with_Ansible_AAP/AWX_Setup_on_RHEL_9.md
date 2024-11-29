@@ -127,3 +127,5 @@ The **Ascender Installer** with **K3s** on **Rocky 9 or RHEL 9** provides an eff
 [Tutorial Here:](https://www.youtube.com/watch?v=lswN7Ct1cjE)
 [Documentaton on K3S Here:](https://docs.k3s.io/quick-start)
 [Documentation for Ascender here:](https://github.com/ctrliq/ascender-install/blob/main/docs/k3s/README.md#k3s-specific-prerequisites)
+
+[Link to Youtube](https://www.youtube.com/live/F62I7WDjcz0?si=fPyhf5lK4GzyveCm)
