@@ -10,7 +10,7 @@ AAP Controller minimum requirements:
 > - RHEL 8 or RHEL 9
 > - 4 vCPUs (Cores)
 > - 8gb of RAM
-> - 100gb of Storage
+> - 20gb of Storage
 
 Each of the Nodes Minimum Requirements:
 > - RHEL 8 or RHEL 9
