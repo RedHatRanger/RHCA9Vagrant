@@ -4,7 +4,8 @@ In the following, “host” refers to the physical computer that you are workin
 If you use Windows, we recommend that you skip Vagrant and just install VirtualBox. Instead of using Vagrant for creating and managing your VM, simply run VirtualBox and use its interface for all VM-related tasks. To create the VM, you can either download a pre-built Lubuntu 14.04 image (note the user name/password) or manually create an VM and install the operating system yourself. Remember to then set up file sharing between your VM and host by installing the VirtualBox “Guest Additions.”
 
 > ## Minimum Requirements
-> The complete Ansible Automation Platform (AAP) lab setup requires at least 16 GB of RAM and 250 GB of storage for the 6 VMs. \ <br>
+> The complete Ansible Automation Platform (AAP) lab setup requires at least 16 GB of RAM and 250 GB of storage for the 6 VMs.
+> <br>
 > AAP Controller minimum requirements:
 > - RHEL 8 or RHEL 9
 > - 4 vCPUs (Cores)
