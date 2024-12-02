@@ -10,6 +10,13 @@ If you use Windows, we recommend that you skip Vagrant and just install VirtualB
 > - RHEL 8 or RHEL 9
 > - 4 vCPUs (Cores)
 > - 8gb of RAM
+> - 100gb of Storage
+> - <br><br>
+> - Nodes Minimum Requirements:
+> - RHEL 8 or RHEL 9
+> - 1 vCPU
+> - 2gb of RAM
+> - 20gb of Storage
 
 ## Prerequisites
 Download and install the latest version of VirtualBox for Windows (PowerShell as Administrator):
