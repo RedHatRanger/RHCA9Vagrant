@@ -5,7 +5,10 @@ If you use Windows, we recommend that you skip Vagrant and just install VirtualB
 
 > ## Minimum Requirements
 > The complete Ansible Automation Platform (AAP) lab setup requires at least 16 GB of RAM and 250 GB of storage for the 6 VMs.
-
+> AAP Controller minimum requirements:
+> - RHEL 8 or RHEL 9
+> - 4 vCPUs (Cores)
+> - 8gb of RAM
 
 ## Prerequisites
 Download and install the latest version of VirtualBox for Windows (PowerShell as Administrator):
