@@ -11,7 +11,7 @@ If you use Windows, we recommend that you skip Vagrant and just install VirtualB
 > - 4 vCPUs (Cores)
 > - 8gb of RAM
 > - 100gb of Storage
-> <br><br>
+> <br><br> \
 > Each of the Nodes Minimum Requirements:
 > - RHEL 8 or RHEL 9
 > - 1 vCPU
