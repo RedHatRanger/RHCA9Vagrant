@@ -1,0 +1,65 @@
+$hostsfile = <<-SCRIPT
+# Create the hosts file for all nodes because we do not have DNS setup:
+echo "172.28.128.100   control.example.com   control" >> /etc/hosts
+echo "172.28.128.101   node1.example.com     node1" >> /etc/hosts
+echo "172.28.128.102   node2.example.com     node2" >> /etc/hosts
+echo "172.28.128.103   node3.example.com     node3" >> /etc/hosts
+echo "172.28.128.104   node4.example.com     node4" >> /etc/hosts
+echo "172.28.128.105   node5.example.com     node5" >> /etc/hosts
+SCRIPT
+
+$user_setup = <<-SCRIPT
+# Create the Ansible user 'rhel' and assign the password 'redhat':
+useradd rhel
+echo "rhel:redhat" | chpasswd
+usermod -aG wheel rhel
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansibleuser_rhel
+
+# Enable PasswordAuthentication and disable root login:
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+systemctl restart sshd
+SCRIPT
+
+Vagrant.configure("2") do |config|
+
+  # Define virtualbox as the provider
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+  end
+
+  # Define the control node as the AAP controller
+  config.vm.define "aap-controller" do |control|
+    control.vm.box = "generic/rhel9"
+    control.vm.box_version = "4.3.12"
+    control.vm.hostname = "aap-controller.example.com"
+    control.vm.network :private_network, ip: "172.28.128.100"
+    control.vm.provider "virtualbox" do |vb|
+      vb.memory = "8192"
+      vb.cpus = "4"
+    end
+    control.vm.provision "shell", inline: $hostsfile
+    control.vm.provision "shell", inline: <<-SHELL
+      yum install -y epel-release
+      
+      # Ansible user setup
+      #{$user_setup}
+    SHELL
+  end
+
+  # Define the rest of the nodes using a for loop
+  (1..5).each do |i|
+    config.vm.define "node#{i}" do |node|
+      node.vm.box = "generic/rhel9"
+      node.vm.box_version = "4.3.12"
+      node.vm.hostname = "node#{i}.example.com"
+      node.vm.network :private_network, ip: "172.28.128.10#{i}"
+      node.vm.provider "virtualbox" do |vb|
+        vb.memory = "2048"
+        vb.cpus = "2"
+      end
+      node.vm.provision "shell", inline: $hostsfile
+      node.vm.provision "shell", inline: $user_setup
+    end
+  end
+end
