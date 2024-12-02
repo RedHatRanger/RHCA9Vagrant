@@ -3,6 +3,10 @@ In the following, “host” refers to the physical computer that you are workin
 
 If you use Windows, we recommend that you skip Vagrant and just install VirtualBox. Instead of using Vagrant for creating and managing your VM, simply run VirtualBox and use its interface for all VM-related tasks. To create the VM, you can either download a pre-built Lubuntu 14.04 image (note the user name/password) or manually create an VM and install the operating system yourself. Remember to then set up file sharing between your VM and host by installing the VirtualBox “Guest Additions.”
 
+## Minimum Requirements
+**IMPORTANT NOTE:** The complete Ansible Automation Platform lab setup requires at least 4 GB of RAM and 20 GB of storage for the VM.
+
+
 ## Prerequisites
 Download and install the latest version of VirtualBox for Windows (PowerShell as Administrator):
 ```
@@ -18,6 +22,8 @@ vagrant plugin install vagrant-vbguest
 ```
 
 ## Creating a VM
+Ensure your system meets the minimum requirements before proceeding with the VM creation.
+
 1) Create a ```vagrant``` directory in your local directory (%USERPROFILE%).
 2) Download the file named Vagrantfile and save it in this directory. Do NOT rename the file.
 3) Get a host shell and change into the directory with the Vagrantfile. Then, type this command to create (and start) the VM:
@@ -67,6 +73,7 @@ LXTerminal (under Accessories) gives you another VM shell. You might find it con
 File Manager (under Accessories) gives you a GUI for exploring folders and files on your VM.
 Document Viewer (under Graphics) is for viewing PDF and images.
 Chrome (under Internet) is the default Web browser. You can use it to WebSubmit files on your VM.
+
 File Access
 If you have followed the setup instructions correctly, you will find a directory named shared under your home directory on the VM. This directory automatically mirrors the directory containing the Vagrantfile on your host. For example, to work on hw01, you can make a subdirectory hw01 under the directory with Vagrantfile on your host. Then, you may create and edit a file named intro.txt inside this subdirectory (using a text editor on your host). Your VM will see this file automatically as shared/hw01/intro.txt. Inside your VM, change your working directory to shared/hw01:
 cd ~/shared/hw01/
@@ -132,3 +139,4 @@ export TERM=xterm-256color
 
 ## CREDITS ##
 https://sites.duke.edu/compsci316_01_f2016/help/vbvagrant/
+
