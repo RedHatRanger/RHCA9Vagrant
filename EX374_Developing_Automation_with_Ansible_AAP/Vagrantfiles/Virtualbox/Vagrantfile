@@ -10,7 +10,6 @@ Vagrant.configure("2") do |config|
     echo "172.28.128.100   ansible.example.com   ansible" >> /etc/hosts
     echo "172.28.128.101   node1.example.com     node1" >> /etc/hosts
     echo "172.28.128.102   node2.example.com     node2" >> /etc/hosts
-    echo "172.28.128.103   node3.example.com     node3" >> /etc/hosts
     echo "172.28.128.104   gitlab.example.com    gitlab" >> /etc/hosts
 
     # Install necessary packages and configure user
@@ -65,7 +64,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Define the rest of the nodes using a for loop
-  (1..3).each do |i|
+  (1..2).each do |i|
     config.vm.define "node#{i}" do |node|
       node.vm.box = "generic/rhel9"
       node.vm.box_version = "4.3.12"
@@ -87,7 +86,7 @@ Vagrant.configure("2") do |config|
     gitlab.vm.network :private_network, ip: "172.28.128.104"
     gitlab.vm.provider "virtualbox" do |vb|
       vb.memory = "4096"
-      vb.cpus = "1"
+      vb.cpus = "2"
     end
     gitlab.vm.provision "shell", inline: provisioning_script
     gitlab.vm.provision "shell", inline: gitlab_install_script
