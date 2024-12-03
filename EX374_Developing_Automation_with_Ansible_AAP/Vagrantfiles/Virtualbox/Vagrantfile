@@ -1,65 +1,72 @@
-$hostsfile = <<-SCRIPT
-# Create the hosts file for all nodes because we do not have DNS setup:
-echo "172.28.128.100   control.example.com   control" >> /etc/hosts
-echo "172.28.128.101   node1.example.com     node1" >> /etc/hosts
-echo "172.28.128.102   node2.example.com     node2" >> /etc/hosts
-echo "172.28.128.103   node3.example.com     node3" >> /etc/hosts
-echo "172.28.128.104   node4.example.com     node4" >> /etc/hosts
-echo "172.28.128.105   node5.example.com     node5" >> /etc/hosts
-SCRIPT
-
-$user_setup = <<-SCRIPT
-# Create the Ansible user 'rhel' and assign the password 'redhat':
-useradd rhel
-echo "rhel:redhat" | chpasswd
-usermod -aG wheel rhel
-echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansibleuser_rhel
-
-# Enable PasswordAuthentication and disable root login:
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-systemctl restart sshd
-SCRIPT
-
 Vagrant.configure("2") do |config|
-
   # Define virtualbox as the provider
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
   end
 
+  # Define the provisioning script
+  provisioning_script = <<-SHELL
+    # Create the hosts file for all nodes because we do not have DNS setup
+    echo "172.28.128.100   ansible.example.com   ansible" >> /etc/hosts
+    echo "172.28.128.101   node1.example.com     node1" >> /etc/hosts
+    echo "172.28.128.102   node2.example.com     node2" >> /etc/hosts
+    echo "172.28.128.103   node3.example.com     node3" >> /etc/hosts
+    echo "172.28.128.104   gitlab.example.com    gitlab" >> /etc/hosts
+
+    # Install necessary packages and configure user
+    yum install -y epel-release
+
+    # Create the Ansible user 'rhel' and assign the password 'redhat'
+    useradd rhel
+    echo "rhel:redhat" | chpasswd
+    usermod -aG wheel rhel
+    echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansibleuser_rhel
+
+    # Enable PasswordAuthentication and disable root login
+    sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+    sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+    systemctl restart sshd
+  SHELL
+
   # Define the control node as the AAP controller
   config.vm.define "aap-controller" do |control|
     control.vm.box = "generic/rhel9"
     control.vm.box_version = "4.3.12"
-    control.vm.hostname = "aap-controller.example.com"
+    control.vm.hostname = "ansible.example.com"
     control.vm.network :private_network, ip: "172.28.128.100"
     control.vm.provider "virtualbox" do |vb|
       vb.memory = "8192"
       vb.cpus = "4"
     end
-    control.vm.provision "shell", inline: $hostsfile
-    control.vm.provision "shell", inline: <<-SHELL
-      yum install -y epel-release
-      
-      # Ansible user setup
-      #{$user_setup}
-    SHELL
+    control.vm.provision "shell", inline: provisioning_script
   end
 
   # Define the rest of the nodes using a for loop
-  (1..5).each do |i|
+  (1..3).each do |i|
     config.vm.define "node#{i}" do |node|
       node.vm.box = "generic/rhel9"
       node.vm.box_version = "4.3.12"
       node.vm.hostname = "node#{i}.example.com"
       node.vm.network :private_network, ip: "172.28.128.10#{i}"
       node.vm.provider "virtualbox" do |vb|
-        vb.memory = "2048"
-        vb.cpus = "2"
-      end
-      node.vm.provision "shell", inline: $hostsfile
-      node.vm.provision "shell", inline: $user_setup
+      vb.memory = "2048"
+      vb.cpus = "1"
+    end
+      node.vm.provision "shell", inline: provisioning_script
     end
   end
+
+  # Define GitLab node
+  config.vm.define "gitlab" do |gitlab|
+    gitlab.vm.box = "generic/rhel9"
+    gitlab.vm.box_version = "4.3.12"
+    gitlab.vm.hostname = "gitlab.example.com"
+    gitlab.vm.network :private_network, ip: "172.28.128.104"
+    gitlab.vm.provider "virtualbox" do |vb|
+      vb.memory = "4096"
+      vb.cpus = "2"
+    end
+    gitlab.vm.provision "shell", inline: provisioning_script
+  end
 end
+
