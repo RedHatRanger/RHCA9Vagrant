@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
     echo "172.28.128.100   ansible.example.com   ansible" >> /etc/hosts
     echo "172.28.128.101   node1.example.com     node1" >> /etc/hosts
     echo "172.28.128.102   node2.example.com     node2" >> /etc/hosts
-    echo "172.28.128.104   gitlab.example.com    gitlab" >> /etc/hosts
+    echo "172.28.128.103   gitlab.example.com    gitlab" >> /etc/hosts
 
     # Install necessary packages and configure user
     yum install -y epel-release
@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
     gitlab.vm.box = "generic/rhel9"
     gitlab.vm.box_version = "4.3.12"
     gitlab.vm.hostname = "gitlab.example.com"
-    gitlab.vm.network :private_network, ip: "172.28.128.104"
+    gitlab.vm.network :private_network, ip: "172.28.128.103"
     gitlab.vm.provider "virtualbox" do |vb|
       vb.memory = "4096"
       vb.cpus = "2"
