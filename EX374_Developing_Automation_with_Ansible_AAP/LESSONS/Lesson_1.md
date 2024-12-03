@@ -26,8 +26,6 @@ podman login registry.redhat.io
 
 Provide your Red Hat Customer Portal login credentials before running the **ansible-navigator** command.
 
-> Note: In some classroom environments without internet access, you can download supported container images from **hub.lab.example.com**.
-
 ### Selecting Alternative Execution Environments
 
 Use the `--execution-environment-image` (`--eei`) option to specify a different container image when running automation content. Tags can be used to specify versions, for example:
