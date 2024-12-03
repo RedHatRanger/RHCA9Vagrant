@@ -44,11 +44,11 @@ Vagrant.configure("2") do |config|
     systemctl reload firewalld
     fi
 
-    # Add the GitLab package repository and install the package
+    # Add the GitLab package repository
     curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | bash
 
     # Install GitLab package
-    EXTERNAL_URL="https://gitlab.example.com" dnf install -y gitlab-ee
+    EXTERNAL_URL="https://gitlab.example.com" yum install -y gitlab-ee
   SHELL
 
   # Define the control node as the AAP controller
