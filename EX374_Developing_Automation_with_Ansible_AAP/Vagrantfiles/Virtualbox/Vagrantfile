@@ -28,6 +28,33 @@ Vagrant.configure("2") do |config|
     systemctl restart sshd
   SHELL
 
+  # Define GitLab installation script
+  gitlab_install_script = <<-SHELL
+    
+    # Install necessary dependencies
+    yum install -y curl policycoreutils openssh-server perl postfix
+
+    # Start and Enable the OpenSSH server daemon and postfix
+    systemctl enable --now sshd
+    systemctl enable --now postfix
+
+    # Open firewall for HTTP, HTTPS, and SSH
+    firewall-cmd --permanent --add-service=http
+    firewall-cmd --permanent --add-service=https
+    systemctl reload firewalld
+    fi
+
+    # Add the GitLab package repository and install the package
+    curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | bash
+
+    # Install GitLab package
+    EXTERNAL_URL="https://gitlab.example.com" dnf install -y gitlab-ee
+
+    # Provide final instructions for the user
+    echo "Installation complete. Please browse to your GitLab instance at: https://gitlab.example.com"
+    echo "If no password was provided during installation, check /etc/gitlab/initial_root_password for the initial root password."
+  SHELL
+
   # Define the control node as the AAP controller
   config.vm.define "aap-controller" do |control|
     control.vm.box = "generic/rhel9"
@@ -67,6 +94,7 @@ Vagrant.configure("2") do |config|
       vb.cpus = "1"
     end
     gitlab.vm.provision "shell", inline: provisioning_script
+    gitlab.vm.provision "shell", inline: gitlab_install_script
   end
 end
 
