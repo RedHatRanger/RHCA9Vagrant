@@ -139,6 +139,7 @@ pip3 install ansible-navigator
 
 ### 16. Pass the control node's public ssh key to the nodes:
 ```bash
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N ""
 for i in {node1,node2,node3,gitlab}; do ssh-copy-id -i /home/rhel/.ssh/id_rsa.pub $i; done
 ```
 
