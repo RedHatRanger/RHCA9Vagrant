@@ -155,5 +155,37 @@ tar -xvzf /home/rhel/ansible-automation-platform-setup-bundle-2.5-1-x86_64.tar.g
 ### 18. Edit the Ansible Automation Platform `inventory` file:
 ```bash
 cd ansible-automation-platform-setup-bundle-2.5-1-x86_64
-vim inventory
+cat << EOF > inventory
+# AAP Enterprise Installer Inventory for a Simple Lab Setup
+# This setup includes:
+# - Ansible Automation Platform server
+# - GitLab server for version control
+# - 3 execution nodes for running playbooks
+
+# This section is for your AAP Controller host(s)
+# -----------------------------------------------------
+[automationcontroller]
+control.example.com ansible_host=172.28.128.100 ansible_user=rhel ansible_ssh_private_key_file=/home/rhel/.ssh/id_rsa
+
+# This section is for your AAP Execution Node(s)
+# -----------------------------------------------------
+[execution_nodes]
+node1.example.com ansible_host=172.28.128.101 ansible_user=rhel ansible_ssh_private_key_file=/home/rhel/.ssh/id_rsa
+node2.example.com ansible_host=172.28.128.102 ansible_user=rhel ansible_ssh_private_key_file=/home/rhel/.ssh/id_rsa
+node3.example.com ansible_host=172.28.128.103 ansible_user=rhel ansible_ssh_private_key_file=/home/rhel/.ssh/id_rsa
+
+# This section is for your GitLab host
+# -----------------------------------------------------
+[gitlab]
+gitlab.example.com ansible_host=172.28.128.104 ansible_user=rhel ansible_ssh_private_key_file=/home/rhel/.ssh/id_rsa
+
+# Group definitions for easier targeting
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+admin_password='redhat'
+
+# Optional: Define relationships for AAP
+[automationcontroller:vars]
+peers=execution_nodes
+EOF
 ```
