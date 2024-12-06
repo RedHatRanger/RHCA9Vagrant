@@ -193,8 +193,16 @@ automationgateway_pg_sslmode='prefer'
 
 # This section is for your Redis Nodes
 # -----------------------------------------------------
+# This section is for your Redis Nodes
+# -----------------------------------------------------
 [redis]
 control.example.com
+control.example.com
+control.example.com
+control.example.com
+control.example.com
+control.example.com
+# -----------------------------------------------------
 # Optional: Define relationships for AAP
 # This section is for your AAP Execution Nodes
 # -----------------------------------------------------
