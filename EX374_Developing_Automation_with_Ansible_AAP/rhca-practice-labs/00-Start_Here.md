@@ -150,3 +150,9 @@ tar -xvzf /home/rhel/ansible-automation-platform-setup-bundle-2.5-1-x86_64.tar.g
 
 # or whatever the full bundle name is...as of this day it is 2.5
 ```
+
+### 18. Edit the Ansible Automation Platform `inventory` file:
+```bash
+cd ansible-automation-platform-setup-bundle-2.5-1-x86_64
+vim inventory
+```
