@@ -23,9 +23,9 @@ sudo subscription-manager --register
 sudo subscription-manager auto-attach
 ```
 
-### 6. Yum install `ansible`, `ansible-core`, `python3-pip`, `container-tools`, and `rhel-system-roles`:
+### 6. Yum install `ansible`, `ansible-core`, `git`, `python3`, `python3-pip`, `container-tools`, and `rhel-system-roles`:
 ```
-sudo yum install -y ansible ansible-core python3-pip container-tools rhel-system-roles
+sudo yum install -y ansible ansible-core git python3 python3-pip container-tools rhel-system-roles
 ```
 
 ### 7. Yum update the system and reboot:
