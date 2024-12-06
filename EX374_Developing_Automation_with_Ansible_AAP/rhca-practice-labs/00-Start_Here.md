@@ -155,6 +155,7 @@ tar -xvzf /home/rhel/ansible-automation-platform-setup-bundle-2.5-1-x86_64.tar.g
 ### 18. Edit the Ansible Automation Platform `inventory` file:
 ```bash
 cd ansible-automation-platform-setup-bundle-2.5-1-x86_64
+cp inventory inventory.bak
 cat << EOF > inventory
 # AAP Enterprise Installer Inventory for a Simple Lab Setup
 # This setup includes:
