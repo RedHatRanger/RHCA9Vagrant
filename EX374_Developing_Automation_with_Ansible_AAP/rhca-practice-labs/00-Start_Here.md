@@ -44,6 +44,11 @@ become_ask_pass=false
 EOF
 ```
 
+## Setup the important Ansible directories:
+```bash
+mkdir -p /home/rhel/ansible/{roles,collections,playbooks,templates}
+```
+
 ## Build the Inventory:
 ```bash
 cat << EOF > /home/rhel/ansible/inventory
