@@ -51,7 +51,7 @@ EOF
 ```
 
 ## Setup the `host_vars`:
-```
+```bash
 mkdir -p /home/rhel/ansible/host_vars
 cat << EOF > /home/rhel/ansible/host_vars/node1.yml
 ansible_host: 172.28.128.101
