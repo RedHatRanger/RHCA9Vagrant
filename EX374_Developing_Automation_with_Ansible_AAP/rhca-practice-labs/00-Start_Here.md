@@ -126,35 +126,7 @@ pip3 install ansible-navigator
 
 ## Pass the control node's public ssh key to the nodes:
 ```bash
-cat << EOF > /home/rhel/ansible/playbooks/ssh_keys.yml
----
-- name: Generate SSH key and distribute to nodes
-  hosts: localhost
-  tasks:
-    - name: Check if SSH key pair exists
-      stat:
-        path: ~/.ssh/id_rsa
-      register: ssh_key_stat
-
-    - name: Generate SSH key pair
-      command: ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N ""
-      when: not ssh_key_stat.stat.exists
-
-- name: Distribute SSH public key to all nodes
-  hosts: all
-  gather_facts: no
-  tasks:
-    - name: Fetch SSH public key from control node
-      delegate_to: localhost
-      slurp:
-        src: ~/.ssh/id_rsa.pub
-      register: public_key_content
-
-    - name: Authorize SSH key for nodes
-      authorized_key:
-        user: rhel  # Replace with appropriate username on target nodes
-        key: "{{ public_key_content.content | b64decode }}"
-EOF
+for i in {node1 node2 node3 gitlab}; do ssh-copy-id -i /home/rhel/.ssh/id_rsa.pub $i; done
 ```
 
 ## Use Ansible-Navigator to kick off the ssh_keys.yml file (IN YOUR ~/.BASHRC, nav="ansible-navigator run -m stdout"):
