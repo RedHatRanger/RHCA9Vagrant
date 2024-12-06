@@ -2,12 +2,12 @@
 
 ### 1. Register as a [Red Hat Developer](https://developers.redhat.com/register)
 
-### 2. Sign in and download the [Ansible Automation Platform Setup Bundle](https://developers.redhat.com/content-gateway/file/ansible/Ansible_Automation_Platform_2.4/ansible-automation-platform-setup-bundle-2.4-1-x86_64.tar.gz)
+### 2. Sign in and download the [Ansible Automation Platform Setup Bundle](https://developers.redhat.com/content-gateway/file/ansible/Ansible_Automation_Platform_2.5/ansible-automation-platform-setup-bundle-2.5-1-x86_64.tar.gz)
 
 ### 3. Open PowerShell and run the SCP command:
 ```PowerShell
 cd .\Downloads\
-scp .\ansible-automation-platform-setup-bundle-2.5-6-x86_64.tar.gz rhel@172.28.128.100:/home/rhel
+scp .\ansible-automation-platform-setup-bundle-2.5-1-x86_64.tar.gz rhel@172.28.128.100:/home/rhel
 
 # or whatever the full bundle name is...as of this day it is 2.5
 ```
@@ -146,7 +146,7 @@ for i in {node1,node2,node3,gitlab}; do ssh-copy-id -i /home/rhel/.ssh/id_rsa.pu
 ### 17. Unzip the Ansible Automation Platform's tar.gz file:
 ```bash
 cd /home/rhel
-tar -xvzf /home/rhel/ansible-automation-platform-setup-bundle-2.5-6-x86_64.tar.gz
+tar -xvzf /home/rhel/ansible-automation-platform-setup-bundle-2.5-1-x86_64.tar.gz
 
 # or whatever the full bundle name is...as of this day it is 2.5
 ```
