@@ -1,10 +1,10 @@
 # How to Setup Your Ansible Automation Platform Home Lab
 
-## 1. Register as a [Red Hat Developer](https://developers.redhat.com/register)
+### 1. Register as a [Red Hat Developer](https://developers.redhat.com/register)
 
-## 2. Sign in and download the [Ansible Automation Platform Setup Bundle](https://developers.redhat.com/content-gateway/file/ansible/Ansible_Automation_Platform_2.4/ansible-automation-platform-setup-bundle-2.4-1-x86_64.tar.gz)
+### 2. Sign in and download the [Ansible Automation Platform Setup Bundle](https://developers.redhat.com/content-gateway/file/ansible/Ansible_Automation_Platform_2.4/ansible-automation-platform-setup-bundle-2.4-1-x86_64.tar.gz)
 
-## 3. From the Windows Host Machine, ssh to the Ansible control node as the `rhel` user:
+### 3. From the Windows Host Machine, ssh to the Ansible control node as the `rhel` user:
 ```PowerShell
 ssh rhel@172.28.128.100
 ```
