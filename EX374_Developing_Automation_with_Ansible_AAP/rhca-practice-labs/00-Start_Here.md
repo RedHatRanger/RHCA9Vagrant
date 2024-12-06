@@ -74,6 +74,11 @@ cat << EOF > /home/rhel/ansible/host_vars/node3.yml
 ansible_host: 172.28.128.103
 ansible_user: rhel
 EOF
+
+cat << EOF > /home/rhel/ansible/host_vars/gitlab.yml
+ansible_host: 172.28.128.104
+ansible_user: rhel
+EOF
 ```
 
 ## Install `ansible-navigator` using python3-pip:
