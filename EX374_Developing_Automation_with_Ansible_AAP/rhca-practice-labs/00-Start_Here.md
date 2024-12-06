@@ -11,7 +11,7 @@ scp .\ansible-automation-platform-setup-bundle-2.5-6-x86_64.tar.gz rhel@172.28.1
 
 # or whatever the full bundle name is...as of this day it is 2.5
 ```
-### 4. From the Windows Host Machine, ssh to the Ansible control node as the `rhel` user using `PowerShell`:
+### 4. From the Windows Host Machine, ssh to the Ansible `control` node as the `rhel` user using `PowerShell`:
 ```PowerShell
 ssh rhel@172.28.128.100
 ```
