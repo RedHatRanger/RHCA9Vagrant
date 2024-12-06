@@ -126,7 +126,7 @@ pip3 install ansible-navigator
 
 ## Pass the control node's public ssh key to the nodes:
 ```bash
-for i in {node1 node2 node3 gitlab}; do ssh-copy-id -i /home/rhel/.ssh/id_rsa.pub $i; done
+for i in {node1,node2,node3,gitlab}; do ssh-copy-id -i /home/rhel/.ssh/id_rsa.pub $i; done
 ```
 
 ## Use Ansible-Navigator to kick off the ssh_keys.yml file (IN YOUR ~/.BASHRC, nav="ansible-navigator run -m stdout"):
