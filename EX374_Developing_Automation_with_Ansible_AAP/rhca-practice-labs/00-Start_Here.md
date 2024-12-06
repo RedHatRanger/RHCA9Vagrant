@@ -1,6 +1,9 @@
 # How to Setup Your Ansible Automation Platform Home Lab \
 [Link to the AAP Documentation](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5)
 
+<br><br><br>
+## Ansible Automation Platform (Control Node) Setup:
+
 ### 1. Register as a [Red Hat Developer](https://developers.redhat.com/register)
 
 ### 2. Sign in and download the [Ansible Automation Platform Setup Bundle](https://developers.redhat.com/content-gateway/file/ansible/Ansible_Automation_Platform_2.5/ansible-automation-platform-setup-bundle-2.5-1-x86_64.tar.gz)
@@ -214,4 +217,15 @@ node3.example.com
 [automationcontroller:vars]
 peers=execution_nodes
 EOF
+```
+
+<br><br><br>
+# GitLab Server Setup:
+
+### 1. SSH from the `control` node to the `gitlab` server:
+```bash
+ssh rhel@gitlab
+sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
+
+# Copy the output as you will need it on the next step to sign in as root
 ```
