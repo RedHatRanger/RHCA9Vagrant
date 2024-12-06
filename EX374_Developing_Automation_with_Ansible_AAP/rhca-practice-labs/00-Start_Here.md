@@ -139,4 +139,6 @@ EOF
 ## Use Ansible-Navigator to kick off the ssh_keys.yml file (IN YOUR ~/.BASHRC, nav="ansible-navigator run -m stdout"):
 ```bash
 nav /home/rhel/ansible/playbooks/ssh_keys.yml
+
+# The first time you run ansible-navigator, it will take a few moments because it is downloading the podman container
 ```
