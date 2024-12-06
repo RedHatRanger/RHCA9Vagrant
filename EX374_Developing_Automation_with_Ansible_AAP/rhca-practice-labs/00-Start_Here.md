@@ -19,7 +19,7 @@ ssh rhel@172.28.128.100
 
 ### 5. Register Your Ansible Control Node:
 ```bash
-sudo subscription-manager --register
+sudo subscription-manager register
 # Enter your developer username and password
 sudo subscription-manager auto-attach
 ```
