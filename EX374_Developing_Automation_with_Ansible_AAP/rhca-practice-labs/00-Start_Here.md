@@ -235,9 +235,18 @@ EOF
 172.28.128.104   gitlab.example.com    gitlab
 ```
 
-### 5. Back on the PowerShell Window, SSH from the `control` node to the `gitlab` server:
+### 5. Install `Git` and yum update the system:
 ```bash
 ssh rhel@gitlab
+sudo subscription-manager register
+sudo subscription-manager auto-attach
+sudo yum install -y git
+sudo yum update -y
+init 6
+```
+
+### 6. Back on the PowerShell Window, SSH from the `control` node to the `gitlab` server:
+```bash
 sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
 
 # Copy the output as you will need it on the next step to sign in as root
