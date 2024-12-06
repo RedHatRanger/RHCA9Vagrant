@@ -3,7 +3,7 @@
 
 <br>
 
-## Ansible Automation Platform (Control Node) Setup:
+## Part 1: Ansible Automation Platform (Control Node) Setup:
 
 ### 1. Register as a [Red Hat Developer](https://developers.redhat.com/register)
 
@@ -221,7 +221,7 @@ EOF
 ```
 
 <br><br><br>
-# GitLab Server Setup:
+# Part 2: GitLab Server Setup:
 
 ### 1. SSH from the `control` node to the `gitlab` server:
 ```bash
@@ -230,3 +230,5 @@ sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
 
 # Copy the output as you will need it on the next step to sign in as root
 ```
+
+### 2. Go to: `https://gitlab.example.com` and sign in with the username `root` and the `password you copied`
