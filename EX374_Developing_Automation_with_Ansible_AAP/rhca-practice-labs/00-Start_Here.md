@@ -93,7 +93,7 @@ pip3 install ansible-navigator
 
 ## Pass the control node's public ssh key to the nodes:
 ```bash
-cat << EOF > ssh_keys.yml
+cat << EOF > /home/rhel/ansible/playbooks/ssh_keys.yml
 ---
 - name: Generate SSH key and distribute to nodes
   hosts: localhost
@@ -122,4 +122,9 @@ cat << EOF > ssh_keys.yml
         user: rhel  # Replace with appropriate username on target nodes
         key: "{{ public_key_content.content | b64decode }}"
 EOF
+```
+
+## Use Ansible-Navigator to kick off the ssh_keys.yml file (IN YOUR ~/.BASHRC, nav="ansible-navigator run -m stdout"):
+```bash
+nav /home/rhel/ansible/playbooks/ssh_keys.yml
 ```
