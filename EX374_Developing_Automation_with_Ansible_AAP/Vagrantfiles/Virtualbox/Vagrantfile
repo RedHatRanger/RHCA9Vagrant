@@ -30,7 +30,6 @@ Vagrant.configure("2") do |config|
 
   # Define GitLab installation script
   gitlab_install_script = <<-SHELL
-    
     # Install necessary dependencies
     yum install -y curl policycoreutils openssh-server perl postfix
 
@@ -38,11 +37,13 @@ Vagrant.configure("2") do |config|
     systemctl enable --now sshd
     systemctl enable --now postfix
 
+    # Enable and start firewalld
+    systemctl enable --now firewalld
+
     # Open firewall for HTTP, HTTPS, and SSH
     firewall-cmd --permanent --add-service=http
     firewall-cmd --permanent --add-service=https
-    systemctl reload firewalld
-    fi
+    firewall-cmd --reload
 
     # Add the GitLab package repository
     curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | bash
@@ -72,9 +73,9 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = "node#{i}.example.com"
       node.vm.network :private_network, ip: "172.28.128.10#{i}"
       node.vm.provider "virtualbox" do |vb|
-      vb.memory = "2048"
-      vb.cpus = "1"
-    end
+        vb.memory = "2048"
+        vb.cpus = "1"
+      end
       node.vm.provision "shell", inline: provisioning_script
     end
   end
@@ -93,9 +94,3 @@ Vagrant.configure("2") do |config|
     gitlab.vm.provision "shell", inline: gitlab_install_script
   end
 end
-
-
-# Provide final instructions for the user
-# Please browse to your GitLab instance at: https://gitlab.example.com"
-# echo "If no password was provided during installation, check /etc/gitlab/initial_root_password for the initial root password."
-# Documentation can be found here: https://about.gitlab.com/install/#almalinux
