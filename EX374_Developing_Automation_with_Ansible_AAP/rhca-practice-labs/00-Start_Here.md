@@ -181,17 +181,28 @@ node3.example.com ansible_host=172.28.128.103 ansible_user=rhel ansible_ssh_priv
 gitlab.example.com ansible_host=172.28.128.104 ansible_user=rhel ansible_ssh_private_key_file=/home/rhel/.ssh/id_rsa
 
 # Group definitions for easier targeting
-[all:vars]admin_password='redhat'
-pg_username='rhel'
-pg_password='redhat'
+[all:vars]ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+admin_password='redhat'
 pg_host='control.example.com'
 pg_port=5432
 pg_database='aap_db'
 pg_sslmode='prefer'
 pg_username='rhel'
 pg_password='redhat'
+pg_host='control.example.com'
+pg_port=5432
 
 # Optional: Define relationships for AAP
+[tower]
+
+[automationgateway]
+
+[automationhub]
+
+[automationedacontroller]
+
+[database]
+
 [automationcontroller:vars]
 peers=execution_nodes
 EOF
