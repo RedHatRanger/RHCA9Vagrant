@@ -9,25 +9,25 @@
 ssh rhel@172.28.128.100
 ```
 
-## 4. Register Your Ansible Control Node:
+### 4. Register Your Ansible Control Node:
 ```bash
 sudo subscription-manager --register
 # Enter your developer username and password
 sudo subscription-manager auto-attach
 ```
 
-## 5. Yum install `ansible`, `ansible-core`, `python3-pip`, `container-tools`, and `rhel-system-roles`:
+### 5. Yum install `ansible`, `ansible-core`, `python3-pip`, `container-tools`, and `rhel-system-roles`:
 ```
 sudo yum install -y ansible ansible-core python3-pip container-tools rhel-system-roles
 ```
 
-## 6. Yum update the system and reboot:
+### 6. Yum update the system and reboot:
 ```
 sudo yum -y update
 sudo init 6
 ```
 
-## 7. Generate the ~/.bashrc file for shortcut access to the nodes:
+### 7. Generate the ~/.bashrc file for shortcut access to the nodes:
 ```bash
 mkdir ansible
 echo "alias go='ssh -Xq -o ServerAliveInterval=60'" >> ~/.bashrc
@@ -40,14 +40,14 @@ echo "cd /home/rhel/ansible" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-## 8. Configure the ~/.vimrc file:
+### 8. Configure the ~/.vimrc file:
 ```bash
 cat << EOF > /home/rhel/.vimrc
 autocmd FileType yaml setlocal ai ts=2 sw=2 et
 EOF
 ```
 
-## 9. Generate the ansible.cfg file
+### 9. Generate the ansible.cfg file
 ```bash
 cat << EOF > /home/rhel/ansible/ansible.cfg
 [defaults]
@@ -68,12 +68,12 @@ become_ask_pass=false
 EOF
 ```
 
-## 10. Setup the important Ansible directories:
+### 10. Setup the important Ansible directories:
 ```bash
 mkdir -p /home/rhel/ansible/{roles,collections,playbooks,templates}
 ```
 
-## Build the Inventory:
+### Build the Inventory:
 ```bash
 cat << EOF > /home/rhel/ansible/inventory
 [nodes]
@@ -86,7 +86,7 @@ gitlab
 EOF
 ```
 
-## 11. Setup the `host_vars`:
+### 11. Setup the `host_vars`:
 ```bash
 mkdir -p /home/rhel/ansible/host_vars
 cat << EOF > /home/rhel/ansible/host_vars/node1.yml
@@ -110,7 +110,7 @@ ansible_user: rhel
 EOF
 ```
 
-## 12. Create a "defaults.yml" file inside the "group_vars" folder:
+### 12. Create a "defaults.yml" file inside the "group_vars" folder:
 ```bash
 cat << EOF > group_vars/defaults.yml
 ---
@@ -119,23 +119,23 @@ ansible_python_interpreter: /usr/bin/python3
 EOF
 ```
 
-## 13. Install the `ansible.posix` and `community.general` collections:
+### 13. Install the `ansible.posix` and `community.general` collections:
 ```bash
 ansible-galaxy collection install https://galaxy.ansible.com/download/ansible-posix-2.0.0.tar.gz -p /home/rhel/ansible/collections/
 ansible-galaxy collection install https://galaxy.ansible.com/download/community-general-10.1.0.tar.gz -p /home/rhel/ansible/collections/
 ```
 
-## 14. Install `ansible-navigator` using python3-pip:
+### 14. Install `ansible-navigator` using python3-pip:
 ```
 pip3 install ansible-navigator
 ```
 
-## 15. Pass the control node's public ssh key to the nodes:
+### 15. Pass the control node's public ssh key to the nodes:
 ```bash
 for i in {node1,node2,node3,gitlab}; do ssh-copy-id -i /home/rhel/.ssh/id_rsa.pub $i; done
 ```
 
-## 16. Use Ansible-Navigator to kick off the ssh_keys.yml file (IN YOUR ~/.BASHRC, nav="ansible-navigator run -m stdout"):
+### 16. Use Ansible-Navigator to kick off the ssh_keys.yml file (IN YOUR ~/.BASHRC, nav="ansible-navigator run -m stdout"):
 ```bash
 nav /home/rhel/ansible/playbooks/ssh_keys.yml
 
