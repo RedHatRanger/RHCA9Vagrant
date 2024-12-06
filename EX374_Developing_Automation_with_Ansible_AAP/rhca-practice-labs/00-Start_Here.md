@@ -43,6 +43,25 @@ EOF
 
 ```
 
+## Setup the `host_vars`:
+```
+mkdir -p /home/rhel/ansible/host_vars
+cat << EOF > /home/rhel/ansible/host_vars/node1.yml
+ansible_host: 172.28.128.101
+ansible_user: rhel
+EOF
+
+cat << EOF > /home/rhel/ansible/host_vars/node2.yml
+ansible_host: 172.28.128.102
+ansible_user: rhel
+EOF
+
+cat << EOF > /home/rhel/ansible/host_vars/node3.yml
+ansible_host: 172.28.128.103
+ansible_user: rhel
+EOF
+```
+
 ## Install `ansible-navigator` using python3-pip:
 ```
 pip3 install ansible-navigator
