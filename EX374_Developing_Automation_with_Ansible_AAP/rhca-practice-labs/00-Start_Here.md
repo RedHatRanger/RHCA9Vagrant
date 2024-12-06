@@ -15,6 +15,12 @@ sudo subscription-manager auto-attach
 sudo yum install -y ansible ansible-core python3-pip container-tools
 ```
 
+## Yum update the system and reboot:
+```
+sudo yum -y update
+sudo init 6
+```
+
 ## Generate the ~/.bashrc file for shortcut access to the nodes:
 ```bash
 mkdir ansible
