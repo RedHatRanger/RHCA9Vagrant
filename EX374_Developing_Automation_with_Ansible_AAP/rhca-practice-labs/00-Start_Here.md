@@ -1,0 +1,82 @@
+## From the Windows Host Machine, ssh to the Ansible control node as the `rhel` user:
+```PowerShell
+ssh rhel@172.28.128.100
+```
+
+## Generate the ~/.bashrc file for shortcut access to the nodes:
+```bash
+mkdir ansible
+echo "alias go='ssh -Xq -o ServerAliveInterval=60'" >> ~/.bashrc
+echo "alias node1='go rhel@node1'" >> ~/.bashrc
+echo "alias node2='go rhel@node2'" >> ~/.bashrc
+echo "alias node3='go rhel@node3'" >> ~/.bashrc
+echo "alias gitlab='go rhel@gitlab'" >> ~/.bashrc
+echo "alias nav='ansible-navigator run -m stdout'" >> ~/.bashrc
+echo "cd /home/rhel/ansible" >> ~/.bashrc
+source ~/.bashrc
+```
+
+## Generate the ansible.cfg file
+```bash
+cat << EOF > /home/rhel/ansible/ansible.cfg
+[defaults]
+remote_user=rhel
+inventory=/home/rhel/ansible/inventory
+roles_path=/home/rhel/ansible/roles:/etc/ansible/roles
+collections_path=/home/rhel/ansible/collections:/etc/ansible/collections
+ask_pass=false
+host_key_checking=false
+callbacks_enabled=profile_tasks
+forks=10
+
+[privilege_escalation]
+become=true
+become_medthod=sudo
+become_user=root
+become_ask_pass=false
+EOF
+```
+
+## Build the Inventory:
+```bash
+
+
+```
+
+## Install `ansible-navigator` using python3-pip:
+```
+pip3 install ansible-navigator
+```
+
+## Pass the control node's public ssh key to the nodes:
+```bash
+cat << EOF > ssh_keys.yml
+---
+- name: Generate SSH key and distribute to nodes
+  hosts: localhost
+  tasks:
+    - name: Check if SSH key pair exists
+      stat:
+        path: ~/.ssh/id_rsa
+      register: ssh_key_stat
+
+    - name: Generate SSH key pair
+      command: ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N ""
+      when: not ssh_key_stat.stat.exists
+
+- name: Distribute SSH public key to all nodes
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Fetch SSH public key from control node
+      delegate_to: localhost
+      slurp:
+        src: ~/.ssh/id_rsa.pub
+      register: public_key_content
+
+    - name: Authorize SSH key for nodes
+      authorized_key:
+        user: rhel  # Replace with appropriate username on target nodes
+        key: "{{ public_key_content.content | b64decode }}"
+EOF
+```
