@@ -143,3 +143,8 @@ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N ""
 for i in {node1,node2,node3,gitlab}; do ssh-copy-id -i /home/rhel/.ssh/id_rsa.pub $i; done
 ```
 
+### 17. Unzip the Ansible Automation Platform's tar.gz file:
+```bash
+cd /home/rhel
+tar -xvzf /home/rhel/ansible-automation-platform-setup-bundle-2.5-6-x86_64.tar.gz
+```
