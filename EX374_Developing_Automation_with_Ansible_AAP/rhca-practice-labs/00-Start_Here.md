@@ -1,4 +1,5 @@
-# How to Setup Your Ansible Automation Platform Home Lab
+# How to Setup Your Ansible Automation Platform Home Lab \
+[Link to the AAP Documentation](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5)
 
 ### 1. Register as a [Red Hat Developer](https://developers.redhat.com/register)
 
