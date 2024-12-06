@@ -3,6 +3,18 @@
 ssh rhel@172.28.128.100
 ```
 
+## Register Your Ansible Control Node:
+```bash
+sudo subscription-manager --register
+# Enter your developer username and password
+sudo subscription-manager auto-attach
+```
+
+## Yum install `ansible`, `ansible-core`, `python3-pip`, and `@Container Tools`:
+```
+sudo yum install -y ansible ansible-core python3-pip @Container tools
+```
+
 ## Generate the ~/.bashrc file for shortcut access to the nodes:
 ```bash
 mkdir ansible
