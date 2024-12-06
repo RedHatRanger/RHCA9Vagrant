@@ -16,6 +16,13 @@ echo "cd /home/rhel/ansible" >> ~/.bashrc
 source ~/.bashrc
 ```
 
+## Configure the ~/.vimrc file:
+```bash
+cat << EOF > /home/rhel/.vimrc
+autocmd FileType yaml setlocal ai ts=2 sw=2 et
+EOF
+```
+
 ## Generate the ansible.cfg file
 ```bash
 cat << EOF > /home/rhel/ansible/ansible.cfg
