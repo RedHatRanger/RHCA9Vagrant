@@ -191,6 +191,10 @@ automationgateway_pg_username='automationgateway'
 automationgateway_pg_password=''
 automationgateway_pg_sslmode='prefer'
 
+# This section is for your Redis Nodes
+# -----------------------------------------------------
+[redis]
+control.example.com
 # Optional: Define relationships for AAP
 # This section is for your AAP Execution Nodes
 # -----------------------------------------------------
