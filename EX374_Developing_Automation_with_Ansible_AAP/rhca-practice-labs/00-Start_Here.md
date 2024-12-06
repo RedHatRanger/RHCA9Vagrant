@@ -157,17 +157,18 @@ tar -xvzf /home/rhel/ansible-automation-platform-setup-bundle-2.5-1-x86_64.tar.g
 cd ansible-automation-platform-setup-bundle-2.5-1-x86_64
 cp inventory inventory.bak
 cat << EOF > inventory
+# AAP Enterprise Installer Inventory for a Simple Lab Setup
+# This setup includes:
+# - Ansible Automation Platform server
+# - GitLab server for version control
+# - 3 execution nodes for running playbooks
+
+# This section is for your AAP Controller host(s)
+# -----------------------------------------------------
 [automationcontroller]
-control.example.com ansible_connection=local
+control.example.com ansible_connection=local ansible_host=172.28.128.100 ansible_user=rhel ansible_ssh_private_key_file=/home/rhel/.ssh/id_rsa
 
-[automationgateway]
-control.example.com
-
-[execution_nodes]
-node1.example.com 
-node2.example.com
-node3.example.com
-
+# Group definitions for easier targeting
 [all:vars]
 ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o GlobalKnownHostsFile=/dev/null'
 admin_password='redhat'
@@ -176,22 +177,27 @@ pg_port=5432
 pg_database='awx'
 pg_username='awx'
 pg_password='redhat'
-pg_sslmode='prefer' # set to 'verify-full' for client-side enforced SSL
+pg_sslmode='prefer'
 
 registry_url='registry.redhat.io'
 registry_username='<registry username>'
 registry_password='<registry password>'
 
 # Automation Gateway configuration
-automationgateway_admin_password=''
-
-automationgateway_pg_host='data.example.com'
+automationgateway_pg_host='control.example.com'
 automationgateway_pg_port=5432
-
 automationgateway_pg_database='automationgateway'
 automationgateway_pg_username='automationgateway'
 automationgateway_pg_password=''
 automationgateway_pg_sslmode='prefer'
+
+# Optional: Define relationships for AAP
+# This section is for your AAP Execution Nodes
+# -----------------------------------------------------
+[execution_nodes]
+node1.example.com
+node2.example.com
+node3.example.com
 
 [automationcontroller:vars]
 peers=execution_nodes
