@@ -226,7 +226,7 @@ EOF
 ### 1. On your `Windows Host Machine`, open `Notepad` as `Administrator`.
 ### 2. Click `Open` and browse to `C:\Windows\System32\drivers\etc\`, then click `all` to see all file types.
 ### 3. Double-click the `hosts` file to view its contents.
-### 4. Add the following information at the bottom and Click `Save`:
+### 4. Add the following information at the bottom and click `Ctrl + s` to save:
 ```
 172.28.128.100   control.example.com   control
 172.28.128.101   node1.example.com     node1
@@ -235,7 +235,7 @@ EOF
 172.28.128.104   gitlab.example.com    gitlab
 ```
 
-### 5. SSH from the `control` node to the `gitlab` server:
+### 5. Back on the PowerShell Window, SSH from the `control` node to the `gitlab` server:
 ```bash
 ssh rhel@gitlab
 sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
