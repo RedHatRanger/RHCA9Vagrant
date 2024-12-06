@@ -116,7 +116,7 @@ cat << EOF > /home/rhel/ansible/playbooks/ssh_keys.yml
       register: ssh_key_stat
 
     - name: Generate SSH key pair
-      command: ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -q -N ""
+      command: ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -q -N ""
       when: not ssh_key_stat.stat.exists
 
 - name: Distribute SSH public key to all nodes
