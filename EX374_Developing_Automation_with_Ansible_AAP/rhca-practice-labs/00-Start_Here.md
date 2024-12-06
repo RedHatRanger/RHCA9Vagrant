@@ -254,3 +254,5 @@ sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
 
 ### 6. Go to: `https://gitlab.example.com` and sign in as `root` and the `password you copied in the previous step`.
 ### 7. Go to: `https://gitlab.example.com/admin/users/root/edit` and change the default `root` password to `RedHatRanger`.
+
+
