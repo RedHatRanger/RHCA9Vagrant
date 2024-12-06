@@ -147,4 +147,6 @@ for i in {node1,node2,node3,gitlab}; do ssh-copy-id -i /home/rhel/.ssh/id_rsa.pu
 ```bash
 cd /home/rhel
 tar -xvzf /home/rhel/ansible-automation-platform-setup-bundle-2.5-6-x86_64.tar.gz
+
+# or whatever the full bundle name is...as of this day it is 2.5
 ```
