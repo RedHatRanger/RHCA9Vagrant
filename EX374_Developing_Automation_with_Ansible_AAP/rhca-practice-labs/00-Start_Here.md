@@ -247,17 +247,27 @@ sudo yum install -y git
 ```bash
 git config --global user.email 'RedHatRanger@example.com'
 git config --global user.name 'Bob Jones'
+git init
 ```
 
-### 9. Uncover the Initial Root Password for GitLab:
+### 9. Optionally pull down a GitHub and transfer it to GitLab:
+```
+git clone https://github.com/username/repository-name.git
+cd repository-name
+git remote add gitlab https://gitlab.com/username/repository-name.git
+```
+
+### 10. Uncover the Initial Root Password for GitLab:
 ```bash
 sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
 
 # Copy the output as you will need it on the next step to sign in as root
 ```
 
-### 10. Go to: `https://gitlab.example.com` and sign in as `root` and the `password you copied in the previous step`.
+### 11. Go to: `https://gitlab.example.com` and sign in as `root` and the `password you copied in the previous step`.
 
-### 11. Go to: `https://gitlab.example.com/admin/users/root/edit` and change the default `root` password to `RedHatRanger`.
+### 12. Go to: `https://gitlab.example.com/admin/users/root/edit` and change the default `root` password to `RedHatRanger`.
+
+### 13. Create another user with a secure password, promote the user to Administrator, then log off of `root` and back in with the new user.
 
 
