@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   # Define the provisioning script
   provisioning_script = <<-SHELL
     # Create the hosts file for all nodes because we do not have DNS setup
-    echo "172.28.128.100   ansible.example.com   ansible" >> /etc/hosts
+    echo "172.28.128.100   control.example.com   control" >> /etc/hosts
     echo "172.28.128.101   node1.example.com     node1" >> /etc/hosts
     echo "172.28.128.102   node2.example.com     node2" >> /etc/hosts
     echo "172.28.128.103   node3.example.com     node3" >> /etc/hosts
