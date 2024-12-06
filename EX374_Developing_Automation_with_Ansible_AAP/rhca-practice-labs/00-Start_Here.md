@@ -104,6 +104,15 @@ ansible_user: rhel
 EOF
 ```
 
+## Create a "defaults.yml" file inside the "group_vars" folder:
+```bash
+cat << EOF > group_vars/defaults.yml
+---
+ansible_user: rhel
+ansible_python_interpreter: /usr/bin/python3
+EOF
+```
+
 ## Install the `ansible.posix` and `community.general` collections:
 ```bash
 ansible-galaxy collection install https://galaxy.ansible.com/download/ansible-posix-2.0.0.tar.gz -p /home/rhel/ansible/collections/
