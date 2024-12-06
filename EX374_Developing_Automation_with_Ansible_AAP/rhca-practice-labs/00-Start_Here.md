@@ -104,6 +104,12 @@ ansible_user: rhel
 EOF
 ```
 
+## Install the `ansible.posix` and `community.general` collections:
+```bash
+ansible-galaxy collection install https://galaxy.ansible.com/download/ansible-posix-2.0.0.tar.gz -p /home/rhel/ansible/collections/
+ansible-galaxy collection install https://galaxy.ansible.com/download/community-general-10.1.0.tar.gz -p /home/rhel/ansible/collections/
+```
+
 ## Install `ansible-navigator` using python3-pip:
 ```
 pip3 install ansible-navigator
