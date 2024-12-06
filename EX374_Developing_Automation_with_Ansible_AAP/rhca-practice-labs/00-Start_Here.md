@@ -39,8 +39,15 @@ EOF
 
 ## Build the Inventory:
 ```bash
+cat << EOF > /home/rhel/ansible/inventory
+[nodes]
+node1
+node2
+node3
 
-
+[gitlab]
+gitlab
+EOF
 ```
 
 ## Setup the `host_vars`:
