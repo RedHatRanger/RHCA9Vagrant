@@ -12,7 +12,7 @@ sudo subscription-manager auto-attach
 
 ## Yum install `ansible`, `ansible-core`, `python3-pip`, and `@Container Tools`:
 ```
-sudo yum install -y ansible ansible-core python3-pip @Container tools
+sudo yum install -y ansible ansible-core python3-pip container-tools
 ```
 
 ## Generate the ~/.bashrc file for shortcut access to the nodes:
