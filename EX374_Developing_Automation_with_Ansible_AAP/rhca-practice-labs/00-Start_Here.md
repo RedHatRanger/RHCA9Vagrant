@@ -248,7 +248,7 @@ sudo yum install -y git
 git init
 git config --global user.email 'RedHatRanger@example.com'
 git config --global user.name 'Bob Jones'
-git config http.sslVerify false
+git config --global http.sslVerify false
 ```
 
 ### 9. Optionally pull down a GitHub and transfer it to GitLab:
