@@ -245,9 +245,10 @@ sudo yum install -y git
 
 ### 8. Setup the local git repo and global configuration (Example Only):
 ```bash
+git init
 git config --global user.email 'RedHatRanger@example.com'
 git config --global user.name 'Bob Jones'
-git init
+git config http.sslVerify false
 ```
 
 ### 9. Optionally pull down a GitHub and transfer it to GitLab:
@@ -255,6 +256,9 @@ git init
 git clone https://github.com/username/repository-name.git
 cd repository-name
 git remote add gitlab https://gitlab.com/username/repository-name.git
+
+# To change the https to http for certificate issues
+git remote set-url origin http://site.git
 ```
 
 ### 10. Uncover the Initial Root Password for GitLab:
