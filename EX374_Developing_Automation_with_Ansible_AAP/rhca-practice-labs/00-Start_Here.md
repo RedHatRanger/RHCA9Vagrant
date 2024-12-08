@@ -244,8 +244,8 @@ Press Win + R on your keyboard to open the Run dialog.
 Type: SystemPropertiesAdvanced
 Hit Enter to open the Advanced System Settings dialog directly.
 Click on Environment Variables.
-Under System variables, find and select Path, then click Edit.
-Ensure the path to Git's bin or cmd directory (e.g., C:\Program Files\Git\bin or C:\Program Files\Git\cmd) is listed.
+Under System variables, find and double-click Path, then click New.
+Type the path to Git's bin in the empty bottom line (C:\Program Files\Git\bin).
 ```
 ### 7. Back on the PowerShell Window, SSH from the `control` node to the `gitlab` server and install `Git`:
 ```bash
