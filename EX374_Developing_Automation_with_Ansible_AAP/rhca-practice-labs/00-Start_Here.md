@@ -235,7 +235,11 @@ EOF
 172.28.128.104   gitlab.example.com    gitlab
 ```
 
-### 5. 
+### 5. Install `Visual Studio Code (VSCode)` on `Windows Host Machine`:
+```
+Go to: https://code.visualstudio.com/
+Download and install the latest version.
+```
 
 ### 6. Install `Git` on `Windows Host Machine`, and add `C:\Program Files\Git\bin` to the `Path` System Variables:
 ```
@@ -248,6 +252,7 @@ Click on Environment Variables.
 Under System variables, find and double-click Path, then click New.
 Type the path to Git's bin in the empty bottom line (C:\Program Files\Git\bin).
 ```
+
 ### 7. Back on the PowerShell Window, SSH from the `control` node to the `gitlab` server and install `Git`:
 ```bash
 ssh rhel@gitlab
