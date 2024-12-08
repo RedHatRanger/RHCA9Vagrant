@@ -235,6 +235,18 @@ EOF
 172.28.128.104   gitlab.example.com    gitlab
 ```
 
+### 5. 
+
+### 6. Install `Git Bash` on `Windows Host Machine`, and add `C:\Program Files\Git\bin` to the `Path` System Variables:
+
+Go to: `https://gitforwindows.org/` and click the blue `download` button. 
+Press `Win + R` on your keyboard to open the Run dialog.
+Type: `SystemPropertiesAdvanced`
+Hit `Enter` to open the `Advanced System Settings` dialog directly.
+Click on `Environment Variables`.
+Under System variables, find and select Path, then click Edit.
+Ensure the path to Git's bin or cmd directory (e.g., C:\Program Files\Git\bin or C:\Program Files\Git\cmd) is listed.
+
 ### 7. Back on the PowerShell Window, SSH from the `control` node to the `gitlab` server and install `Git`:
 ```bash
 ssh rhel@gitlab
@@ -273,5 +285,12 @@ sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
 ### 12. Go to: `https://gitlab.example.com/admin/users/root/edit` and change the default `root` password to `RedHatRanger`.
 
 ### 13. Create another user with a secure password, promote the user to Administrator, then log off of `root` and back in with the new user.
+
+### 14. Play around with adding Repositories (Projects).
+
+### 15. 
+
+
+
 
 
