@@ -237,9 +237,10 @@ EOF
 
 ### 5. 
 
-### 6. Install `Git Bash` on `Windows Host Machine`, and add `C:\Program Files\Git\bin` to the `Path` System Variables:
+### 6. Install `Git` on `Windows Host Machine`, and add `C:\Program Files\Git\bin` to the `Path` System Variables:
 ```
-Go to: https://gitforwindows.org/ and click the blue download button. 
+Go to: https://gitforwindows.org/ and click the blue download button.
+Install the Git Progam using the defaults, by continuously clicking Next or Ok.
 Press Win + R on your keyboard to open the Run dialog.
 Type: SystemPropertiesAdvanced
 Hit Enter to open the Advanced System Settings dialog directly.
