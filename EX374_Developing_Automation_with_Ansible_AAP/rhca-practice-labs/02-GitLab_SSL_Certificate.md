@@ -1,4 +1,17 @@
 # Handling SSL Warnings for GitLab in a Container
+```
+podman pull gitlab/gitlab-ce:latest
+
+docker run --detach \
+  --hostname gitlab.local \
+  --publish 443:443 --publish 80:80 --publish 22:22 \
+  --name gitlab \
+  --restart always \
+  --volume /srv/gitlab/config:/etc/gitlab \
+  --volume /srv/gitlab/logs:/var/log/gitlab \
+  --volume /srv/gitlab/data:/var/opt/gitlab \
+  gitlab/gitlab-ce:latest
+```
 
 If you access your GitLab server from the host machine (or another device) and encounter SSL warnings, this guide explains why they occur and how to resolve them.
 
