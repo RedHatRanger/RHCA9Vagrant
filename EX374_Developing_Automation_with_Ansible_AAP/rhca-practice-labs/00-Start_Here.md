@@ -386,7 +386,6 @@ fi
 # Final Message
 echo "Self-signed SSL with SANs setup for GitLab completed successfully!"
 echo "Access your GitLab instance at: https://$DOMAIN"
-
 ```
 
 
