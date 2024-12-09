@@ -1,11 +1,17 @@
-# Git Tutorial for Windows and RHEL 9 Hosts
+# Git 101 - The Basics
 
+## **Objective**
 This guide provides step-by-step instructions for installing, configuring, and using Git on **Windows** and **RHEL 9** hosts.
+
+
 
 ---
 
 ## 1. **What is Git?**
 Git is a distributed version control system that helps developers track, manage, and collaborate on projects efficiently.
+
+Snapshots, Not Differences
+The major difference between Git and any other VCS (Subversion and friends included) is the way Git thinks about its data. Conceptually, most other systems store information as a list of file-based changes. These other systems (CVS, Subversion, Perforce, and so on) think of the information they store as a set of files and the changes made to each file over time (this is commonly described as delta-based version control).
 
 ---
 
