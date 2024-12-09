@@ -6,4 +6,4 @@
 [Best GitLab CI/CD Lab Video](https://www.youtube.com/watch?v=qP8kir2GUgo&list=TLPQMDMxMjIwMjQChSb63_4TJw&index=2) \
 [Amazon Humidifier Vornado](https://a.co/d/5AYIi0n) \
 [Amazon USB-C 3.3ft Extender](https://a.co/d/hY07KIS) \
-[Configuring NPM Proxy Server](https://www.youtube.com/watch?v=nmE28_BA83w)
+[Fix Certificate Issues](https://www.youtube.com/watch?v=79e6KBYcVmQ)
