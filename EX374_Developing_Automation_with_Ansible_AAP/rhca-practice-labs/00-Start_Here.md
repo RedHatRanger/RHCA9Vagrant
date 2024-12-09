@@ -315,19 +315,19 @@ echo "Generating OpenSSL configuration file for SANs..."
 sudo tee $CONFIG_FILE > /dev/null <<EOF
 [ req ]
 default_bits        = 4096
-prompt              = no
 default_md          = sha256
-distinguished_name  = dn
-req_extensions      = req_ext
+prompt              = no
+distinguished_name  = req_distinguished_name
+x509_extensions     = v3_ca
 
-[ dn ]
+[ req_distinguished_name ]
 C                   = US
 ST                  = State
 L                   = City
 O                   = Organization
 CN                  = $DOMAIN
 
-[ req_ext ]
+[ v3_ca ]
 subjectAltName      = @alt_names
 
 [ alt_names ]
@@ -342,7 +342,7 @@ echo "Generating self-signed certificate for $DOMAIN..."
 sudo openssl req -x509 -nodes -days $CERT_DAYS -newkey rsa:4096 \
   -keyout $SSL_DIR/$DOMAIN.key \
   -out $SSL_DIR/$DOMAIN.crt \
-  -config $CONFIG_FILE
+  -config $CONFIG_FILE -extensions v3_ca
 
 # Step 4: Set Permissions for the Certificate and Key
 echo "Setting permissions for SSL files..."
