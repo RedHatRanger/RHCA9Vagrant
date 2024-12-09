@@ -299,76 +299,94 @@ sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
 #!/bin/bash
 
 # Variables
-DOMAIN="gitlab.example.com"               # Replace with your GitLab domain
-SSL_DIR="/etc/gitlab/ssl"                 # GitLab SSL directory
-DAYS_VALID=365                            # Certificate validity in days
-ANSWER_FILE="openssl_answerfile.cnf"      # OpenSSL configuration file
+DOMAIN="gitlab.example.com"                 # Primary domain for GitLab
+SSL_DIR="/etc/gitlab/ssl"                   # Directory to store SSL certificates
+CERT_DAYS=825                               # Certificate validity in days
+CONFIG_FILE="$SSL_DIR/openssl_gitlab.cnf"   # OpenSSL configuration file
+GITLAB_CONFIG="/etc/gitlab/gitlab.rb"       # GitLab configuration file
 
-# Ensure the SSL directory exists
-echo "Ensuring SSL directory exists at $SSL_DIR..."
+# Step 1: Create the SSL Directory
+echo "Creating SSL directory at $SSL_DIR if it doesn't exist..."
 sudo mkdir -p $SSL_DIR
 sudo chmod 700 $SSL_DIR
 
-# Generate the OpenSSL answer file
-echo "Generating OpenSSL answer file: $ANSWER_FILE..."
-cat <<EOF > $ANSWER_FILE
+# Step 2: Create OpenSSL Configuration File with SANs
+echo "Generating OpenSSL configuration file for SANs..."
+sudo tee $CONFIG_FILE > /dev/null <<EOF
 [ req ]
 default_bits        = 4096
 prompt              = no
 default_md          = sha256
-distinguished_name  = req_distinguished_name
-x509_extensions     = v3_ca
+distinguished_name  = dn
+req_extensions      = req_ext
 
-[ req_distinguished_name ]
+[ dn ]
 C                   = US
-ST                  = Alabama
-L                   = Huntsville
-O                   = GitLab Inc
+ST                  = State
+L                   = City
+O                   = Organization
 CN                  = $DOMAIN
 
-[ v3_ca ]
+[ req_ext ]
 subjectAltName      = @alt_names
-basicConstraints    = CA:TRUE
-keyUsage            = digitalSignature, keyEncipherment, keyCertSign
-extendedKeyUsage    = serverAuth
 
 [ alt_names ]
 DNS.1               = $DOMAIN
 DNS.2               = www.$DOMAIN
 EOF
 
-echo "Answer file created successfully."
+echo "OpenSSL configuration file created at $CONFIG_FILE."
 
-# Remove old certificate and key files if they exist
-echo "Removing old certificate and key files (if they exist)..."
-sudo rm -f $SSL_DIR/$DOMAIN.crt $SSL_DIR/$DOMAIN.key
-
-# Generate the new RSA 4096 key and self-signed certificate
-echo "Generating new RSA 4096 key and self-signed certificate..."
-sudo openssl req -x509 -nodes -days $DAYS_VALID -newkey rsa:4096 \
+# Step 3: Generate Self-Signed Certificate with SANs
+echo "Generating self-signed certificate for $DOMAIN..."
+sudo openssl req -x509 -nodes -days $CERT_DAYS -newkey rsa:4096 \
   -keyout $SSL_DIR/$DOMAIN.key \
   -out $SSL_DIR/$DOMAIN.crt \
-  -config $ANSWER_FILE
+  -config $CONFIG_FILE
 
-# Set proper permissions for the certificate and key
-echo "Setting proper permissions on key and certificate..."
+# Step 4: Set Permissions for the Certificate and Key
+echo "Setting permissions for SSL files..."
 sudo chmod 600 $SSL_DIR/$DOMAIN.key
 sudo chmod 644 $SSL_DIR/$DOMAIN.crt
 
-# Verify the certificate
-echo "Verifying the certificate..."
-openssl x509 -in $SSL_DIR/$DOMAIN.crt -text -noout | grep -E "Issuer|Subject|Public-Key"
+# Step 5: Update GitLab Configuration
+echo "Backing up GitLab configuration file..."
+sudo cp $GITLAB_CONFIG "${GITLAB_CONFIG}.bak.$(date +%F_%T)"
 
-# Clean up the answer file (optional)
-echo "Cleaning up temporary files..."
-rm -f $ANSWER_FILE
+echo "Updating GitLab configuration file to use the new certificate..."
+sudo tee $GITLAB_CONFIG > /dev/null <<EOF
+external_url "https://$DOMAIN"
 
-# Reconfigure GitLab
-echo "Reconfiguring GitLab to apply the new certificate..."
+# Configure NGINX to use the self-signed certificate
+nginx['ssl_certificate'] = "$SSL_DIR/$DOMAIN.crt"
+nginx['ssl_certificate_key'] = "$SSL_DIR/$DOMAIN.key"
+EOF
+
+# Step 6: Reconfigure and Restart GitLab
+echo "Reconfiguring GitLab to apply changes..."
 sudo gitlab-ctl reconfigure
-sudo gitlab-ctl restart
+if [ $? -eq 0 ]; then
+  echo "GitLab reconfiguration completed successfully."
+else
+  echo "Error: GitLab reconfiguration failed. Please check the logs."
+  exit 1
+fi
 
-echo "Certificate generation and GitLab reconfiguration complete."
+# Step 7: Verify the Certificate Includes SANs
+echo "Verifying the certificate for SANs..."
+CERT_SAN=$(openssl x509 -in $SSL_DIR/$DOMAIN.crt -text -noout | grep -A1 "Subject Alternative Name")
+if [[ $CERT_SAN == *"$DOMAIN"* ]]; then
+  echo "Certificate successfully includes SANs:"
+  echo "$CERT_SAN"
+else
+  echo "Error: SANs are missing from the certificate."
+  exit 1
+fi
+
+# Final Message
+echo "Self-signed SSL with SANs setup for GitLab completed successfully!"
+echo "Access your GitLab instance at: https://$DOMAIN"
+
 ```
 
 
