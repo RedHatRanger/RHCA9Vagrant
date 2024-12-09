@@ -294,7 +294,82 @@ sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
 
 ### 14. Play around with adding Repositories (Projects).
 
-### 15. 
+### 15. Generate the https:// certificate (Copy and Paste this into a .sh file and chmod+x it to execute this):
+```bash
+#!/bin/bash
+
+# Variables
+DOMAIN="gitlab.example.com"               # Replace with your GitLab domain
+SSL_DIR="/etc/gitlab/ssl"                 # GitLab SSL directory
+DAYS_VALID=365                            # Certificate validity in days
+ANSWER_FILE="openssl_answerfile.cnf"      # OpenSSL configuration file
+
+# Ensure the SSL directory exists
+echo "Ensuring SSL directory exists at $SSL_DIR..."
+sudo mkdir -p $SSL_DIR
+sudo chmod 700 $SSL_DIR
+
+# Generate the OpenSSL answer file
+echo "Generating OpenSSL answer file: $ANSWER_FILE..."
+cat <<EOF > $ANSWER_FILE
+[ req ]
+default_bits        = 4096
+prompt              = no
+default_md          = sha256
+distinguished_name  = req_distinguished_name
+x509_extensions     = v3_ca
+
+[ req_distinguished_name ]
+C                   = US
+ST                  = Alabama
+L                   = Huntsville
+O                   = GitLab Inc
+CN                  = $DOMAIN
+
+[ v3_ca ]
+subjectAltName      = @alt_names
+basicConstraints    = CA:TRUE
+keyUsage            = digitalSignature, keyEncipherment, keyCertSign
+extendedKeyUsage    = serverAuth
+
+[ alt_names ]
+DNS.1               = $DOMAIN
+DNS.2               = www.$DOMAIN
+EOF
+
+echo "Answer file created successfully."
+
+# Remove old certificate and key files if they exist
+echo "Removing old certificate and key files (if they exist)..."
+sudo rm -f $SSL_DIR/$DOMAIN.crt $SSL_DIR/$DOMAIN.key
+
+# Generate the new RSA 4096 key and self-signed certificate
+echo "Generating new RSA 4096 key and self-signed certificate..."
+sudo openssl req -x509 -nodes -days $DAYS_VALID -newkey rsa:4096 \
+  -keyout $SSL_DIR/$DOMAIN.key \
+  -out $SSL_DIR/$DOMAIN.crt \
+  -config $ANSWER_FILE
+
+# Set proper permissions for the certificate and key
+echo "Setting proper permissions on key and certificate..."
+sudo chmod 600 $SSL_DIR/$DOMAIN.key
+sudo chmod 644 $SSL_DIR/$DOMAIN.crt
+
+# Verify the certificate
+echo "Verifying the certificate..."
+openssl x509 -in $SSL_DIR/$DOMAIN.crt -text -noout | grep -E "Issuer|Subject|Public-Key"
+
+# Clean up the answer file (optional)
+echo "Cleaning up temporary files..."
+rm -f $ANSWER_FILE
+
+# Reconfigure GitLab
+echo "Reconfiguring GitLab to apply the new certificate..."
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl restart
+
+echo "Certificate generation and GitLab reconfiguration complete."
+```
 
 
 
