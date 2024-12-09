@@ -299,93 +299,76 @@ sudo grep -i password: /etc/gitlab/initial_root_password | cut -d ":" -f2
 #!/bin/bash
 
 # Variables
-DOMAIN="gitlab.example.com"                 # Primary domain for GitLab
-SSL_DIR="/etc/gitlab/ssl"                   # Directory to store SSL certificates
-CERT_DAYS=825                               # Certificate validity in days
-CONFIG_FILE="$SSL_DIR/openssl_gitlab.cnf"   # OpenSSL configuration file
+ROOT_CA_NAME="MyRootCA"                     # Name of the Root CA
+ROOT_CA_KEY="/etc/gitlab/ssl/rootCA.key"    # Root CA private key
+ROOT_CA_CERT="/etc/gitlab/ssl/rootCA.crt"   # Root CA certificate
+DOMAIN="gitlab.example.com"                 # GitLab domain
+SSL_DIR="/etc/gitlab/ssl"                   # Directory for SSL files
+DAYS_VALID=825                              # Validity for GitLab certificate
 GITLAB_CONFIG="/etc/gitlab/gitlab.rb"       # GitLab configuration file
 
-# Step 1: Create the SSL Directory
-echo "Creating SSL directory at $SSL_DIR if it doesn't exist..."
-sudo mkdir -p $SSL_DIR
-sudo chmod 700 $SSL_DIR
+# Step 1: Create SSL Directory
+echo "Creating SSL directory at $SSL_DIR..."
+sudo mkdir -p "$SSL_DIR"
+sudo chmod 700 "$SSL_DIR"
 
-# Step 2: Create OpenSSL Configuration File with SANs
-echo "Generating OpenSSL configuration file for SANs..."
-sudo tee $CONFIG_FILE > /dev/null <<EOF
-[ req ]
-default_bits        = 4096
-default_md          = sha256
-prompt              = no
-distinguished_name  = req_distinguished_name
-x509_extensions     = v3_ca
+# Step 2: Generate Root Certificate Authority
+echo "Generating Root Certificate Authority..."
+sudo openssl genrsa -out "$ROOT_CA_KEY" 4096
+sudo openssl req -x509 -new -nodes -key "$ROOT_CA_KEY" -sha256 -days 1825 \
+  -out "$ROOT_CA_CERT" \
+  -subj "/C=US/ST=State/L=City/O=MyOrganization/CN=$ROOT_CA_NAME"
 
-[ req_distinguished_name ]
-C                   = US
-ST                  = State
-L                   = City
-O                   = Organization
-CN                  = $DOMAIN
+echo "Root CA created at $ROOT_CA_CERT."
 
-[ v3_ca ]
-subjectAltName      = @alt_names
+# Step 3: Generate Certificate Signing Request (CSR) for GitLab
+echo "Generating a certificate signing request (CSR) for $DOMAIN..."
+sudo openssl genrsa -out "$SSL_DIR/$DOMAIN.key" 2048
+sudo openssl req -new -key "$SSL_DIR/$DOMAIN.key" \
+  -out "$SSL_DIR/$DOMAIN.csr" \
+  -subj "/C=US/ST=State/L=City/O=MyOrganization/CN=$DOMAIN"
 
-[ alt_names ]
-DNS.1               = $DOMAIN
-DNS.2               = www.$DOMAIN
-EOF
+# Step 4: Sign the CSR with the Root CA
+echo "Signing the CSR with the Root CA..."
+sudo openssl x509 -req -in "$SSL_DIR/$DOMAIN.csr" -CA "$ROOT_CA_CERT" -CAkey "$ROOT_CA_KEY" \
+  -CAcreateserial -out "$SSL_DIR/$DOMAIN.crt" -days $DAYS_VALID -sha256 \
+  -extfile <(printf "subjectAltName=DNS:$DOMAIN,DNS:www.$DOMAIN")
 
-echo "OpenSSL configuration file created at $CONFIG_FILE."
+# Set permissions for SSL files
+sudo chmod 600 "$SSL_DIR/$DOMAIN.key"
+sudo chmod 644 "$SSL_DIR/$DOMAIN.crt"
+sudo chmod 644 "$ROOT_CA_CERT"
 
-# Step 3: Generate Self-Signed Certificate with SANs
-echo "Generating self-signed certificate for $DOMAIN..."
-sudo openssl req -x509 -nodes -days $CERT_DAYS -newkey rsa:4096 \
-  -keyout $SSL_DIR/$DOMAIN.key \
-  -out $SSL_DIR/$DOMAIN.crt \
-  -config $CONFIG_FILE -extensions v3_ca
+echo "Certificate for $DOMAIN created and signed."
 
-# Step 4: Set Permissions for the Certificate and Key
-echo "Setting permissions for SSL files..."
-sudo chmod 600 $SSL_DIR/$DOMAIN.key
-sudo chmod 644 $SSL_DIR/$DOMAIN.crt
+# Step 5: Backup Existing GitLab Configuration
+echo "Backing up GitLab configuration..."
+sudo cp "$GITLAB_CONFIG" "${GITLAB_CONFIG}.bak.$(date +%F_%T)"
 
-# Step 5: Update GitLab Configuration
-echo "Backing up GitLab configuration file..."
-sudo cp $GITLAB_CONFIG "${GITLAB_CONFIG}.bak.$(date +%F_%T)"
-
-echo "Updating GitLab configuration file to use the new certificate..."
-sudo tee $GITLAB_CONFIG > /dev/null <<EOF
+# Step 6: Update GitLab Configuration
+echo "Updating GitLab configuration to use the signed certificate..."
+sudo tee "$GITLAB_CONFIG" > /dev/null <<EOF
 external_url "https://$DOMAIN"
 
-# Configure NGINX to use the self-signed certificate
+# Configure NGINX with the signed certificate
 nginx['ssl_certificate'] = "$SSL_DIR/$DOMAIN.crt"
 nginx['ssl_certificate_key'] = "$SSL_DIR/$DOMAIN.key"
 EOF
 
-# Step 6: Reconfigure and Restart GitLab
-echo "Reconfiguring GitLab to apply changes..."
+# Step 7: Reconfigure GitLab
+echo "Reconfiguring GitLab to apply the new settings..."
 sudo gitlab-ctl reconfigure
 if [ $? -eq 0 ]; then
-  echo "GitLab reconfiguration completed successfully."
+    echo "GitLab reconfiguration completed successfully."
 else
-  echo "Error: GitLab reconfiguration failed. Please check the logs."
-  exit 1
+    echo "Error: GitLab reconfiguration failed. Please check the logs."
+    exit 1
 fi
 
-# Step 7: Verify the Certificate Includes SANs
-echo "Verifying the certificate for SANs..."
-CERT_SAN=$(openssl x509 -in $SSL_DIR/$DOMAIN.crt -text -noout | grep -A1 "Subject Alternative Name")
-if [[ $CERT_SAN == *"$DOMAIN"* ]]; then
-  echo "Certificate successfully includes SANs:"
-  echo "$CERT_SAN"
-else
-  echo "Error: SANs are missing from the certificate."
-  exit 1
-fi
-
-# Final Message
-echo "Self-signed SSL with SANs setup for GitLab completed successfully!"
-echo "Access your GitLab instance at: https://$DOMAIN"
+# Final Instructions
+echo "Self-signed Root CA and GitLab SSL setup completed successfully!"
+echo "Distribute the Root CA certificate ($ROOT_CA_CERT) to clients to trust the GitLab server."
+echo "You can access your GitLab instance at: https://$DOMAIN"
 ```
 
 
