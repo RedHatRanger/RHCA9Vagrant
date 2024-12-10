@@ -237,7 +237,7 @@ git pull
 
 ---
 
-## **Git Cheat Sheet**
+## Git Cheat Sheet
 ![image](https://github.com/user-attachments/assets/1dad6084-b047-431f-8f64-291c2da4780e)
 
 
