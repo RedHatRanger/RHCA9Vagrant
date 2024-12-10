@@ -249,4 +249,5 @@ git pull
 And this one...
 ![image](https://github.com/user-attachments/assets/1ef44904-5c8d-4505-a2f2-6a9c9de1e59f)
 
+(Image subject to @Copyright by: Danny Adams https://dev.to/doabledanny/git-cheat-sheet-50-commands-free-pdf-and-poster-4gcn/comments)
 
