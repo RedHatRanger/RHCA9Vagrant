@@ -237,4 +237,3 @@ git pull
 
 ---
 
-This guide combines installation instructions, workflow management, and advanced usage tips for Git on both Windows and RHEL 9 hosts. Let me know if further refinements are needed!
