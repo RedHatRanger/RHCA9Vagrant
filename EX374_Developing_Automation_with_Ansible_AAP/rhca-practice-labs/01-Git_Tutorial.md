@@ -1,4 +1,4 @@
-# Git Tutorial for Windows, RHEL 9 Hosts, and Workflow Management
+# Git 101
 
 This guide provides comprehensive instructions for installing, configuring, and using Git on **Windows** and **RHEL 9** hosts. It also explains the Git workflow with a detailed description of file states and commands.
 
