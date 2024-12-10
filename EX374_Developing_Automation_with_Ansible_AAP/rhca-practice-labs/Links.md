@@ -7,4 +7,5 @@
 [Amazon Humidifier Vornado](https://a.co/d/5AYIi0n) \
 [Amazon USB-C 3.3ft Extender](https://a.co/d/hY07KIS) \
 [Fix Certificate Issues](https://www.youtube.com/watch?v=JNFQOJP5VY0&list=TLPQMDkxMjIwMjQ5rrSkXkriMQ&index=3) \
-[Zero to Mastery Career questions](https://zerotomastery.io/)
+[Zero to Mastery Career questions](https://zerotomastery.io/) \
+[Birthday Paradox](https://www.youtube.com/watch?v=OcCRflNM-Xk)
