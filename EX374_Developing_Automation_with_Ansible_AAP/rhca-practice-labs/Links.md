@@ -9,4 +9,5 @@
 [Fix Certificate Issues](https://www.youtube.com/watch?v=JNFQOJP5VY0&list=TLPQMDkxMjIwMjQ5rrSkXkriMQ&index=3) \
 [Zero to Mastery Career questions](https://zerotomastery.io/) \
 [Birthday Paradox](https://www.youtube.com/watch?v=OcCRflNM-Xk) \
-[Best Git Tutorial for Revert and Reset](https://www.youtube.com/watch?v=IWR24Z1yp80)
+[Best Git Tutorial for Revert and Reset](https://www.youtube.com/watch?v=IWR24Z1yp80) \
+[Computer Science Explained in 17 minutes](https://www.youtube.com/watch?v=CxGSnA-RTsA)
