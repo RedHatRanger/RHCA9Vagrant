@@ -11,4 +11,5 @@
 [Birthday Paradox](https://www.youtube.com/watch?v=OcCRflNM-Xk) \
 [Best Git Tutorial for Revert and Reset](https://www.youtube.com/watch?v=IWR24Z1yp80) \
 [Computer Science Explained in 17 minutes](https://www.youtube.com/watch?v=CxGSnA-RTsA) \
-[How to Study Extremely Fast](https://www.youtube.com/watch?v=9tDkkKDQWlg)
+[How to Study Extremely Fast](https://www.youtube.com/watch?v=9tDkkKDQWlg) \
+[Diabetes Remedy](https://www.youtube.com/watch?v=lVTS_J7Xmxs)
