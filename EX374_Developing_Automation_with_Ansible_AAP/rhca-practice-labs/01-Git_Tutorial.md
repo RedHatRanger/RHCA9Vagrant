@@ -57,6 +57,7 @@ After installation, set up your user identity for Git commits.
 ```bash
 git config --global user.name "Your Name"
 git config --global user.email "your_email@example.com"
+git config --global alias.pr "pull --rebase"
 ```
 
 Verify the configuration:
