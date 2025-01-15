@@ -3,6 +3,14 @@ Vagrant.configure("2") do |config|
   # Global Box Configuration
   config.vm.box = "generic/rhel9" # Replace with a valid RHEL 9.5 box
 
+  # Hostname-to-IP Mapping for /etc/hosts
+  hosts_entries = <<-EOF
+192.168.56.10 db.local
+192.168.56.11 pah.local
+192.168.56.12 controller.local
+192.168.56.13 worker.local
+EOF
+
   # Credentials for Red Hat subscription
   REDHAT_USERNAME = "your_username"
   REDHAT_PASSWORD = "your_password"
@@ -28,7 +36,11 @@ Vagrant.configure("2") do |config|
     echo "==> Creating Ansible user 'rhel' with password 'redhat'..." | tee -a $LOGFILE
     sudo useradd -m -G wheel rhel
     echo 'rhel:redhat' | sudo chpasswd
-    # Note: In the real world scenario, you'll want to use a more secure password.
+
+    echo "==> Updating /etc/hosts with lab entries..." | tee -a $LOGFILE
+    echo "#{hosts_entries}" | sudo tee -a /etc/hosts
+
+    # Note: In the real world scenario, you'll want to use a more secure password and DNS setup.
   SCRIPT
 
   # --------------------------------------------------------------
@@ -44,22 +56,21 @@ Vagrant.configure("2") do |config|
       vb.memory = 2048
     end
 
-    db.vm.provision "shell", inline: <<-SCRIPT
-      #{provision_script}
+    db.vm.provision "shell", inline: provision_script
 
-      echo "==> Installing PostgreSQL..." | tee -a $LOGFILE
+    db.vm.provision "shell", inline: <<-SCRIPT
+      echo "==> Installing PostgreSQL..." | tee -a /var/log/vagrant-provision.log
       sudo dnf -y install postgresql-server
       sudo postgresql-setup --initdb
       sudo systemctl enable --now postgresql
 
-      echo "==> Configuring PostgreSQL for remote access..." | tee -a $LOGFILE
+      echo "==> Configuring PostgreSQL for remote access..." | tee -a /var/log/vagrant-provision.log
       sudo sed -i "s/127.0.0.1\/32/all\/0/g" /var/lib/pgsql/data/pg_hba.conf
       echo "listen_addresses = '*'" | sudo tee -a /var/lib/pgsql/data/postgresql.conf
       sudo systemctl restart postgresql
 
-      echo "==> Setting PostgreSQL user password to 'redhat'..." | tee -a $LOGFILE
+      echo "==> Setting PostgreSQL user password to 'redhat'..." | tee -a /var/log/vagrant-provision.log
       sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'redhat';"
-      # Note: In the real world scenario, you'll want to use a more secure password.
     SCRIPT
   end
 
@@ -76,12 +87,12 @@ Vagrant.configure("2") do |config|
       vb.memory = 4096
     end
 
+    controller.vm.provision "shell", inline: provision_script
+
     controller.vm.provision "shell", inline: <<-SCRIPT
-      #{provision_script}
+      echo "==> Preparing system for Ansible Automation Platform offline installer..." | tee -a /var/log/vagrant-provision.log
 
-      echo "==> Preparing system for Ansible Automation Platform offline installer..." | tee -a $LOGFILE
-
-      echo "==> Setting up GitLab with Podman..." | tee -a $LOGFILE
+      echo "==> Setting up GitLab with Podman..." | tee -a /var/log/vagrant-provision.log
       podman pull gitlab/gitlab-ce:latest
 
       podman run -d \
@@ -94,7 +105,7 @@ Vagrant.configure("2") do |config|
         -v /srv/gitlab/data:/var/opt/gitlab \
         gitlab/gitlab-ce:latest
 
-      echo "==> GitLab is up and running. Access it at http://192.168.56.12" | tee -a $LOGFILE
+      echo "==> GitLab is up and running. Access it at http://192.168.56.12" | tee -a /var/log/vagrant-provision.log
     SCRIPT
   end
 
@@ -111,12 +122,7 @@ Vagrant.configure("2") do |config|
       vb.memory = 2048
     end
 
-    pah.vm.provision "shell", inline: <<-SCRIPT
-      #{provision_script}
-
-      echo "==> Preparing system for Private Automation Hub offline installer..." | tee -a $LOGFILE
-      # Placeholder for offline installer
-    SCRIPT
+    pah.vm.provision "shell", inline: provision_script
   end
 
   # --------------------------------------------------------------
@@ -130,14 +136,8 @@ Vagrant.configure("2") do |config|
       vb.name = "worker"
       vb.cpus = 1
       vb.memory = 2048
-      # Optional: Resize disk to 20 GB using vagrant-disksize plugin
-      # vb.customize ["modifyvm", :id, "--resize", 20000]
     end
 
-    worker.vm.provision "shell", inline: <<-SCRIPT
-      #{provision_script}
-
-      echo "==> Worker node is ready for Ansible playbook execution." | tee -a $LOGFILE
-    SCRIPT
+    worker.vm.provision "shell", inline: provision_script
   end
 end
