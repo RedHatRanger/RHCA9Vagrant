@@ -66,22 +66,7 @@ Prepare the environment for the labs, including setting up Vagrant nodes.
 
 
 
-## **Lab 9: Backup and Recovery**
 
-### Objective
-Backup and restore AAP components.
-
-### Steps
-1. **Backup Controller**:
-   - Use the `ansible-callbacks` CLI to back up configurations.
-
-2. **Backup PAH**:
-   - Archive PAH data and database dumps.
-
-3. **Simulate Restore**:
-   - Restore the Controller and PAH from backups.
-
----
 
 ## **Lab 10: Configuring Automation Mesh**
 
