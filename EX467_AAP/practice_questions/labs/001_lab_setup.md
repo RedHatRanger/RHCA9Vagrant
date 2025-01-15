@@ -64,25 +64,7 @@ Prepare the environment for the labs, including setting up Vagrant nodes.
 
 
 
-## **Lab 8: Using the Automation Controller API**
 
-### Objective
-Use the API for advanced automation tasks.
-
-### Steps
-1. **Retrieve API Token**:
-   - Log in to the Controller and navigate to **Token Management**.
-
-2. **Test API Endpoints**:
-   - Use `curl` or Postman to interact with the API:
-     ```bash
-     curl -X GET -H "Authorization: Bearer <token>" https://controller.local/api/v2/
-     ```
-
-3. **Automate Job Launch**:
-   - Write a script to launch a job template using the API.
-
----
 
 ## **Lab 9: Backup and Recovery**
 
