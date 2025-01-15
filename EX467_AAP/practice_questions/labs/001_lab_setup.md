@@ -60,27 +60,7 @@ Prepare the environment for the labs, including setting up Vagrant nodes.
 
 
 
-## **Lab 6: Managing Projects and Templates**
 
-### Objective
-Set up and manage automation projects and job templates.
-
-### Steps
-1. **Create a Project**:
-   - Navigate to **Projects** > **Create Project**.
-   - Link the project to the GitLab repository created earlier.
-
-2. **Create a Job Template**:
-   - Navigate to **Templates** > **Create Template**.
-   - Associate the template with the created project and inventory.
-
-3. **Run the Template**:
-   - Launch the job template and verify the results.
-
-4. **Schedule Jobs**:
-   - Navigate to **Schedules** and create a schedule for the job template.
-
----
 
 ## **Lab 7: Working with Workflows**
 
