@@ -1,5 +1,5 @@
 # Exam Objective Coverage by Lab
-Download AAP Offline Setup Bundle [Here](https://access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software)
+Download AAP Offline Setup Bundle v2.4 [Here](https://access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software)
 
 1. Install Ansible Automation Platform
 -Lab 2: Focuses on installing AAP on Controller and PAH nodes.
