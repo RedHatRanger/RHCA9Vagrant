@@ -1,5 +1,5 @@
 # Exam Objective Coverage by Lab
-Download AAP Offline Setup Bundle v2.4 [Here](https://access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software)
+Download AAP Offline Setup Bundle v2.4 [Here](https://access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software) \
 [EX467 Objectives](https://www.redhat.com/en/services/training/ex467-red-hat-certified-specialist-managing-automation-ansible-automation-platform-exam?section=objectives)
 
 1. Install Ansible Automation Platform
