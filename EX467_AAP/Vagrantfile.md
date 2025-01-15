@@ -1,0 +1,131 @@
+# Vagrantfile
+Vagrant.configure("2") do |config|
+  # Global Box Configuration
+  config.vm.box = "generic/rhel9" # Replace with a valid RHEL 9.5 box
+
+  # Credentials for Red Hat subscription
+  REDHAT_USERNAME = "your_username"
+  REDHAT_PASSWORD = "your_password"
+
+  # Shared provision script for registering and enabling repos
+  provision_script = <<-SCRIPT
+    LOGFILE="/var/log/vagrant-provision.log"
+
+    echo "==> Registering system with subscription-manager..." | tee -a $LOGFILE
+    subscription-manager register --username #{REDHAT_USERNAME} --password #{REDHAT_PASSWORD} --auto-attach
+
+    echo "==> Enabling required repositories..." | tee -a $LOGFILE
+    subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms --enable=rhel-9-for-x86_64-appstream-rpms
+
+    echo "==> Updating system and installing core packages..." | tee -a $LOGFILE
+    sudo dnf -y update
+    sudo dnf -y install python3 python3-pip docker podman git ansible
+    sudo systemctl enable --now docker
+  SCRIPT
+
+  # --------------------------------------------------------------
+  # Database Node (PostgreSQL)
+  # --------------------------------------------------------------
+  config.vm.define "db" do |db|
+    db.vm.hostname = "db.local"
+    db.vm.network :private_network, ip: "192.168.56.10"
+
+    db.vm.provider "virtualbox" do |vb|
+      vb.name = "db"
+      vb.cpus = 1
+      vb.memory = 2048
+    end
+
+    db.vm.provision "shell", inline: <<-SCRIPT
+      #{provision_script}
+
+      echo "==> Installing PostgreSQL..." | tee -a $LOGFILE
+      sudo dnf -y install postgresql-server
+      sudo postgresql-setup --initdb
+      sudo systemctl enable --now postgresql
+
+      echo "==> Configuring PostgreSQL for remote access..." | tee -a $LOGFILE
+      sudo sed -i "s/127.0.0.1\/32/all\/0/g" /var/lib/pgsql/data/pg_hba.conf
+      echo "listen_addresses = '*'" | sudo tee -a /var/lib/pgsql/data/postgresql.conf
+      sudo systemctl restart postgresql
+    SCRIPT
+  end
+
+  # --------------------------------------------------------------
+  # Controller Node (AAP Controller)
+  # --------------------------------------------------------------
+  config.vm.define "controller" do |controller|
+    controller.vm.hostname = "controller.local"
+    controller.vm.network :private_network, ip: "192.168.56.12"
+
+    controller.vm.provider "virtualbox" do |vb|
+      vb.name = "controller"
+      vb.cpus = 2
+      vb.memory = 4096
+    end
+
+    controller.vm.provision "shell", inline: <<-SCRIPT
+      #{provision_script}
+
+      echo "==> Preparing system for Ansible Automation Platform offline installer..." | tee -a $LOGFILE
+
+      echo "==> Setting up GitLab with Podman..." | tee -a $LOGFILE
+      podman pull gitlab/gitlab-ce:latest
+
+      podman run -d \
+        --hostname gitlab.local \
+        --name gitlab \
+        -p 80:80 -p 443:443 -p 2222:22 \
+        --restart=always \
+        -v /srv/gitlab/config:/etc/gitlab \
+        -v /srv/gitlab/logs:/var/log/gitlab \
+        -v /srv/gitlab/data:/var/opt/gitlab \
+        gitlab/gitlab-ce:latest
+
+      echo "==> GitLab is up and running. Access it at http://192.168.56.12" | tee -a $LOGFILE
+    SCRIPT
+  end
+
+  # --------------------------------------------------------------
+  # Private Automation Hub Node (PAH)
+  # --------------------------------------------------------------
+  config.vm.define "pah" do |pah|
+    pah.vm.hostname = "pah.local"
+    pah.vm.network :private_network, ip: "192.168.56.11"
+
+    pah.vm.provider "virtualbox" do |vb|
+      vb.name = "pah"
+      vb.cpus = 2
+      vb.memory = 2048
+    end
+
+    pah.vm.provision "shell", inline: <<-SCRIPT
+      #{provision_script}
+
+      echo "==> Preparing system for Private Automation Hub offline installer..." | tee -a $LOGFILE
+      # Placeholder for offline installer
+    SCRIPT
+  end
+
+  # --------------------------------------------------------------
+  # Worker Node (Playbook Target)
+  # --------------------------------------------------------------
+  config.vm.define "worker" do |worker|
+    worker.vm.hostname = "worker.local"
+    worker.vm.network :private_network, ip: "192.168.56.13"
+
+    worker.vm.provider "virtualbox" do |vb|
+      vb.name = "worker"
+      vb.cpus = 1
+      vb.memory = 2048
+      # Optional: Resize disk to 20 GB using vagrant-disksize plugin
+      # vb.customize ["modifyvm", :id, "--resize", 20000]
+    end
+
+    worker.vm.provision "shell", inline: <<-SCRIPT
+      #{provision_script}
+
+      echo "==> Worker node is ready for Ansible playbook execution." | tee -a $LOGFILE
+    SCRIPT
+  end
+end
