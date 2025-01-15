@@ -1,4 +1,4 @@
-#Exam Objective Coverage by Lab
+# Exam Objective Coverage by Lab
 
 1. Install Ansible Automation Platform
 -Lab 2: Focuses on installing AAP on Controller and PAH nodes.
