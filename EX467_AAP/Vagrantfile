@@ -21,6 +21,14 @@ Vagrant.configure("2") do |config|
     sudo dnf -y update
     sudo dnf -y install python3 python3-pip docker podman git ansible
     sudo systemctl enable --now docker
+
+    echo "==> Setting root password to 'redhat'..." | tee -a $LOGFILE
+    echo 'root:redhat' | sudo chpasswd
+
+    echo "==> Creating Ansible user 'rhel' with password 'redhat'..." | tee -a $LOGFILE
+    sudo useradd -m -G wheel rhel
+    echo 'rhel:redhat' | sudo chpasswd
+    # Note: In the real world scenario, you'll want to use a more secure password.
   SCRIPT
 
   # --------------------------------------------------------------
@@ -48,6 +56,10 @@ Vagrant.configure("2") do |config|
       sudo sed -i "s/127.0.0.1\/32/all\/0/g" /var/lib/pgsql/data/pg_hba.conf
       echo "listen_addresses = '*'" | sudo tee -a /var/lib/pgsql/data/postgresql.conf
       sudo systemctl restart postgresql
+
+      echo "==> Setting PostgreSQL user password to 'redhat'..." | tee -a $LOGFILE
+      sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'redhat';"
+      # Note: In the real world scenario, you'll want to use a more secure password.
     SCRIPT
   end
 
