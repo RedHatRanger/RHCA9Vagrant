@@ -12,4 +12,5 @@
 [Best Git Tutorial for Revert and Reset](https://www.youtube.com/watch?v=IWR24Z1yp80) \
 [Computer Science Explained in 17 minutes](https://www.youtube.com/watch?v=CxGSnA-RTsA) \
 [How to Study Extremely Fast](https://www.youtube.com/watch?v=9tDkkKDQWlg) \
-[Diabetes Remedy](https://www.youtube.com/watch?v=lVTS_J7Xmxs)
+[Diabetes Remedy](https://www.youtube.com/watch?v=lVTS_J7Xmxs) \
+[Story of Squid Game](https://www.youtube.com/watch?v=pC4TnAjQUp8)
