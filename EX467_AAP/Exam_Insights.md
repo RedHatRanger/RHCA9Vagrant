@@ -2,7 +2,7 @@
 
 # RHCA_EX467 Study Guide & Exam Prep
 This repository is built to help you as beginner to Understand Ansible, And
-walk you through RHCE_EX467 study Topics from setting up a lab to mastry in Ansible, and ensure that you're ready for the RHCE EX467 exam.
+walk you through RHCA_EX467 study Topics from setting up a lab to mastry in Ansible, and ensure that you're ready for the RHCA EX467 exam.
 
 Repository contains Study-Guide and exercises preparing for EX467 exam. the readers need to keep in mind that none of them was taken from the actual test. They were created based on the study point available at RedHat's website.
 
@@ -312,7 +312,7 @@ such as
 - **Enhanced security**
 - **Centralized logging**
 
-Because the RHCE EX467 exam is about Ansible Engine,
+Because the RHCA EX467 exam is about Ansible Engine,
 you won’t find much information about Ansible Tower in
 this book.
 </details>
