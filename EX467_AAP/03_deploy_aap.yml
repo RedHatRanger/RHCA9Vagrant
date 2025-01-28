@@ -1,0 +1,25 @@
+---
+- name: Deploy Ansible Automation Platform
+  hosts: controller
+  become: true
+  tasks:
+    - name: Copy offline installer to controller
+      ansible.builtin.copy:
+        src: /path/to/aap-offline-installer.tar.gz
+        dest: /tmp/aap-offline-installer.tar.gz
+
+    - name: Extract the installer
+      ansible.builtin.unarchive:
+        src: /tmp/aap-offline-installer.tar.gz
+        dest: /opt/aap-installer/
+        remote_src: true
+
+    - name: Create the inventory file for AAP installation
+      ansible.builtin.template:
+        src: inventory.j2
+        dest: /opt/aap-installer/inventory
+
+    - name: Run the AAP installer
+      ansible.builtin.command:
+        cmd: ansible-playbook -i /opt/aap-installer/inventory /opt/aap-installer/install.yml
+        chdir: /opt/aap-installer
