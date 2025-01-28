@@ -1,20 +1,20 @@
-```yml
+```yaml
 # Automation Controller
 [automationcontroller]
-controller.local
+controller.example.com
 
 # Automation Hub
 [automationhub]
-automationhub.local
+pah.example.com
 
 # External Database
 [database]
-db.local
+db.example.com
 
 [all:vars]
 # General Configuration
 admin_password='redhat'
-pg_host='db.local'
+pg_host='db.example.com'
 pg_port=5432
 pg_database='awx'
 pg_username='awx'
@@ -23,7 +23,7 @@ pg_sslmode='prefer'
 
 # Automation Hub Configuration
 automationhub_admin_password='redhat'
-automationhub_pg_host='db.local'
+automationhub_pg_host='db.example.com'
 automationhub_pg_port=5432
 automationhub_pg_database='automationhub'
 automationhub_pg_username='automationhub'
