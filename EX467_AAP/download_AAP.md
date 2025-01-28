@@ -1,1 +1,2 @@
-Download Ansible Automation Platform 2.4 [Here](https://access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software)
+Download Ansible Automation Platform 2.4 [Here:](https://access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software)
+Access the installation guider [Here:](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/red_hat_ansible_automation_platform_installation_guide/index)
