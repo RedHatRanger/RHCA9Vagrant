@@ -31,9 +31,10 @@ automationhub_pg_password='redhat'
 automationhub_pg_sslmode='prefer'
 
 # Registry Configuration
-registry_url='registry.redhat.io'
-registry_username='<your_registry_username>'
-registry_password='<your_registry_password>'
+# THIS IS COMMENTED OUT BECAUSE WE ARE USING THE OFFLINE INSTALLER
+# registry_url='registry.redhat.io'
+# registry_username='<your_registry_username>'
+# registry_password='<your_registry_password>'
 
 # SSL Configuration (Optional)
 # custom_ca_cert=/path/to/ca.crt
