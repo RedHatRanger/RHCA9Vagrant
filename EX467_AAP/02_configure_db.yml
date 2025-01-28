@@ -1,0 +1,44 @@
+---
+- name: Configure PostgreSQL Database
+  hosts: database
+  become: true
+  tasks:
+    - name: Install PostgreSQL
+      ansible.builtin.yum:
+        name: postgresql-server
+        state: present
+
+    - name: Initialize PostgreSQL
+      ansible.builtin.command:
+        cmd: postgresql-setup --initdb
+        creates: /var/lib/pgsql/data
+
+    - name: Enable and start PostgreSQL
+      ansible.builtin.service:
+        name: postgresql
+        state: started
+        enabled: true
+
+    - name: Configure PostgreSQL for remote access
+      ansible.builtin.lineinfile:
+        path: /var/lib/pgsql/data/pg_hba.conf
+        line: "host all all 192.168.56.0/24 md5"
+        state: present
+
+    - name: Set listen_addresses in postgresql.conf
+      ansible.builtin.lineinfile:
+        path: /var/lib/pgsql/data/postgresql.conf
+        regexp: '^#?listen_addresses ='
+        line: "listen_addresses = '*'"
+        state: present
+
+    - name: Restart PostgreSQL
+      ansible.builtin.service:
+        name: postgresql
+        state: restarted
+
+    - name: Set PostgreSQL password for postgres user
+      ansible.builtin.postgresql_user:
+        name: postgres
+        password: "{{ pg_password }}"
+        role_attr_flags: SUPERUSER
