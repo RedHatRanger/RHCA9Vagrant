@@ -1,3 +1,4 @@
+```yml
 # Automation Controller
 [automationcontroller]
 controller.local
@@ -40,3 +41,4 @@ registry_password='<your_registry_password>'
 # web_server_ssl_key=/path/to/tower.key
 # automationhub_ssl_cert=/path/to/automationhub.cert
 # automationhub_ssl_key=/path/to/automationhub.key
+```
