@@ -1,4 +1,5 @@
 ---
+# ansible-playbook -i inventory 03_deploy_aap.yml
 - name: Deploy Ansible Automation Platform
   hosts: controller
   become: true
