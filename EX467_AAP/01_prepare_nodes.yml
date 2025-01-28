@@ -1,4 +1,5 @@
 ---
+# ansible-playbook -i inventory 01_prepare_nodes.yml
 - name: Prepare all nodes for AAP
   hosts: all
   become: true
