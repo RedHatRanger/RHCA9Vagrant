@@ -14,14 +14,14 @@
                      |                                       |
             +-------------------+                 +-------------------+
             |    Database Node  |                 |   Controller Node |
-            |    (db.local)     |                 | (controller.local)|
+            |    (db.example.com)     |                 | (controller.example.com)|
             +--------+----------+                 +--------+----------+
                      |                                       |
          +-----------+-----------+                 +--------+----------+
          |                       |                 |
 +-------------------+   +-------------------+   +-------------------+
 |      PAH Node     |   |   Worker Node     |   |    GitLab Server  |
-|    (pah.local)    |   |  (worker.local)   |   | (controller.local)|
+|    (pah.example.com)    |   |  (node1.example.com)   |   | (controller.example.com)|
 +-------------------+   +-------------------+   +-------------------+
 ```
 
@@ -43,3 +43,6 @@
   - Runs as a Podman container on the Controller node, providing version control and CI/CD functionality.
 
 ---
+
+
+
