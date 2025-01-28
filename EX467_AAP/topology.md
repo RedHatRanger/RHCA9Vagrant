@@ -9,21 +9,37 @@
                                 +-------------------+
                                          |
                               +----------+----------+
-                              |                     |
-                     +-----------------+   +-------------------+
-                     | Platform Gateway|   | EDA Controller    |
-                     |  (gateway.local)|   |  (eda.local)      |
-                     +--------+--------+   +--------+----------+
-                              |                     |
-         +--------------------+---------------------+------------------+
-         |                                                             |
-+-------------------+                                   +-------------------+
-|  Database Node    |                                   |    Controller     |
-|  (db.local)       |                                   |  (controller.local)|
-+-------------------+                                   +-------------------+
-          |                                                       |
-          |                                                       |
-  +-------------------+                               +-------------------+
-  |      PAH          |                               |   Worker Node     |
-  | (pah.local)        |                               |  (worker.local)   |
-  +-------------------+                               +-------------------+
+                                         |
+                     +-------------------+-------------------+
+                     |                                       |
+            +-------------------+                 +-------------------+
+            |    Database Node  |                 |   Controller Node |
+            |    (db.local)     |                 | (controller.local)|
+            +--------+----------+                 +--------+----------+
+                     |                                       |
+         +-----------+-----------+                 +--------+----------+
+         |                       |                 |
++-------------------+   +-------------------+   +-------------------+
+|      PAH Node     |   |   Worker Node     |   |    GitLab Server  |
+|    (pah.local)    |   |  (worker.local)   |   | (controller.local)|
++-------------------+   +-------------------+   +-------------------+
+```
+
+---
+
+## **Explanation**
+
+- **Workstation (Ansible User)**:
+  - The machine used to manage the environment via Ansible playbooks.
+- **Controller Node**:
+  - The central component for managing workflows, job templates, and inventories.
+- **Database Node**:
+  - A dedicated PostgreSQL server used by the Controller and PAH.
+- **PAH Node (Private Automation Hub)**:
+  - A repository for Ansible Content Collections and Execution Environments.
+- **Worker Node**:
+  - Executes playbooks dispatched by the Controller.
+- **GitLab Server**:
+  - Runs as a Podman container on the Controller node, providing version control and CI/CD functionality.
+
+---
