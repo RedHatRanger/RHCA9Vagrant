@@ -51,7 +51,7 @@
 
 ## 9. Install and configure automation mesh
 - [Install Automation Mesh](
-- [Create and Manage Instance Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-and-managing-instance-groups)
+- [Create and Manage Instance Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-instance-groups#controller-create-instance-group)
 - [Assign Default Instance Groups to Controller Inventories or Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#assigning-instance-groups)
 - [Run Controller Job Templates in a Specific Instance Group](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#running-job-templates-in-instance-groups)
 
