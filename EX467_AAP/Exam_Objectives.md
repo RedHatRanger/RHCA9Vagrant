@@ -48,3 +48,4 @@
 
 ## 8. Exam Considerations
 - **As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.**
+- LINK TO THE OFFICIAL EXAM OBJECTIVES [HERE:](https://www.redhat.com/en/services/training/ex467-red-hat-certified-specialist-managing-automation-ansible-automation-platform-exam?section=objectives)
