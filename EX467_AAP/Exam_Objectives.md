@@ -33,7 +33,7 @@
 - [Create Projects](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-projects#proc-controller-adding-a-project)
 - [Create Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-job-templates#controller-create-job-template)
 - [Control User Access to Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#controller-adding-permissions_templates)
-- [Launch Jobs](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#launching-jobs)
+- [Launch Jobs](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#controller-launch-job-template)
 
 ## 6. Automation Mesh Installation and Configuration
 - [Install Automation Mesh](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_mesh_guide/index)
