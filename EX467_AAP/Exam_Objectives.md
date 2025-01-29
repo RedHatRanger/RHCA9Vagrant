@@ -20,7 +20,7 @@
 - Create [Users](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-users#proc-controller-creating-a-user) and [Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-teams#proc-controller-creating-a-team)
 - [Associate Users with Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-teams#adding_or_removing_a_user_to_a_team)
 - [Configure Organization Roles](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-organizations)
-- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#configuring-user-types)
+- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-users#proc-controller-creating-a-user)
 
 ## 4. Inventory and Credential Management
 - [Create Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-host-groups)
