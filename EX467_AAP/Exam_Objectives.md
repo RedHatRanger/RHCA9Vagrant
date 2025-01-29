@@ -1,6 +1,6 @@
 # EX467 Exam Objectives
 
-## 1. Install Ansible Automation Platform
+## 1. [Install Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/red_hat_ansible_automation_platform_installation_guide/disconnected-installation#disconnected-installation)
 - [Private Automation Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#proc-verify-hub-installation_platform-install-scenario)
 - [Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#proc-verify-controller-installation_platform-install-scenario)
 - [Configure Automation Controller Post-Installation](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_administration_guide/index)
