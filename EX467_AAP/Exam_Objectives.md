@@ -57,7 +57,7 @@
 
 ## 10. Back Up Ansible Automation Platform
 - [Back Up an Instance of Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_administration_guide/controller-backup-and-restore#controller-backup-and-restore)
-- [Back Up an Instance of Ansible Private Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/administration_guide/index#backup-private-hub)
+- [Back Up an Instance of Ansible Private Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_administration_guide/controller-backup-and-restore#controller-backup-and-restore)
 
 ## Exam Considerations
 - **As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.**
