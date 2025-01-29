@@ -56,7 +56,7 @@
 - [Run Controller Job Templates in a Specific Instance Group](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#running-job-templates-in-instance-groups)
 
 ## 10. Back Up Ansible Automation Platform
-- [Back Up an Instance of Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_administration_guide/controller-backup-and-restore)
+- [Back Up an Instance of Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_administration_guide/controller-backup-and-restore#controller-backup-and-restore)
 - [Back Up an Instance of Ansible Private Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/administration_guide/index#backup-private-hub)
 
 ## Exam Considerations
