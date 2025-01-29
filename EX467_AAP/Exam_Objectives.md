@@ -37,7 +37,7 @@
 - [Schedule Jobs and Manage Notifications](
 
 ## 6. Manage automation controller workflows
-- [Create workflow templates](
+- [Create workflow templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-workflow-job-templates#controller-create-workflow-template)
 - [Launch workflow jobs](
 - [Configure workflow jobs for automatic approval](
 
@@ -50,7 +50,7 @@
 - [Write an API scriptlet to launch a job](
 
 ## 9. Install and configure automation mesh
-- [Install Automation Mesh](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_mesh_guide/index)
+- [Install Automation Mesh](
 - [Create and Manage Instance Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-and-managing-instance-groups)
 - [Assign Default Instance Groups to Controller Inventories or Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#assigning-instance-groups)
 - [Run Controller Job Templates in a Specific Instance Group](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#running-job-templates-in-instance-groups)
