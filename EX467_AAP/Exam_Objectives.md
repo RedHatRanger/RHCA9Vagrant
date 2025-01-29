@@ -14,7 +14,7 @@
 ### Private Automation Hub
 - [Create Groups and Assign Permissions](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/getting_started_with_automation_hub/assembly-user-access#proc-create-group)
 - [Create Users and Assign to Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/getting_started_with_automation_hub/assembly-user-access#proc-create-users)
-- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/managing_automation_hub_content/index#configuring-user-types)
+- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/getting_started_with_automation_hub/assembly-user-access#proc-create-super-users)
 
 ### Automation Controller
 - [Create Users and Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-users-and-teams)
