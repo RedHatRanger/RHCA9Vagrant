@@ -23,7 +23,7 @@
 - [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-users#proc-controller-creating-a-user)
 
 ## 4. Inventory and Credential Management
-- [Create Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/getting_started_with_automation_controller/index?utm_source=chatgpt.com#controller-groups-and-hosts)
+- [Create Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/getting_started_with_automation_controller/index#controller-add-groups-and-hosts)
 - [Assign Systems to Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/getting_started_with_automation_controller/index#controller-add-groups-and-hosts)
 - [Configure Access to Inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#configuring-inventory-access)
 - [Set Inventory Variables](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#setting-inventory-variables)
