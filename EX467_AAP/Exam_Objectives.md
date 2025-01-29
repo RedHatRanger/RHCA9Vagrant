@@ -2,7 +2,7 @@
 
 ## 1. Installation and Configuration
 - [Install Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#assembly-platform-install-scenario)
-  - [Private Automation Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#installing-private-automation-hub)
+  - [Private Automation Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#proc-verify-hub-installation_platform-install-scenario)
   - [Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#installing-automation-controller)
 - [Configure Automation Controller Post-Installation](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_administration_guide/index)
 
