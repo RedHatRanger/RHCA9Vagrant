@@ -17,7 +17,7 @@
 - [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/getting_started_with_automation_hub/assembly-user-access#proc-create-super-users)
 
 ### Automation Controller
-- [Create Users and Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-users-and-teams)
+- [Create Users and Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-users#proc-controller-creating-a-user)
 - [Associate Users with Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#associating-users-with-teams)
 - [Configure Organization Roles](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#configuring-organization-roles)
 - [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#configuring-user-types)
