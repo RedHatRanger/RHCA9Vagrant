@@ -32,7 +32,7 @@
 - [Create Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-job-templates#controller-create-job-template)
 - [Control User Access to Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#controller-adding-permissions_templates)
 - [Launch Jobs](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#controller-launch-job-template)
-- [Create a Job Template Survey](
+- [Create a Job Template Survey](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-job-templates#controller-surveys-in-job-templates)
 - [Use Variables from a Survey in a Jinja Template](
 - [Schedule Jobs and Manage Notifications](
 
