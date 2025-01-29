@@ -8,7 +8,7 @@
 
 ## 2. Private Automation Hub Management
 - [Upload Content Collections](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/managing_content_in_automation_hub/managing-collections-hub#proc-uploading-collections)
-- [Upload Execution Environments](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/managing_automation_hub_content/index#uploading-execution-environments)
+- [Upload Execution Environments](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/creating_and_consuming_execution_environments/assembly-publishing-exec-env)
 
 ## 3. Access Management
 ### Private Automation Hub
