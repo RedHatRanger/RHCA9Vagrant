@@ -13,4 +13,5 @@
 [Computer Science Explained in 17 minutes](https://www.youtube.com/watch?v=CxGSnA-RTsA) \
 [How to Study Extremely Fast](https://www.youtube.com/watch?v=9tDkkKDQWlg) \
 [Diabetes Remedy](https://www.youtube.com/watch?v=lVTS_J7Xmxs) \
-[Story of Squid Game](https://www.youtube.com/watch?v=pC4TnAjQUp8)
+[Story of Squid Game](https://www.youtube.com/watch?v=pC4TnAjQUp8) \
+[Run DeepSeek in the Web](https://huggingface.co/spaces/webml-community/deepseek-r1-webgpu)
