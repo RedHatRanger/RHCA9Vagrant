@@ -8,7 +8,7 @@ Repository contains Study-Guide and exercises preparing for EX467 exam. the read
 
 
 ## About the EX467 Exam
- - [RHCA EX467 Exam Objectives](https://www.redhat.com/en/services/training/ex467-red-hat-certified-specialist-managing-automation-ansible-automation-platform-exam?section=objectives)
+ - [RHCA EX467 Exam Objectives](Exam_Objectives.md)
  - [Purchase the RHCA EX467 Exam](https://training-lms.redhat.com/lmt/clmsBrowseV2.prMain?site=redhat&in_region=us&in_keyword=EX467)
  - [Schedule RHCA EX467 Exam](https://rhtapps.redhat.com/ies/external/dashboard)
  - [Download the Remote Exam ISO](https://red.ht/rhrex)
