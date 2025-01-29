@@ -1,108 +1,53 @@
 # EX467 Exam Objectives
 
 ## 1. Installation and Configuration
-- [Install Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing/index)
-  - [Private Automation Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing_private_automation_hub/index)
-  - [Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing_automation_controller/index)
-- [Configure Automation Controller Post-Installation](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/configuring_and_operating/index)
+- [Install Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index)
+  - [Private Automation Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#installing-private-automation-hub)
+  - [Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#installing-automation-controller)
+- [Configure Automation Controller Post-Installation](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_administration_guide/index)
 
 ## 2. Private Automation Hub Management
-- [Upload Content Collections](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#uploading_collections)
-- [Upload Execution Environments](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#uploading_execution_environments)
+- [Upload Content Collections](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/managing_automation_hub_content/index#uploading-collections)
+- [Upload Execution Environments](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/managing_automation_hub_content/index#uploading-execution-environments)
 
 ## 3. Access Management
 ### Private Automation Hub
-- [Create Groups and Assign Permissions](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#managing_groups_and_permissions)
-- [Create Users and Assign to Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#managing_users_and_groups)
-- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#configuring_user_types)
+- [Create Groups and Assign Permissions](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/managing_automation_hub_content/index#managing-groups-and-permissions)
+- [Create Users and Assign to Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/managing_automation_hub_content/index#managing-users-and-groups)
+- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/managing_automation_hub_content/index#configuring-user-types)
 
 ### Automation Controller
-- [Create Users and Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_users_and_teams)
-- [Associate Users with Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#associating_users_with_teams)
-- [Configure Organization Roles](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#configuring_organization_roles)
-- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#configuring_user_types)
+- [Create Users and Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-users-and-teams)
+- [Associate Users with Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#associating-users-with-teams)
+- [Configure Organization Roles](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#configuring-organization-roles)
+- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#configuring-user-types)
 
 ## 4. Inventory and Credential Management
-- [Create Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_host_groups)
-- [Assign Systems to Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#assigning_systems_to_host_groups)
-- [Configure Access to Inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#configuring_inventory_access)
-- [Set Inventory Variables](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#setting_inventory_variables)
-- [Create and Configure Machine Credentials](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_machine_credentials)
+- [Create Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-host-groups)
+- [Assign Systems to Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#assigning-systems-to-host-groups)
+- [Configure Access to Inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#configuring-inventory-access)
+- [Set Inventory Variables](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#setting-inventory-variables)
+- [Create and Configure Machine Credentials](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-machine-credentials)
 
 ## 5. Project and Job Management
-- [Create Projects](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_projects)
-- [Create Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_job_templates)
-- [Control User Access to Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#controlling_access_to_job_templates)
-- [Launch Jobs](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#launching_jobs)
+- [Create Projects](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-projects)
+- [Create Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-job-templates)
+- [Control User Access to Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#controlling-access-to-job-templates)
+- [Launch Jobs](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#launching-jobs)
 
 ## 6. Automation Mesh Installation and Configuration
-- [Install Automation Mesh](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing_automation_mesh/index)
-- [Create and Manage Instance Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_and_managing_instance_groups)
-- [Assign Default Instance Groups to Controller Inventories or Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#assigning_instance_groups)
-- [Run Controller Job Templates in a Specific Instance Group](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#running_job_templates_in_instance_groups)
+- [Install Automation Mesh](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_mesh_guide/index)
+- [Create and Manage Instance Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-and-managing-instance-groups)
+- [Assign Default Instance Groups to Controller Inventories or Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#assigning-instance-groups)
+- [Run Controller Job Templates in a Specific Instance Group](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#running-job-templates-in-instance-groups)
 
 ## 7. Backup and Recovery
-- [Back Up Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/administration_guide/index#backup_and_restore)
-- [Back Up an Instance of Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/administration_guide/index#backup_controller)
-- [Back Up an Instance of Ansible Private Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/administration_guide/index#backup_private_hub)
+- [Back Up Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/administration_guide/index#backup-and-restore)
+- [Back Up an Instance of Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/administration_guide/index#backup-controller)
+- [Back Up an Instance of Ansible Private Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/administration_guide/index#backup-private-hub)
 
 ## 8. Exam Considerations
 - **As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.**
 - LINK TO THE OFFICIAL EXAM OBJECTIVES [HERE:](https://www.redhat.com/en/services/training/ex467-red-hat-certified-specialist-managing-automation-ansible-automation-platform-exam?section=objectives)
-
-
-
-
-
-# EX467 Exam Objectives
-
-## 1. Installation and Configuration
-- [Install Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/installing/index)
-  - [Private Automation Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing_private_automation_hub/index)
-  - [Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing_automation_controller/index)
-- [Configure Automation Controller Post-Installation](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/configuring_and_operating/index)
-
-## 2. Private Automation Hub Management
-- [Upload Content Collections](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#uploading_collections)
-- [Upload Execution Environments](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#uploading_execution_environments)
-
-## 3. Access Management
-### Private Automation Hub
-- [Create Groups and Assign Permissions](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#managing_groups_and_permissions)
-- [Create Users and Assign to Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#managing_users_and_groups)
-- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/managing_automation_content/index#configuring_user_types)
-
-### Automation Controller
-- [Create Users and Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_users_and_teams)
-- [Associate Users with Teams](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#associating_users_with_teams)
-- [Configure Organization Roles](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#configuring_organization_roles)
-- [Configure User Types](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#configuring_user_types)
-
-## 4. Inventory and Credential Management
-- [Create Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_host_groups)
-- [Assign Systems to Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#assigning_systems_to_host_groups)
-- [Configure Access to Inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#configuring_inventory_access)
-- [Set Inventory Variables](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#setting_inventory_variables)
-- [Create and Configure Machine Credentials](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_machine_credentials)
-
-## 5. Project and Job Management
-- [Create Projects](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_projects)
-- [Create Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_job_templates)
-- [Control User Access to Job Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#controlling_access_to_job_templates)
-- [Launch Jobs](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#launching_jobs)
-
-## 6. Automation Mesh Installation and Configuration
-- [Install Automation Mesh](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing_automation_mesh/index)
-- [Create and Manage Instance Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#creating_and_managing_instance_groups)
-- [Assign Default Instance Groups to Controller Inventories or Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#assigning_instance_groups)
-- [Run Controller Job Templates in a Specific Instance Group](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/operating/index#running_job_templates_in_instance_groups)
-
-## 7. Backup and Recovery
-- [Back Up Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/administration_guide/index#backup_and_restore)
-- [Back Up an Instance of Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/administration_guide/index#backup_controller)
-- [Back Up an Instance of Ansible Private Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/administration_guide/index#backup_private_hub)
-
-## 8. Exam Considerations
-- **As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.**
 
 
