@@ -25,7 +25,7 @@
 ## 4. Inventory and Credential Management
 - [Create Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/getting_started_with_automation_controller/index#controller-add-groups-and-hosts)
 - [Assign Systems to Host Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/getting_started_with_automation_controller/index#controller-add-groups-and-hosts)
-- [Configure Access to Inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#configuring-inventory-access)
+- [Configure Access to Inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-inventories#proc-controller-adding-inv-permissions)
 - [Set Inventory Variables](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#setting-inventory-variables)
 - [Create and Configure Machine Credentials](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/automation_controller_user_guide/index#creating-machine-credentials)
 
