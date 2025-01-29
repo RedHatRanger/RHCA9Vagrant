@@ -38,7 +38,7 @@
 
 ## 6. Manage automation controller workflows
 - [Create workflow templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-workflow-job-templates#controller-create-workflow-template)
-- [Launch workflow jobs](
+- [Launch workflow jobs](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-workflow-job-templates#controller-launch-workflow-template)
 - [Configure workflow jobs for automatic approval](
 
 ## 7. Manage advanced inventories
