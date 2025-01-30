@@ -54,8 +54,8 @@
 ## 9. Install and configure automation mesh
 - [Install Automation Mesh](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/red_hat_ansible_automation_platform_automation_mesh_guide_for_vm-based_installations/setting-up#install-mesh_setting-up)
 - [Create and Manage Instance Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-instance-groups#controller-create-instance-group)
-- [Assign Default Instance Groups to Controller Inventories or Templates](
-- [Run Controller Job Templates in a Specific Instance Group](
+- [Assign Default Instance Groups to Controller Inventories or Templates](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_administration_guide/controller-instance-and-container-groups#controller-control-job-run)
+- [Run Controller Job Templates in a Specific Instance Group](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_administration_guide/controller-instance-and-container-groups#controller-control-job-run)
 
 ## 10. Back Up Ansible Automation Platform
 - [Back Up an Instance of Automation Controller](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_administration_guide/controller-backup-and-restore#controller-backup-and-restore)
