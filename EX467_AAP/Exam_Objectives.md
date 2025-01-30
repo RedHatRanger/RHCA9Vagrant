@@ -48,7 +48,7 @@
 
 ## 8. Work with the automation controller API
 - [Understand how to use an API script to obtain required parameters for launching jobs](
-- [Write an API scriptlet to launch a job](
+- [Write an API scriptlet to launch a job](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_api_overview/controller-api-auth-methods#controller-api-oauth2-token)
 
 ## 9. Install and configure automation mesh
 - [Install Automation Mesh](
