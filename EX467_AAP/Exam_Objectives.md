@@ -51,7 +51,7 @@
 - [Write an API scriptlet to launch a job](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_api_overview/controller-api-auth-methods#controller-api-oauth2-token)
 
 ## 9. Install and configure automation mesh
-- [Install Automation Mesh](
+- [Install Automation Mesh](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/red_hat_ansible_automation_platform_automation_mesh_guide_for_vm-based_installations/setting-up#install-mesh_setting-up)
 - [Create and Manage Instance Groups](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-instance-groups#controller-create-instance-group)
 - [Assign Default Instance Groups to Controller Inventories or Templates](
 - [Run Controller Job Templates in a Specific Instance Group](
