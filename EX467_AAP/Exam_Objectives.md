@@ -44,7 +44,7 @@
 - [Configure workflow jobs for automatic approval](
 
 ## 7. Manage advanced inventories
-- [Import external static inventories](
+- [Import external static inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_administration_guide/assembly-inventory-file-importing)
 - [Filter hosts with Smart Inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-inventories#ref-controller-smart-host-filter)
 
 ## 8. Work with the automation controller API
