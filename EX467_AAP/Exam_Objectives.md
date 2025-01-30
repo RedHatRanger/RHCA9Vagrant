@@ -45,7 +45,7 @@
 
 ## 7. Manage advanced inventories
 - [Import external static inventories](
-- [Filter hosts with Smart Inventories](
+- [Filter hosts with Smart Inventories](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-inventories#ref-controller-smart-host-filter)
 
 ## 8. Work with the automation controller API
 - [Understand how to use an API script to obtain required parameters for launching jobs](
