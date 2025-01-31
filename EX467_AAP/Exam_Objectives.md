@@ -1,7 +1,8 @@
 # EX467 Exam Objectives
 [Link](https://www.youtube.com/watch?v=N1GhMAKOMiE) to YouTube Video by Luca Berton \
 [Link](https://www.redhat.com/en/interactive-labs/ansible) to the Red Hat Official AAP Labs \
-[Link](https://www.amazon.com/Demystifying-Ansible-Automation-Platform-definitive-ebook/dp/B0B579GB1N/ref=tmm_kin_swatch_0?_encoding=UTF8&sr=) to the best Amazon Book on AAP
+[Link](https://www.amazon.com/Demystifying-Ansible-Automation-Platform-definitive-ebook/dp/B0B579GB1N/ref=tmm_kin_swatch_0?_encoding=UTF8&sr=) to the best Amazon Book on AAP \
+[Link](https://access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software) to download the Ansible Automation Platform Setup Bundle
 
 ## 1. [Install Ansible Automation Platform](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/red_hat_ansible_automation_platform_installation_guide/disconnected-installation#disconnected-installation)
 - [Private Automation Hub](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_installation_guide/index#proc-verify-hub-installation_platform-install-scenario)
