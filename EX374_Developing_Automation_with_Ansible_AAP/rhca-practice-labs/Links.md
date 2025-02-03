@@ -16,4 +16,5 @@
 [Story of Squid Game](https://www.youtube.com/watch?v=pC4TnAjQUp8) \
 [Run DeepSeek in the Web](https://huggingface.co/spaces/webml-community/deepseek-r1-webgpu) \
 [Run full 671b DeepSeek Locally on $2000 machine](https://digitalspaceport.com/how-to-run-deepseek-r1-671b-fully-locally-on-2000-epyc-rig/) \
-[FREE AI Video Creations](https://app.pixverse.ai/)
+[FREE AI Video Creations](https://app.pixverse.ai/) \
+[Tulu3 405B](https://playground.allenai.org/)
