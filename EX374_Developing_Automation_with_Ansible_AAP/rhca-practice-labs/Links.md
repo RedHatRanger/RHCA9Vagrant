@@ -14,4 +14,5 @@
 [How to Study Extremely Fast](https://www.youtube.com/watch?v=9tDkkKDQWlg) \
 [Diabetes Remedy](https://www.youtube.com/watch?v=lVTS_J7Xmxs) \
 [Story of Squid Game](https://www.youtube.com/watch?v=pC4TnAjQUp8) \
-[Run DeepSeek in the Web](https://huggingface.co/spaces/webml-community/deepseek-r1-webgpu)
+[Run DeepSeek in the Web](https://huggingface.co/spaces/webml-community/deepseek-r1-webgpu) \
+[Run full 671b DeepSeek Locally on $2000 machine](https://digitalspaceport.com/how-to-run-deepseek-r1-671b-fully-locally-on-2000-epyc-rig/)
