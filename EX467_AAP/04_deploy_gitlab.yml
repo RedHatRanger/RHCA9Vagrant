@@ -70,7 +70,7 @@
         podman run --detach
         --hostname {{ gitlab_hostname }}
         --env GITLAB_OMNIBUS_CONFIG="external_url '{{ gitlab_external_url }}'"
-        --publish 443:443 --publish 80:80 --publish 22:22
+        --publish 8080:80 --publish 8443:443 --publish 2222:22
         --name {{ gitlab_container_name }}
         --restart always
         --volume {{ gitlab_home }}/config:/etc/gitlab:Z
