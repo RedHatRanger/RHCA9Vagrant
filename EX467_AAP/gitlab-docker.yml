@@ -1,0 +1,25 @@
+---
+services:
+  gitlab:
+    image: docker.io/gitlab/gitlab-ce:latest
+    container_name: gitlab.example.com
+    hostname: gitlab.example.com
+    environment:
+      # Configure GitLab to listen on port 8080 instead of 80.
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.example.com:8080'
+        # For HTTPS on 8443, you would also configure SSL settings here, for example:
+        # external_url 'https://gitlab.example.com:8443'
+        # and mount your certificates in the volumes section as needed.
+    ports:
+      - '8080:80'
+      - '8443:443'
+      - '2222:22'
+    volumes:
+      # If $GITLAB_HOME is set in your environment, it s used here.
+      # Otherwise, remember to set it manually or replace with an absolute path.
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'
+    restart: unless-stopped
