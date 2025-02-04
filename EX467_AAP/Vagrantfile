@@ -1,143 +1,83 @@
-# Vagrantfile
-Vagrant.configure("2") do |config|
-  # Global Box Configuration
-  config.vm.box = "generic/rhel9" # Replace with a valid RHEL 9.5 box
+# Vagrantfile for a minimal, lab/testing setup of AAP 2.4 (offline bundle)
+# Hostnames and IP addresses (with /24 CIDR):
+#   controller.example.com  -> 172.28.128.100 (Automation Controller)
+#   node1.example.com       -> 172.28.128.101 (Managed Host)
+#   db.example.com          -> 172.28.128.102 (PostgreSQL DB)
+#   hub.example.com         -> 172.28.128.103 (Automation Hub)
+#
+# Note: Resource allocations below are the minimum for learning purposes.
+# The passwords "redhat" are used for exam practice only.
+# In production, use more secure passwords.
+#
+# Since DNS is not available, we update /etc/hosts on each VM with static entries.
 
-  # Hostname-to-IP Mapping for /etc/hosts
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/rhel9"
+  
+  # Disable the default synced folder if not needed.
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # Define the common /etc/hosts entries.
   hosts_entries = <<-EOF
-192.168.56.10 db.local
-192.168.56.11 pah.local
-192.168.56.12 controller.local
-192.168.56.13 worker.local
+172.28.128.100 controller.example.com
+172.28.128.101 node1.example.com
+172.28.128.102 db.example.com
+172.28.128.103 hub.example.com
 EOF
 
-  # Credentials for Red Hat subscription
-  REDHAT_USERNAME = "your_username"
-  REDHAT_PASSWORD = "your_password"
-
-  # Shared provision script for registering and enabling repos
-  provision_script = <<-SCRIPT
-    LOGFILE="/var/log/vagrant-provision.log"
-
-    echo "==> Registering system with subscription-manager..." | tee -a $LOGFILE
-    subscription-manager register --username #{REDHAT_USERNAME} --password #{REDHAT_PASSWORD} --auto-attach
-
-    echo "==> Enabling required repositories..." | tee -a $LOGFILE
-    subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms --enable=rhel-9-for-x86_64-appstream-rpms
-
-    echo "==> Updating system and installing core packages..." | tee -a $LOGFILE
-    sudo dnf -y update
-    sudo dnf -y install python3 python3-pip docker podman git ansible
-    sudo systemctl enable --now docker
-
-    echo "==> Setting root password to 'redhat'..." | tee -a $LOGFILE
+  # Define a common provisioning script to set passwords and update /etc/hosts.
+  common_provision = <<-SHELL
+    # Set passwords for rhel and root (for exam practice only; use secure passwords in production)
+    echo 'rhel:redhat' | sudo chpasswd
     echo 'root:redhat' | sudo chpasswd
 
-    echo "==> Creating Ansible user 'rhel' with password 'redhat'..." | tee -a $LOGFILE
-    sudo useradd -m -G wheel rhel
-    echo 'rhel:redhat' | sudo chpasswd
+    # Append static host entries to /etc/hosts for local name resolution
+    cat <<EOF | sudo tee -a /etc/hosts
+#{hosts_entries}
+EOF
+  SHELL
 
-    echo "==> Updating /etc/hosts with lab entries..." | tee -a $LOGFILE
-    echo "#{hosts_entries}" | sudo tee -a /etc/hosts
-
-    # Note: In the real world scenario, you'll want to use a more secure password and DNS setup.
-  SCRIPT
-
-  # --------------------------------------------------------------
-  # Database Node (PostgreSQL)
-  # --------------------------------------------------------------
-  config.vm.define "db" do |db|
-    db.vm.hostname = "db.local"
-    db.vm.network :private_network, ip: "192.168.56.10"
-
-    db.vm.provider "virtualbox" do |vb|
-      vb.name = "db"
-      vb.cpus = 1
-      vb.memory = 2048
-    end
-
-    db.vm.provision "shell", inline: provision_script
-
-    db.vm.provision "shell", inline: <<-SCRIPT
-      echo "==> Installing PostgreSQL..." | tee -a /var/log/vagrant-provision.log
-      sudo dnf -y install postgresql-server
-      sudo postgresql-setup --initdb
-      sudo systemctl enable --now postgresql
-
-      echo "==> Configuring PostgreSQL for remote access..." | tee -a /var/log/vagrant-provision.log
-      sudo sed -i "s/127.0.0.1\/32/all\/0/g" /var/lib/pgsql/data/pg_hba.conf
-      echo "listen_addresses = '*'" | sudo tee -a /var/lib/pgsql/data/postgresql.conf
-      sudo systemctl restart postgresql
-
-      echo "==> Setting PostgreSQL user password to 'redhat'..." | tee -a /var/log/vagrant-provision.log
-      sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'redhat';"
-    SCRIPT
-  end
-
-  # --------------------------------------------------------------
-  # Controller Node (AAP Controller)
-  # --------------------------------------------------------------
+  # Automation Controller VM
   config.vm.define "controller" do |controller|
-    controller.vm.hostname = "controller.local"
-    controller.vm.network :private_network, ip: "192.168.56.12"
-
+    controller.vm.hostname = "controller.example.com"
+    controller.vm.network "private_network", ip: "172.28.128.100", netmask: "255.255.255.0"
     controller.vm.provider "virtualbox" do |vb|
-      vb.name = "controller"
-      vb.cpus = 2
-      vb.memory = 4096
+      vb.memory = "4096"  # 4GB RAM (minimum for learning)
+      vb.cpus   = 2       # 2 vCPUs (minimum for learning)
     end
-
-    controller.vm.provision "shell", inline: provision_script
-
-    controller.vm.provision "shell", inline: <<-SCRIPT
-      echo "==> Preparing system for Ansible Automation Platform offline installer..." | tee -a /var/log/vagrant-provision.log
-
-      echo "==> Setting up GitLab with Podman on a different IP and ports..." | tee -a /var/log/vagrant-provision.log
-      podman pull gitlab/gitlab-ce:latest
-
-      podman run -d \
-        --hostname gitlab.local \
-        --name gitlab \
-        -p 8080:80 -p 8443:443 -p 2223:22 \
-        --restart=always \
-        -v /srv/gitlab/config:/etc/gitlab \
-        -v /srv/gitlab/logs:/var/log/gitlab \
-        -v /srv/gitlab/data:/var/opt/gitlab \
-        gitlab/gitlab-ce:latest
-
-      echo "==> GitLab is up and running. Access it at http://192.168.56.12:8080" | tee -a /var/log/vagrant-provision.log
-    SCRIPT
+    controller.vm.provision "shell", inline: common_provision
   end
 
-  # --------------------------------------------------------------
-  # Private Automation Hub Node (PAH)
-  # --------------------------------------------------------------
-  config.vm.define "pah" do |pah|
-    pah.vm.hostname = "pah.local"
-    pah.vm.network :private_network, ip: "192.168.56.11"
-
-    pah.vm.provider "virtualbox" do |vb|
-      vb.name = "pah"
-      vb.cpus = 2
-      vb.memory = 2048
+  # Managed Host VM (node1.example.com)
+  config.vm.define "node1" do |node1|
+    node1.vm.hostname = "node1.example.com"
+    node1.vm.network "private_network", ip: "172.28.128.101", netmask: "255.255.255.0"
+    node1.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"  # 1GB RAM (minimum for learning)
+      vb.cpus   = 1       # 1 vCPU (minimum for learning)
     end
-
-    pah.vm.provision "shell", inline: provision_script
+    node1.vm.provision "shell", inline: common_provision
   end
 
-  # --------------------------------------------------------------
-  # Worker Node (Playbook Target)
-  # --------------------------------------------------------------
-  config.vm.define "worker" do |worker|
-    worker.vm.hostname = "worker.local"
-    worker.vm.network :private_network, ip: "192.168.56.13"
-
-    worker.vm.provider "virtualbox" do |vb|
-      vb.name = "worker"
-      vb.cpus = 1
-      vb.memory = 2048
+  # PostgreSQL DB VM
+  config.vm.define "db" do |db|
+    db.vm.hostname = "db.example.com"
+    db.vm.network "private_network", ip: "172.28.128.102", netmask: "255.255.255.0"
+    db.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"  # 2GB RAM (minimum for learning)
+      vb.cpus   = 1       # 1 vCPU (minimum for learning)
     end
+    db.vm.provision "shell", inline: common_provision
+  end
 
-    worker.vm.provision "shell", inline: provision_script
+  # Automation Hub VM
+  config.vm.define "hub" do |hub|
+    hub.vm.hostname = "hub.example.com"
+    hub.vm.network "private_network", ip: "172.28.128.103", netmask: "255.255.255.0"
+    hub.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"  # 2GB RAM (minimum for learning)
+      vb.cpus   = 1       # 1 vCPU (minimum for learning)
+    end
+    hub.vm.provision "shell", inline: common_provision
   end
 end
