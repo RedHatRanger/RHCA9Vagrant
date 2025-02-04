@@ -13,7 +13,7 @@
 # firewall-cmd --reload
 #
 # Once installed and configured, run:
-# podman compose -f docker-compose.yml up -d
+# podman compose -f ./gitlab-docker.yml up -d
 #
 ---
 services:
