@@ -1,17 +1,20 @@
 ---
-- name: Deploy GitLab EE in a Podman container on RHEL 9.5
+- name: Deploy GitLab CE with Podman (replicating docker-compose.yml example)
   hosts: automationcontroller
   become: yes
+
   vars:
-    gitlab_hostname: "gitlab.example.com"
-    gitlab_external_url: "http://{{ gitlab_hostname }}"
-    gitlab_home: "/srv/gitlab"
-    gitlab_image: "gitlab/gitlab-ee:latest"  # Change to a specific version if desired
-    gitlab_container_name: "gitlab-ee"
-    gitlab_shm_size: "256m"
+    gitlab_image: "gitlab/gitlab-ce:latest"
+    container_name: "gitlab.example.com"
+    container_hostname: "gitlab.example.com"
+    gitlab_home: "{{ lookup('env', 'GITLAB_HOME') | default('/srv/gitlab.example.com', true) }}"
+    shm_size: "256m"
+    restart_policy: "unless-stopped"
+    # Adjust the external_url to reflect the new port (8080)
+    gitlab_external_url: "http://{{ container_hostname }}:8080"
 
   tasks:
-    - name: Install required packages (Podman and Postfix)
+    - name: Install Podman and Postfix (if not already installed)
       dnf:
         name:
           - podman
@@ -19,7 +22,7 @@
         state: present
         update_cache: yes
 
-    - name: Ensure Postfix service is started and enabled
+    - name: Ensure Postfix is running and enabled
       service:
         name: postfix
         state: started
@@ -29,55 +32,50 @@
       file:
         path: "{{ gitlab_home }}"
         state: directory
-        owner: root
-        group: root
         mode: '0755'
 
     - name: Create GitLab config directory
       file:
         path: "{{ gitlab_home }}/config"
         state: directory
-        owner: root
-        group: root
         mode: '0755'
 
     - name: Create GitLab logs directory
       file:
         path: "{{ gitlab_home }}/logs"
         state: directory
-        owner: root
-        group: root
         mode: '0755'
 
     - name: Create GitLab data directory
       file:
         path: "{{ gitlab_home }}/data"
         state: directory
-        owner: root
-        group: root
         mode: '0755'
 
-    - name: Restore SELinux context for GitLab directories
+    - name: Restore SELinux contexts on GitLab directories
       command: "restorecon -R {{ gitlab_home }}"
       when: ansible_selinux.status == "enabled"
 
-    - name: Remove any existing GitLab container if present
-      command: "podman rm -f {{ gitlab_container_name }}"
+    - name: Remove existing GitLab container if present
+      command: "podman rm -f {{ container_name }}"
       ignore_errors: yes
 
-    - name: Run GitLab container using Podman
+    - name: Run GitLab CE container with Podman
       command: >
-        podman run --detach
-        --hostname {{ gitlab_hostname }}
+        podman run -d
+        --name {{ container_name }}
+        --hostname {{ container_hostname }}
         --env GITLAB_OMNIBUS_CONFIG="external_url '{{ gitlab_external_url }}'"
-        --publish 8080:80 --publish 8443:443 --publish 2222:22
-        --name {{ gitlab_container_name }}
-        --restart always
+        --publish 8080:80
+        --publish 8443:443
+        --publish 2222:22
+        --restart {{ restart_policy }}
         --volume {{ gitlab_home }}/config:/etc/gitlab:Z
         --volume {{ gitlab_home }}/logs:/var/log/gitlab:Z
         --volume {{ gitlab_home }}/data:/var/opt/gitlab:Z
-        --shm-size {{ gitlab_shm_size }}
+        --shm-size {{ shm_size }}
         {{ gitlab_image }}
       args:
         warn: false
+
 # To stop and delete this instance: sudo podman stop gitlab-ee && sudo podman rm gitlab-ee
