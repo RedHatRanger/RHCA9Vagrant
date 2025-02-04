@@ -19,7 +19,7 @@
 services:
   gitlab:
     image: docker.io/gitlab/gitlab-ce:latest
-    container_name: gitlab.example.com
+    name: gitlab
     hostname: gitlab.example.com
     environment:
       GITLAB_OMNIBUS_CONFIG: |
@@ -29,8 +29,8 @@ services:
       - '8443:443'
       - '2222:22'
     volumes:
-      - '$GITLAB_HOME/config:/etc/gitlab'
-      - '$GITLAB_HOME/logs:/var/log/gitlab'
-      - '$GITLAB_HOME/data:/var/opt/gitlab'
+      - '$GITLAB_HOME/config:/etc/gitlab:Z'
+      - '$GITLAB_HOME/logs:/var/log/gitlab:Z'
+      - '$GITLAB_HOME/data:/var/opt/gitlab:Z'
     shm_size: '256m'
     restart: unless-stopped
