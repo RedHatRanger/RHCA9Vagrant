@@ -80,3 +80,4 @@
         {{ gitlab_image }}
       args:
         warn: false
+# To stop and delete this instance: sudo podman stop gitlab-ee && sudo podman rm gitlab-ee
