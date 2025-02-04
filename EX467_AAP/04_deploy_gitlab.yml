@@ -4,7 +4,7 @@
   become: yes
 
   vars:
-    gitlab_image: "gitlab/gitlab-ce:latest"
+    gitlab_image: "docker.io/gitlab/gitlab-ce:latest"
     container_name: "gitlab.example.com"
     container_hostname: "gitlab.example.com"
     gitlab_home: "{{ lookup('env', 'GITLAB_HOME') | default('/srv/gitlab.example.com', true) }}"
@@ -78,4 +78,4 @@
       args:
         warn: false
 
-# To stop and delete this instance: sudo podman stop gitlab-ee && sudo podman rm gitlab-ee
+# To stop and delete this instance: sudo podman stop gitlab-ee && sudo podman rm gitlab-ce
