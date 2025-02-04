@@ -19,4 +19,5 @@
 [FREE AI Video Creations](https://app.pixverse.ai/) \
 [Tulu3 405B](https://playground.allenai.org/) \
 [ChatHub - Chat with all AIs at once!](https://app.chathub.gg/?utm_source=chathub.gg) \
-[OpenAI YouTube Short: "I'm a Sign Not a Cop" Video](https://www.youtube.com/shorts/BhFcNCJj88Q)
+[OpenAI YouTube Short: "I'm a Sign Not a Cop" Video](https://www.youtube.com/shorts/BhFcNCJj88Q) \
+[DeepSeek Banned?](https://www.youtube.com/watch?v=PoeFxGzPpXE)
