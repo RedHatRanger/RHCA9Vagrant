@@ -18,4 +18,5 @@
 [Run full 671b DeepSeek Locally on $2000 machine](https://digitalspaceport.com/how-to-run-deepseek-r1-671b-fully-locally-on-2000-epyc-rig/) \
 [FREE AI Video Creations](https://app.pixverse.ai/) \
 [Tulu3 405B](https://playground.allenai.org/) \
-[ChatHub - Chat with all AIs at once!](https://app.chathub.gg/?utm_source=chathub.gg)
+[ChatHub - Chat with all AIs at once!](https://app.chathub.gg/?utm_source=chathub.gg) \
+[OpenAI YouTube Short: "I'm a Sign Not a Cop" Video](https://www.youtube.com/shorts/BhFcNCJj88Q)
