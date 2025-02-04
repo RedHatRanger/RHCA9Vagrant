@@ -12,8 +12,10 @@
 # firewall-cmd --permanent --add-port=2222/tcp
 # firewall-cmd --reload
 #
-# Once installed and configured, run:
+# Once installed and configured, run (takes about 15 mins):
 # podman compose -f ./gitlab-docker.yml up -d
+# You can also run this command to view the logs:
+# docker logs -f gitlab
 #
 ---
 services:
