@@ -1,0 +1,84 @@
+```yaml
+---
+- name: Deploy GitLab EE in a Podman container on RHEL 9.5
+  hosts: automationcontroller
+  become: yes
+  vars:
+    gitlab_hostname: "gitlab.example.com"
+    gitlab_external_url: "http://{{ gitlab_hostname }}"
+    gitlab_home: "/srv/gitlab"
+    gitlab_image: "gitlab/gitlab-ee:latest"  # Change to a specific version if desired
+    gitlab_container_name: "gitlab-ee"
+    gitlab_shm_size: "256m"
+
+  tasks:
+    - name: Install required packages (Podman and Postfix)
+      dnf:
+        name:
+          - podman
+          - postfix
+        state: present
+        update_cache: yes
+
+    - name: Ensure Postfix service is started and enabled
+      service:
+        name: postfix
+        state: started
+        enabled: yes
+
+    - name: Create GitLab home directory
+      file:
+        path: "{{ gitlab_home }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create GitLab config directory
+      file:
+        path: "{{ gitlab_home }}/config"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create GitLab logs directory
+      file:
+        path: "{{ gitlab_home }}/logs"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create GitLab data directory
+      file:
+        path: "{{ gitlab_home }}/data"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Restore SELinux context for GitLab directories
+      command: "restorecon -R {{ gitlab_home }}"
+      when: ansible_selinux.status == "enabled"
+
+    - name: Remove any existing GitLab container if present
+      command: "podman rm -f {{ gitlab_container_name }}"
+      ignore_errors: yes
+
+    - name: Run GitLab container using Podman
+      command: >
+        podman run --detach
+        --hostname {{ gitlab_hostname }}
+        --env GITLAB_OMNIBUS_CONFIG="external_url '{{ gitlab_external_url }}'"
+        --publish 443:443 --publish 80:80 --publish 22:22
+        --name {{ gitlab_container_name }}
+        --restart always
+        --volume {{ gitlab_home }}/config:/etc/gitlab:Z
+        --volume {{ gitlab_home }}/logs:/var/log/gitlab:Z
+        --volume {{ gitlab_home }}/data:/var/opt/gitlab:Z
+        --shm-size {{ gitlab_shm_size }}
+        {{ gitlab_image }}
+      args:
+        warn: false
+```
