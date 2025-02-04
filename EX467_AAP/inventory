@@ -1,7 +1,6 @@
 # inventory for Ansible Automation Platform 2.4 installation (offline tar bundle)
 # Note: The password "redhat" is used here for exam practice/testing purposes only.
-# In a real-world scenario, you should use a much more secure password.
-# This inventory is configured for an offline installation using the tar setup bundle.
+# In a production environment, you should use a more secure password.
 
 [automationcontroller]
 controller.example.com
@@ -24,7 +23,7 @@ pg_port=5432
 pg_database='awx'
 pg_username='awx'
 pg_password='redhat'
-pg_sslmode='prefer'  # Change to 'verify-full' if client-side enforced SSL is required
+pg_sslmode='prefer'  # Change to 'verify-full' if using client-side enforced SSL
 
 # Registry credentials are not required when using the offline tar bundle.
 # Uncomment and configure these if using an online installer.
