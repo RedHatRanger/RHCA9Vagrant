@@ -1,5 +1,5 @@
 # Vagrantfile for a minimal, lab/testing setup of AAP 2.4 (offline bundle)
-# 
+#
 # Hostnames and IP addresses (with /24 CIDR):
 # - controller.example.com  → 172.28.128.100 (Automation Controller)
 # - node1.example.com       → 172.28.128.101 (Managed Host)
@@ -20,7 +20,7 @@
 # (on Windows PowerShell):
 #   $env:RHSM_USER = "<rhn_username>"
 #   $env:RHSM_PASS = "<rhn_password>"
-#  Set the environment variables before vagrant up. If not set, it prints a warning and skips subscription registration.
+# Set the environment variables before vagrant up. If not set, it prints a warning and skips subscription registration.
 
 Vagrant.configure("2") do |config|
   ##############################################################################
@@ -72,6 +72,18 @@ EOS
 HOSTS
   SHELL
 
+  # ---------------------------------------------------------------------------
+  # Wheel Group Passwordless Sudo for 'rhel'
+  # ---------------------------------------------------------------------------
+  wheel_sudo_provision = <<-SHELL
+    echo "Adding 'rhel' user to the 'wheel' group..."
+    sudo usermod -aG wheel rhel
+
+    echo "Configuring passwordless sudo for the 'wheel' group..."
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/wheel-nopasswd
+    sudo chmod 440 /etc/sudoers.d/wheel-nopasswd
+  SHELL
+
   ##############################################################################
   # 2) Automation Controller
   ##############################################################################
@@ -92,47 +104,52 @@ HOSTS
       "RHSM_USER" => ENV['RHSM_USER'],
       "RHSM_PASS" => ENV['RHSM_PASS']
     }
+
+    # Wheel group passwordless sudo for 'rhel'
+    controller.vm.provision "shell", inline: wheel_sudo_provision
   end
 
   ##############################################################################
   # 3) Managed Host (node1)
   ##############################################################################
-config.vm.define "node1" do |node1|
-  node1.vm.hostname = "node1.example.com"
-  node1.vm.network "private_network", ip: "172.28.128.101", netmask: "255.255.255.0"
+  config.vm.define "node1" do |node1|
+    node1.vm.hostname = "node1.example.com"
+    node1.vm.network "private_network", ip: "172.28.128.101", netmask: "255.255.255.0"
 
-  node1.vm.provider "virtualbox" do |vb|
-    vb.memory = 2048
-    vb.cpus   = 1
+    node1.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+      vb.cpus   = 1
+    end
+
+    # Basic provisioning: sets passwords, /etc/hosts
+    node1.vm.provision "shell", inline: common_provision
+
+    # Subscription-manager (optional)
+    node1.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
+
+    # Install Podman, pull a container image, and run it
+    node1.vm.provision "shell", inline: <<-SHELL
+      echo "Installing Podman..."
+      sudo dnf install -y podman
+
+      echo "Pulling GitHub container image..."
+      # Replace with any actual GitHub or other container image you prefer
+      # For demonstration, let's assume you have 'docker.io/library/httpd:latest'
+      sudo podman pull docker.io/library/httpd:latest
+
+      echo "Running container on port 8080..."
+      # Expose container port 80 -> host port 8080
+      sudo podman run -d --name my-github-container -p 8080:80 docker.io/library/httpd:latest
+
+      echo "Container is running. Access it via http://node1.example.com:8080 (or 172.28.128.101:8080)"
+    SHELL
+
+    # Wheel group passwordless sudo for 'rhel'
+    node1.vm.provision "shell", inline: wheel_sudo_provision
   end
-
-  # Basic provisioning: sets passwords, /etc/hosts
-  node1.vm.provision "shell", inline: common_provision
-
-  # Subscription-manager provisioning (optional)
-  node1.vm.provision "shell", inline: subscription_manager_provision, env: {
-    "RHSM_USER" => ENV['RHSM_USER'],
-    "RHSM_PASS" => ENV['RHSM_PASS']
-  }
-
-  # Install Podman, pull a container image, and run it
-  node1.vm.provision "shell", inline: <<-SHELL
-    echo "Installing Podman..."
-    sudo dnf install -y podman
-
-    echo "Pulling GitHub container image..."
-    # Replace with any actual GitHub or other container image you prefer
-    # For demonstration, let's assume you have 'docker.io/library/httpd:latest'
-    # or an actual GitHub-based container
-    sudo podman pull docker.io/library/httpd:latest
-
-    echo "Running container on port 8080..."
-    # Expose container port 80 -> host port 8080
-    sudo podman run -d --name my-github-container -p 8080:80 docker.io/library/httpd:latest
-
-    echo "Container is running. Access it via http://node1.example.com:8080 (or 172.28.128.101:8080)"
-  SHELL
-end
 
   ##############################################################################
   # 4) PostgreSQL DB
@@ -151,6 +168,9 @@ end
       "RHSM_USER" => ENV['RHSM_USER'],
       "RHSM_PASS" => ENV['RHSM_PASS']
     }
+
+    # Wheel group passwordless sudo for 'rhel'
+    db.vm.provision "shell", inline: wheel_sudo_provision
   end
 
   ##############################################################################
@@ -170,5 +190,8 @@ end
       "RHSM_USER" => ENV['RHSM_USER'],
       "RHSM_PASS" => ENV['RHSM_PASS']
     }
+
+    # Wheel group passwordless sudo for 'rhel'
+    hub.vm.provision "shell", inline: wheel_sudo_provision
   end
 end
