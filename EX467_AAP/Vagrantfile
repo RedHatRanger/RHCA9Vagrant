@@ -15,9 +15,15 @@
 #
 # This Vagrantfile also demonstrates subscription-manager registration using
 # environment variables RHSM_USER and RHSM_PASS. Run:
-#   export RHSM_USER="<rhn_username>"
-#   export RHSM_PASS="<rhn_password>"
+#   
+#   export RHSM_USER="<rhn_username>" (Linux)
+#   export RHSM_PASS="<rhn_password>" (Linux)
+#   
+#   $env:RHSM_USER = "<rhn_username>" (Windows PowerShell)
+#   $env:RHSM_PASS = "<rhn_password>" (Windows PowerShell)
+
 # before "vagrant up" if you wish to register the VMs automatically.
+
 
   ###########################################################################
   # 1) Specify the RHEL 9 Box
