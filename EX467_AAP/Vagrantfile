@@ -5,79 +5,140 @@
 #   db.example.com          -> 172.28.128.102 (PostgreSQL DB)
 #   hub.example.com         -> 172.28.128.103 (Automation Hub)
 #
+# Box Reference: "generic/rhel9" (a community-maintained RHEL 9 base image).
+#
 # Note: Resource allocations below are the minimum for learning purposes.
 # The passwords "redhat" are used for exam practice only.
 # In production, use more secure passwords.
 #
 # Since DNS is not available, we update /etc/hosts on each VM with static entries.
+#
+# This Vagrantfile also demonstrates subscription-manager registration using
+# environment variables RHSM_USER and RHSM_PASS. Run:
+#   export RHSM_USER="<rhn_username>"
+#   export RHSM_PASS="<rhn_password>"
+# before "vagrant up" if you wish to register the VMs automatically.
 
-Vagrant.configure("2") do |config|
+  ###########################################################################
+  # 1) Specify the RHEL 9 Box
+  ###########################################################################
+  Vagrant.configure("2") do |config|
   config.vm.box = "generic/rhel9"
-  
-  # Disable the default synced folder if not needed.
-  config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  # Define the common /etc/hosts entries.
-  hosts_entries = <<-EOF
+  ###########################################################################
+  # Warn user if environment variables are not set
+  ###########################################################################
+  if ENV['RHSM_USER'].nil? || ENV['RHSM_PASS'].nil?
+    puts "WARNING: Please set RHSM_USER and RHSM_PASS environment variables before running vagrant up!"
+  end
+
+  ###########################################################################
+  # Subscription-Manager Provisioning Script
+  ###########################################################################
+  subscription_manager_provision = <<-SHELL
+    if [ -z "$RHSM_USER" ] || [ -z "$RHSM_PASS" ]; then
+      echo "RHSM_USER / RHSM_PASS not set. Skipping subscription-manager register."
+      exit 0
+    fi
+
+    echo "Registering this VM via subscription-manager..."
+    sudo subscription-manager register --username "$RHSM_USER" --password "$RHSM_PASS" --auto-attach
+
+    # If needed, enable specific repositories:
+    # sudo subscription-manager repos --enable rhel-9-for-x86_64-baseos-rpms
+    # sudo subscription-manager repos --enable rhel-9-for-x86_64-appstream-rpms
+  SHELL
+
+  ###########################################################################
+  # Common /etc/hosts Entries for All VMs
+  ###########################################################################
+  hosts_entries = <<-EOS
 172.28.128.100 controller.example.com
 172.28.128.101 node1.example.com
 172.28.128.102 db.example.com
 172.28.128.103 hub.example.com
-EOF
+EOS
 
-  # Define a common provisioning script to set passwords and update /etc/hosts.
+  ###########################################################################
+  # Common Provisioning (Set Passwords, Update /etc/hosts)
+  ###########################################################################
   common_provision = <<-SHELL
-    # Set passwords for rhel and root (for exam practice only; use secure passwords in production)
     echo 'rhel:redhat' | sudo chpasswd
     echo 'root:redhat' | sudo chpasswd
 
-    # Append static host entries to /etc/hosts for local name resolution
-    cat <<EOF | sudo tee -a /etc/hosts
+    cat <<HOSTS | sudo tee -a /etc/hosts
 #{hosts_entries}
-EOF
+HOSTS
   SHELL
 
-  # Automation Controller VM
+  ###########################################################################
+  # 1) Automation Controller
+  ###########################################################################
   config.vm.define "controller" do |controller|
     controller.vm.hostname = "controller.example.com"
     controller.vm.network "private_network", ip: "172.28.128.100", netmask: "255.255.255.0"
     controller.vm.provider "virtualbox" do |vb|
-      vb.memory = "4096"  # 4GB RAM (minimum for learning)
-      vb.cpus   = 2       # 2 vCPUs (minimum for learning)
+      vb.memory = 4096
+      vb.cpus   = 2
     end
+    # Basic provisioning
     controller.vm.provision "shell", inline: common_provision
+    # Subscription-manager provisioning
+    controller.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
   end
 
-  # Managed Host VM (node1.example.com)
+  ###########################################################################
+  # 2) Managed Host (node1)
+  ###########################################################################
   config.vm.define "node1" do |node1|
     node1.vm.hostname = "node1.example.com"
     node1.vm.network "private_network", ip: "172.28.128.101", netmask: "255.255.255.0"
     node1.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"  # 1GB RAM (minimum for learning)
-      vb.cpus   = 1       # 1 vCPU (minimum for learning)
+      vb.memory = 2048
+      vb.cpus   = 1
     end
     node1.vm.provision "shell", inline: common_provision
+    node1.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
   end
 
-  # PostgreSQL DB VM
+  ###########################################################################
+  # 3) PostgreSQL DB
+  ###########################################################################
   config.vm.define "db" do |db|
     db.vm.hostname = "db.example.com"
     db.vm.network "private_network", ip: "172.28.128.102", netmask: "255.255.255.0"
     db.vm.provider "virtualbox" do |vb|
-      vb.memory = "2048"  # 2GB RAM (minimum for learning)
-      vb.cpus   = 1       # 1 vCPU (minimum for learning)
+      vb.memory = 2048
+      vb.cpus   = 1
     end
     db.vm.provision "shell", inline: common_provision
+    db.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
   end
 
-  # Automation Hub VM
+  ###########################################################################
+  # 4) Automation Hub
+  ###########################################################################
   config.vm.define "hub" do |hub|
     hub.vm.hostname = "hub.example.com"
     hub.vm.network "private_network", ip: "172.28.128.103", netmask: "255.255.255.0"
     hub.vm.provider "virtualbox" do |vb|
-      vb.memory = "2048"  # 2GB RAM (minimum for learning)
-      vb.cpus   = 1       # 1 vCPU (minimum for learning)
+      vb.memory = 2048
+      vb.cpus   = 1
     end
     hub.vm.provision "shell", inline: common_provision
+    hub.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
   end
 end
+
