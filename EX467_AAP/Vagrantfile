@@ -22,12 +22,6 @@
 #   $env:RHSM_PASS = "<rhn_password>"
 #  Set the environment variables before vagrant up. If not set, it prints a warning and skips subscription registration.
 
----
-
-```ruby
-# ------------------------------
-# Vagrantfile
-# ------------------------------
 Vagrant.configure("2") do |config|
   ##############################################################################
   # 1) Specify the RHEL 9 Base Box
