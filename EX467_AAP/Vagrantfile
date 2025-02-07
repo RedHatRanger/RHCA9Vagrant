@@ -1,29 +1,26 @@
 # Vagrantfile for a minimal, lab/testing setup of AAP 2.4 (offline bundle)
-
-**Hostnames and IP addresses (with /24 CIDR):**
-- `controller.example.com` → 172.28.128.100 (Automation Controller)  
-- `node1.example.com`      → 172.28.128.101 (Managed Host)  
-- `db.example.com`         → 172.28.128.102 (PostgreSQL DB)  
-- `hub.example.com`        → 172.28.128.103 (Automation Hub)
-
-**Box Reference:** `"generic/rhel9"` — a widely used base box for RHEL 9.
-
-> **Note**: Resource allocations below are the minimum for learning purposes.  
-> The passwords `"redhat"` are used for exam practice only. In production, use more secure passwords.  
-> Since DNS is not available, we update `/etc/hosts` on each VM with static entries.  
->
-> This Vagrantfile also demonstrates *subscription-manager* registration using environment variables `RHSM_USER` and `RHSM_PASS`.  
-> If you wish to register the VMs automatically, run:
-> ```bash
-> export RHSM_USER="<rhn_username>"
-> export RHSM_PASS="<rhn_password>"
-> ```
-> (on Linux/macOS) or
-> ```powershell
-> $env:RHSM_USER = "<rhn_username>"
-> $env:RHSM_PASS = "<rhn_password>"
-> ```
-> (on Windows PowerShell) before `vagrant up`. If not set, it prints a warning and **skips** subscription registration.
+# 
+# Hostnames and IP addresses (with /24 CIDR):
+# - controller.example.com  → 172.28.128.100 (Automation Controller)
+# - node1.example.com       → 172.28.128.101 (Managed Host)
+# - db.example.com          → 172.28.128.102 (PostgreSQL DB)
+# - hub.example.com         → 172.28.128.103 (Automation Hub)
+#
+# Box Reference: "generic/rhel9" — a widely used base box for RHEL 9.
+#
+# Note: Resource allocations below are the minimum for learning purposes.
+# The passwords "redhat" are used for exam practice only. In production, use more secure passwords.
+# Since DNS is not available, we update /etc/hosts on each VM with static entries.
+#
+# This Vagrantfile also demonstrates subscription-manager registration using environment variables RHSM_USER and RHSM_PASS.
+# If you wish to register the VMs automatically, run:
+# (on Linux/macOS):
+#   export RHSM_USER="<rhn_username>"
+#   export RHSM_PASS="<rhn_password>"
+# (on Windows PowerShell):
+#   $env:RHSM_USER = "<rhn_username>"
+#   $env:RHSM_PASS = "<rhn_password>"
+#  Set the environment variables before vagrant up. If not set, it prints a warning and skips subscription registration.
 
 ---
 
