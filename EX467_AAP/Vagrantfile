@@ -51,6 +51,16 @@ Vagrant.configure("2") do |config|
   SHELL
 
   # ---------------------------------------------------------------------------
+  # Create 'rhel' user if missing
+  # ---------------------------------------------------------------------------
+  create_rhel_user = <<-SHELL
+    echo "Ensuring 'rhel' user exists..."
+    if ! id -u rhel &>/dev/null; then
+      sudo useradd -m -s /bin/bash rhel
+    fi
+  SHELL
+
+  # ---------------------------------------------------------------------------
   # Common /etc/hosts Entries for All VMs
   # ---------------------------------------------------------------------------
   hosts_entries = <<-EOS
@@ -96,6 +106,9 @@ HOSTS
       vb.cpus   = 2
     end
 
+    # Create rhel user if missing
+    controller.vm.provision "shell", inline: create_rhel_user
+
     # Basic provisioning
     controller.vm.provision "shell", inline: common_provision
 
@@ -120,6 +133,9 @@ HOSTS
       vb.memory = 2048
       vb.cpus   = 1
     end
+
+    # Create rhel user if missing
+    node1.vm.provision "shell", inline: create_rhel_user
 
     # Basic provisioning: sets passwords, /etc/hosts
     node1.vm.provision "shell", inline: common_provision
@@ -163,6 +179,9 @@ HOSTS
       vb.cpus   = 1
     end
 
+    # Create rhel user if missing
+    db.vm.provision "shell", inline: create_rhel_user
+
     db.vm.provision "shell", inline: common_provision
     db.vm.provision "shell", inline: subscription_manager_provision, env: {
       "RHSM_USER" => ENV['RHSM_USER'],
@@ -184,6 +203,9 @@ HOSTS
       vb.memory = 2048
       vb.cpus   = 1
     end
+
+    # Create rhel user if missing
+    hub.vm.provision "shell", inline: create_rhel_user
 
     hub.vm.provision "shell", inline: common_provision
     hub.vm.provision "shell", inline: subscription_manager_provision, env: {
