@@ -65,10 +65,10 @@ Vagrant.configure("2") do |config|
   # Common /etc/hosts Entries for All VMs
   # ---------------------------------------------------------------------------
   hosts_entries = <<-EOS
-172.28.128.100 controller.example.com
-172.28.128.101 node1.example.com
-172.28.128.102 db.example.com
-172.28.128.103 hub.example.com
+172.28.128.100  controller.example.com  controller
+172.28.128.101  node1.example.com  node1
+172.28.128.102  db.example.com  node1
+172.28.128.103  hub.example.com  hub  pah
 EOS
 
   # ---------------------------------------------------------------------------
