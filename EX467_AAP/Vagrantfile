@@ -21,6 +21,7 @@
 #   $env:RHSM_USER = "<rhn_username>"
 #   $env:RHSM_PASS = "<rhn_password>"
 # Set the environment variables before vagrant up. If not set, it prints a warning and skips subscription registration.
+# Run 'Yum update -y' and reboot to update all the VMs to RHEL 9.5
 
 Vagrant.configure("2") do |config|
   ##############################################################################
