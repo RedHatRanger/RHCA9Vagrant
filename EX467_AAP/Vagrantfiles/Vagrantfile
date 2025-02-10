@@ -1,0 +1,230 @@
+# Vagrantfile for a minimal, lab/testing setup of AAP 2.4 (offline bundle)
+#
+# Hostnames and IP addresses (with /24 CIDR):
+# - controller.example.com  → 172.28.128.100 (Automation Controller)
+# - node1.example.com       → 172.28.128.101 (Managed Host, now running GitLab via Podman)
+# - db.example.com          → 172.28.128.102 (PostgreSQL DB)
+# - hub.example.com         → 172.28.128.103 (Automation Hub)
+#
+# Box Reference: "generic/rhel9" — a widely used base box for RHEL 9.
+#
+# Note: Resource allocations below are the minimum for learning purposes, except
+# for node1 which needs a bit more memory/CPU to run GitLab.
+# The passwords "redhat" are used for exam practice only. In production, use stronger passwords.
+#
+# Since DNS is not available, we update /etc/hosts on each VM with static entries.
+#
+# This Vagrantfile also demonstrates subscription-manager registration using environment variables RHSM_USER and RHSM_PASS.
+# If you wish to register the VMs automatically, run:
+# (on Linux/macOS):
+#   export RHSM_USER="<rhn_username>"
+#   export RHSM_PASS="<rhn_password>"
+# (on Windows PowerShell):
+#   $env:RHSM_USER = "<rhn_username>"
+#   $env:RHSM_PASS = "<rhn_password>"
+# ...then run 'vagrant up'. If not set, it prints a warning and skips subscription registration.
+
+Vagrant.configure("2") do |config|
+  ##############################################################################
+  # 1) Specify the RHEL 9 Base Box
+  ##############################################################################
+  config.vm.box = "generic/rhel9"
+
+  # Warn user if environment variables are not set
+  if ENV['RHSM_USER'].nil? || ENV['RHSM_PASS'].nil?
+    puts "WARNING: Please set RHSM_USER and RHSM_PASS environment variables before running vagrant up!"
+  end
+
+  ##############################################################################
+  # A) Subscription-Manager Provisioning Script
+  ##############################################################################
+  subscription_manager_provision = <<-SHELL
+    if [ -z "$RHSM_USER" ] || [ -z "$RHSM_PASS" ]; then
+      echo "RHSM_USER / RHSM_PASS not set. Skipping subscription-manager register."
+      exit 0
+    fi
+
+    echo "Registering this VM via subscription-manager..."
+    sudo subscription-manager register --username "$RHSM_USER" --password "$RHSM_PASS" --auto-attach
+
+    # If needed, enable specific repositories:
+    # sudo subscription-manager repos --enable rhel-9-for-x86_64-baseos-rpms
+    # sudo subscription-manager repos --enable rhel-9-for-x86_64-appstream-rpms
+  SHELL
+
+  ##############################################################################
+  # B) Create 'rhel' user if missing
+  ##############################################################################
+  create_rhel_user = <<-SHELL
+    echo "Ensuring 'rhel' user exists..."
+    if ! id -u rhel &>/dev/null; then
+      sudo useradd -m -s /bin/bash rhel
+    fi
+  SHELL
+
+  ##############################################################################
+  # C) Common /etc/hosts entries
+  ##############################################################################
+  hosts_entries = <<-EOS
+172.28.128.100  controller.example.com  controller
+172.28.128.101  node1.example.com       node1
+172.28.128.102  db.example.com          db
+172.28.128.103  hub.example.com         hub
+EOS
+
+  ##############################################################################
+  # D) Common Provision (set passwords, update /etc/hosts)
+  ##############################################################################
+  common_provision = <<-SHELL
+    echo "Setting passwords for 'rhel' and 'root' to 'redhat'..."
+    echo 'rhel:redhat' | sudo chpasswd
+    echo 'root:redhat' | sudo chpasswd
+
+    echo "Adding static host entries..."
+    cat <<HOSTS | sudo tee -a /etc/hosts
+#{hosts_entries}
+HOSTS
+  SHELL
+
+  ##############################################################################
+  # E) Wheel group passwordless sudo for 'rhel'
+  ##############################################################################
+  wheel_sudo_provision = <<-SHELL
+    echo "Adding 'rhel' to wheel group + passwordless sudo..."
+    sudo usermod -aG wheel rhel
+    echo '%wheel ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/wheel-nopasswd
+    sudo chmod 440 /etc/sudoers.d/wheel-nopasswd
+  SHELL
+
+  ##############################################################################
+  # 2) Automation Controller
+  ##############################################################################
+  config.vm.define "controller" do |controller|
+    controller.vm.hostname = "controller.example.com"
+    controller.vm.network "private_network", ip: "172.28.128.100", netmask: "255.255.255.0"
+
+    controller.vm.provider "virtualbox" do |vb|
+      vb.memory = 4096
+      vb.cpus   = 2
+    end
+
+    # 1) create rhel user
+    controller.vm.provision "shell", inline: create_rhel_user
+
+    # 2) common tasks
+    controller.vm.provision "shell", inline: common_provision
+
+    # 3) subscription-manager
+    controller.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
+
+    # 4) wheel group passwordless sudo
+    controller.vm.provision "shell", inline: wheel_sudo_provision
+  end
+
+  ##############################################################################
+  # 3) Managed Host (node1) - GitLab Container
+  ##############################################################################
+  config.vm.define "node1" do |node1|
+    node1.vm.hostname = "node1.example.com"
+    node1.vm.network "private_network", ip: "172.28.128.101", netmask: "255.255.255.0"
+
+    # Increase resources for GitLab
+    node1.vm.provider "virtualbox" do |vb|
+      vb.memory = 4096
+      vb.cpus   = 2
+    end
+
+    # 1) create rhel user
+    node1.vm.provision "shell", inline: create_rhel_user
+
+    # 2) common tasks
+    node1.vm.provision "shell", inline: common_provision
+
+    # 3) subscription-manager
+    node1.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
+
+    # 4) Install Podman, run GitLab container
+    node1.vm.provision "shell", inline: <<-SHELL
+      echo "Installing Podman..."
+      sudo dnf install -y podman
+
+      echo "Pulling GitLab CE container image..."
+      sudo podman pull docker.io/gitlab/gitlab-ce:latest
+
+      echo "Running GitLab container..."
+      # Map ports:
+      #   - HTTP  => 8080
+      #   - HTTPS => 8443
+      #   - SSH   => 2222
+      sudo podman run -d \
+        --name gitlab \
+        --hostname gitlab.example.com \
+        --publish 8080:80 --publish 8443:443 --publish 2222:22 \
+        --restart always \
+        docker.io/gitlab/gitlab-ce:latest
+
+      echo "GitLab is starting. Access it at http://node1.example.com:8080 or https://node1.example.com:8443"
+      echo "SSH for Git is on port 2222. Initial root password can be found via:"
+      echo "  sudo podman logs gitlab | grep 'Password:'"
+    SHELL
+
+    # 5) wheel group passwordless sudo
+    node1.vm.provision "shell", inline: wheel_sudo_provision
+  end
+
+  ##############################################################################
+  # 4) PostgreSQL DB
+  ##############################################################################
+  config.vm.define "db" do |db|
+    db.vm.hostname = "db.example.com"
+    db.vm.network "private_network", ip: "172.28.128.102", netmask: "255.255.255.0"
+
+    db.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+      vb.cpus   = 1
+    end
+
+    # 1) create rhel user
+    db.vm.provision "shell", inline: create_rhel_user
+    # 2) common tasks
+    db.vm.provision "shell", inline: common_provision
+    # 3) subscription-manager
+    db.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
+    # 4) wheel group passwordless sudo
+    db.vm.provision "shell", inline: wheel_sudo_provision
+  end
+
+  ##############################################################################
+  # 5) Automation Hub
+  ##############################################################################
+  config.vm.define "hub" do |hub|
+    hub.vm.hostname = "hub.example.com"
+    hub.vm.network "private_network", ip: "172.28.128.103", netmask: "255.255.255.0"
+
+    hub.vm.provider "virtualbox" do |vb|
+      vb.memory = 2048
+      vb.cpus   = 1
+    end
+
+    # 1) create rhel user
+    hub.vm.provision "shell", inline: create_rhel_user
+    # 2) common tasks
+    hub.vm.provision "shell", inline: common_provision
+    # 3) subscription-manager
+    hub.vm.provision "shell", inline: subscription_manager_provision, env: {
+      "RHSM_USER" => ENV['RHSM_USER'],
+      "RHSM_PASS" => ENV['RHSM_PASS']
+    }
+    # 4) wheel group passwordless sudo
+    hub.vm.provision "shell", inline: wheel_sudo_provision
+  end
+end
