@@ -26,7 +26,7 @@ Result
 
 
 >Each VM:
-
+>
 >Creates a rhel user with password redhat.
 >Updates SSH config to allow password + public key authentication.
 >Registers with subscription-manager.
