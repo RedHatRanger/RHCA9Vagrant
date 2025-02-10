@@ -1,6 +1,6 @@
 # Usage Steps
 
-1. Register for a Red Hat Developer Account at https://developers.redhat.com.
+1. Register for a FREE Red Hat Developer Account at https://developers.redhat.com.
 1. **Install VirtualBox and Vagrant** (if you haven’t already).
 2. **Auto-register with Red Hat**  
    If you want the VMs to automatically register, set the following environment variables **before** running `vagrant up`:
