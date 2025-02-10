@@ -19,14 +19,16 @@
 Result
 4 RHEL 9 VMs spin up:
 
-controller (2 vCPUs, 4 GB RAM)
-node1 (1 vCPU, 2 GB RAM, plus Podman container on port 8080)
-db (1 vCPU, 2 GB RAM)
-hub (1 vCPU, 2 GB RAM)
-Each VM:
+1. controller (2 vCPUs, 4 GB RAM)
+2. node1 (1 vCPU, 2 GB RAM, plus Podman container on port 8080)
+3. db (1 vCPU, 2 GB RAM)
+4. hub (1 vCPU, 2 GB RAM)
 
-Creates a rhel user with password redhat.
-Updates SSH config to allow password + public key authentication.
-(Optionally) registers with subscription-manager.
-Adds rhel to wheel with passwordless sudo.
-On node1, runs a quick httpd container as a stand-in for a GitHub or any other container.
+
+- Each VM:
+
+>Creates a rhel user with password redhat.
+>Updates SSH config to allow password + public key authentication.
+>Registers with subscription-manager.
+>Adds rhel to wheel with passwordless sudo.
+>On node1, runs a quick httpd container as a stand-in for a GitHub or any other container.
