@@ -2,27 +2,28 @@
 #
 # Hostnames and IP addresses (with /24 CIDR):
 # - controller.example.com  → 172.28.128.100 (Automation Controller)
-# - node1.example.com       → 172.28.128.101 (Managed Host, now running GitLab via Podman)
+# - node1.example.com       → 172.28.128.101 (Managed Host, runs GitLab via Podman)
 # - db.example.com          → 172.28.128.102 (PostgreSQL DB)
 # - hub.example.com         → 172.28.128.103 (Automation Hub)
 #
-# Box Reference: "generic/rhel9" — a widely used base box for RHEL 9.
+# Box: "generic/rhel9" (widely used base RHEL 9 box from Vagrant Cloud).
 #
-# Note: Resource allocations below are the minimum for learning purposes, except
-# for node1 which needs a bit more memory/CPU to run GitLab.
-# The passwords "redhat" are used for exam practice only. In production, use stronger passwords.
+# The password "redhat" is used for 'rhel' and 'root' for exam/lab practice.
+# In production, use more secure credentials.
 #
-# Since DNS is not available, we update /etc/hosts on each VM with static entries.
+# This Vagrantfile demonstrates:
+#   - Subscription-manager registration (if RHSM_USER / RHSM_PASS are exported).
+#   - Creation of 'rhel' user, passwordless sudo, and host file updates.
+#   - GitLab container on node1 with mapped ports (8080→80, 8443→443, 2222→22).
+#   - Installation of ansible, python3-pip, container-tools, and ansible-navigator on the controller node.
 #
-# This Vagrantfile also demonstrates subscription-manager registration using environment variables RHSM_USER and RHSM_PASS.
-# If you wish to register the VMs automatically, run:
-# (on Linux/macOS):
+# On Linux/macOS, set:
 #   export RHSM_USER="<rhn_username>"
 #   export RHSM_PASS="<rhn_password>"
-# (on Windows PowerShell):
+# On Windows (PowerShell):
 #   $env:RHSM_USER = "<rhn_username>"
 #   $env:RHSM_PASS = "<rhn_password>"
-# ...then run 'vagrant up'. If not set, it prints a warning and skips subscription registration.
+# Then run `vagrant up`. If not set, subscription registration is skipped.
 
 Vagrant.configure("2") do |config|
   ##############################################################################
@@ -32,22 +33,22 @@ Vagrant.configure("2") do |config|
 
   # Warn user if environment variables are not set
   if ENV['RHSM_USER'].nil? || ENV['RHSM_PASS'].nil?
-    puts "WARNING: Please set RHSM_USER and RHSM_PASS environment variables before running vagrant up!"
+    puts "WARNING: RHSM_USER / RHSM_PASS not set. Subscription registration will be skipped unless manually set."
   end
 
   ##############################################################################
-  # A) Subscription-Manager Provisioning Script
+  # A) Subscription-Manager Provisioning
   ##############################################################################
   subscription_manager_provision = <<-SHELL
     if [ -z "$RHSM_USER" ] || [ -z "$RHSM_PASS" ]; then
-      echo "RHSM_USER / RHSM_PASS not set. Skipping subscription-manager register."
+      echo "No RHSM_USER or RHSM_PASS provided, skipping subscription-manager..."
       exit 0
     fi
 
     echo "Registering this VM via subscription-manager..."
     sudo subscription-manager register --username "$RHSM_USER" --password "$RHSM_PASS" --auto-attach
 
-    # If needed, enable specific repositories:
+    # Enable repos if desired:
     # sudo subscription-manager repos --enable rhel-9-for-x86_64-baseos-rpms
     # sudo subscription-manager repos --enable rhel-9-for-x86_64-appstream-rpms
   SHELL
@@ -73,14 +74,14 @@ Vagrant.configure("2") do |config|
 EOS
 
   ##############################################################################
-  # D) Common Provision (set passwords, update /etc/hosts)
+  # D) Common Provision (set password, /etc/hosts)
   ##############################################################################
   common_provision = <<-SHELL
-    echo "Setting passwords for 'rhel' and 'root' to 'redhat'..."
+    echo "Setting passwords for 'rhel' and 'root' -> 'redhat'"
     echo 'rhel:redhat' | sudo chpasswd
     echo 'root:redhat' | sudo chpasswd
 
-    echo "Adding static host entries..."
+    echo "Updating /etc/hosts..."
     cat <<HOSTS | sudo tee -a /etc/hosts
 #{hosts_entries}
 HOSTS
@@ -97,7 +98,7 @@ HOSTS
   SHELL
 
   ##############################################################################
-  # 2) Automation Controller
+  # 2) Automation Controller Node
   ##############################################################################
   config.vm.define "controller" do |controller|
     controller.vm.hostname = "controller.example.com"
@@ -108,20 +109,34 @@ HOSTS
       vb.cpus   = 2
     end
 
-    # 1) create rhel user
+    # Step 1: create rhel user
     controller.vm.provision "shell", inline: create_rhel_user
 
-    # 2) common tasks
+    # Step 2: common tasks
     controller.vm.provision "shell", inline: common_provision
 
-    # 3) subscription-manager
+    # Step 3: subscription-manager
     controller.vm.provision "shell", inline: subscription_manager_provision, env: {
       "RHSM_USER" => ENV['RHSM_USER'],
       "RHSM_PASS" => ENV['RHSM_PASS']
     }
 
-    # 4) wheel group passwordless sudo
+    # Step 4: wheel group passwordless sudo
     controller.vm.provision "shell", inline: wheel_sudo_provision
+
+    # Step 5: Install ansible, python3-pip, container-tools & ansible-navigator
+    controller.vm.provision "shell", inline: <<-SHELL
+      echo "Installing Ansible, python3-pip, container-tools on controller..."
+      sudo yum clean all
+      sudo yum install -y ansible python3-pip container-tools
+
+      echo "Installing ansible-navigator for rhel user..."
+      # We install in rhel's home path. We do 'sudo -u rhel' to run as the rhel user.
+      sudo -u rhel python3 -m pip install --user ansible-navigator
+
+      echo "You can now run 'ansible-navigator' as the rhel user!"
+      echo "Example: 'vagrant ssh controller' then 'ansible-navigator'"
+    SHELL
   end
 
   ##############################################################################
@@ -137,31 +152,27 @@ HOSTS
       vb.cpus   = 2
     end
 
-    # 1) create rhel user
+    # Step 1: create rhel user
     node1.vm.provision "shell", inline: create_rhel_user
 
-    # 2) common tasks
+    # Step 2: common tasks
     node1.vm.provision "shell", inline: common_provision
 
-    # 3) subscription-manager
+    # Step 3: subscription-manager
     node1.vm.provision "shell", inline: subscription_manager_provision, env: {
       "RHSM_USER" => ENV['RHSM_USER'],
       "RHSM_PASS" => ENV['RHSM_PASS']
     }
 
-    # 4) Install Podman, run GitLab container
+    # Step 4: Install Podman, run GitLab container
     node1.vm.provision "shell", inline: <<-SHELL
-      echo "Installing Podman..."
+      echo "Installing Podman for GitLab..."
       sudo dnf install -y podman
 
       echo "Pulling GitLab CE container image..."
       sudo podman pull docker.io/gitlab/gitlab-ce:latest
 
       echo "Running GitLab container..."
-      # Map ports:
-      #   - HTTP  => 8080
-      #   - HTTPS => 8443
-      #   - SSH   => 2222
       sudo podman run -d \
         --name gitlab \
         --hostname gitlab.example.com \
@@ -170,11 +181,11 @@ HOSTS
         docker.io/gitlab/gitlab-ce:latest
 
       echo "GitLab is starting. Access it at http://node1.example.com:8080 or https://node1.example.com:8443"
-      echo "SSH for Git is on port 2222. Initial root password can be found via:"
+      echo "SSH for Git is on port 2222. For initial root password, run:"
       echo "  sudo podman logs gitlab | grep 'Password:'"
     SHELL
 
-    # 5) wheel group passwordless sudo
+    # Step 5: wheel group passwordless sudo
     node1.vm.provision "shell", inline: wheel_sudo_provision
   end
 
@@ -190,16 +201,16 @@ HOSTS
       vb.cpus   = 1
     end
 
-    # 1) create rhel user
+    # Step 1: create rhel user
     db.vm.provision "shell", inline: create_rhel_user
-    # 2) common tasks
+    # Step 2: common tasks
     db.vm.provision "shell", inline: common_provision
-    # 3) subscription-manager
+    # Step 3: subscription-manager
     db.vm.provision "shell", inline: subscription_manager_provision, env: {
       "RHSM_USER" => ENV['RHSM_USER'],
       "RHSM_PASS" => ENV['RHSM_PASS']
     }
-    # 4) wheel group passwordless sudo
+    # Step 4: wheel group passwordless sudo
     db.vm.provision "shell", inline: wheel_sudo_provision
   end
 
@@ -215,16 +226,16 @@ HOSTS
       vb.cpus   = 1
     end
 
-    # 1) create rhel user
+    # Step 1: create rhel user
     hub.vm.provision "shell", inline: create_rhel_user
-    # 2) common tasks
+    # Step 2: common tasks
     hub.vm.provision "shell", inline: common_provision
-    # 3) subscription-manager
+    # Step 3: subscription-manager
     hub.vm.provision "shell", inline: subscription_manager_provision, env: {
       "RHSM_USER" => ENV['RHSM_USER'],
       "RHSM_PASS" => ENV['RHSM_PASS']
     }
-    # 4) wheel group passwordless sudo
+    # Step 4: wheel group passwordless sudo
     hub.vm.provision "shell", inline: wheel_sudo_provision
   end
 end
