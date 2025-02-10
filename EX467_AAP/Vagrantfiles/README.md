@@ -33,3 +33,9 @@ Result
 >Registers with subscription-manager.
 >Adds rhel to wheel with passwordless sudo.
 >On node1, runs a quick httpd container as a stand-in for a GitHub or any other container.
+
+
+### TO UNREGISTER YOUR MACHINES:
+```
+sudo subscription-manager unregister
+```
