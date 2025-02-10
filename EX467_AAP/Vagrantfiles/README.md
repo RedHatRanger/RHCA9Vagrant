@@ -25,7 +25,7 @@ Result
 4. hub (1 vCPU, 2 GB RAM)
 
 
-- Each VM:
+>Each VM:
 
 >Creates a rhel user with password redhat.
 >Updates SSH config to allow password + public key authentication.
