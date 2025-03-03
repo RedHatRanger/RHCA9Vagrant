@@ -26,3 +26,5 @@ Base Domain: example.com
 ```
 11) Open `Proxmox` and click on `pve`>`local (pve)`>`ISO Images`>`Download from URL`.
 12) Paste the `Discovery URL` you copied from Step #10, and give the image a name: `discovery.iso`.
+13) Click `Download`.
+14) 
