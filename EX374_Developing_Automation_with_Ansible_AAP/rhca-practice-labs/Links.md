@@ -23,7 +23,10 @@
 [DeepSeek Banned?](https://www.youtube.com/watch?v=PoeFxGzPpXE)
 [Goku AI](https://www.yeschat.ai/features/goku-ai)
 
-### Research Tools [Video Link](https://www.youtube.com/@AcademicEnglishNow):
-[Research Rabbit](https://www.researchrabbit.ai/) \
+### Research Tools: [Video Link](https://www.youtube.com/@AcademicEnglishNow)
+*(BEST)* [Scispace](https://scispace.com/) \
+[Jenni AI](https://app.jenni.ai/) \
 [Paper Pal](https://paperpal.com) \
-[Jenni AI](https://app.jenni.ai/) 
+[Research Rabbit](https://www.researchrabbit.ai/) 
+
+
