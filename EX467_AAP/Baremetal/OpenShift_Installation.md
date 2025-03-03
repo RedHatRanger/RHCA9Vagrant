@@ -47,5 +47,6 @@ Cores: 4
 27) Click `Next`.
 28) In the `Network` tab, paste the `MAC Address` from Step #14 (Router's settings).
 29) Click `Next`.
-30) In the `Confirm` tab, Click `Finish` to complete the `Create VM` setup.
-31) 
+30) In the `Confirm` tab, check the `Start after finish` box.
+31) Then click `Finish`.
+32) 
