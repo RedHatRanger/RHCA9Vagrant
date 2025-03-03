@@ -48,6 +48,11 @@ Cores: 4
 28) In the `Network` tab, paste the `MAC Address` from Step #14 (Router's settings).
 29) Click `Next`.
 30) In the `Confirm` tab, check the `Start after finish` box.
-31) Now go to your Proxmox console to see the VM build progress on the `sno` machine.
-32) Then click `Finish`.
-33) 
+31) Then click `Finish`.
+32) Now go to your Proxmox console to see the VM build progress on the `sno` machine.
+33) Once it's built, you can go to `https://console.redhat.com` to your `Clusters` to check if the `sno` instance is there.
+```
+# The instance showing up may take a few minutes.
+```
+
+
