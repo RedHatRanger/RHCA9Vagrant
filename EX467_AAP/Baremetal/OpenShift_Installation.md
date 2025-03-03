@@ -13,4 +13,6 @@ Base Domain: example.com
 # Leave the OpenShift Version at the highest (Default option)
 ```
 5) Click `Next` to continue the setup.
-6) 
+6) Click `Generate Discovery ISO`>`Full image file: Provision with physical media`.
+7) Switch to your terminal and run `cat ~/.ssh/id_rsa.pub` to grab your public SSH key.
+8) 
