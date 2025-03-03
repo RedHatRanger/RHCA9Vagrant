@@ -68,5 +68,8 @@ Cores: 4
 # Note: While the Cluster installation is progressing, you will want to download the kubeconfig 
 ```
 41) Click `Download kubeconfig` to download that to your local system.
-42) Also you will need to download the `OpenShift Client Software` from [here](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/4.9.9/). *Version is 4.9.9 currently.
+42) Download the `OpenShift Client Software` from [here](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/4.9.9/). *Version is 4.9.9 currently.
+```
+# Download both for your local system and the RHEL system we will use later.
+```
 
