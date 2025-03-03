@@ -14,7 +14,7 @@ Base Domain: example.com
 ```
 5) Click `Next` to continue the setup.
 6) Click `Generate Discovery ISO`>`Full image file: Provision with physical media`.
-7) Switch to your terminal and run `cat ~/.ssh/id_rsa.pub | pbcopy` to grab your public SSH key.
+7) Switch to your local machine's terminal and run `cat ~/.ssh/id_rsa.pub | pbcopy` to grab your public SSH key.
 8) Paste the public SSH key you copied in Step #7 to the onscreen text box.
 9) Click `Generate Discovery ISO`.
 10) At this point, you have 2 options:
@@ -67,6 +67,6 @@ Cores: 4
 ```
 # Note: While the Cluster installation is progressing, you will want to download the kubeconfig 
 ```
-41) Click `Download kubeconfig`.
-42) 
+41) Click `Download kubeconfig` to download that to your local system.
+42) Also you will need to download the `OpenShift Client Software` from [here](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/).
 
