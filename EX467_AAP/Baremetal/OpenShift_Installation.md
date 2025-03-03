@@ -61,5 +61,7 @@ Cores: 4
 ```
 36) Click `Next`.
 37) Choose your correct subnet in the `Available Subnets` dropdown.
-38) 
+38) Fix the NTP error by adding `time.apple.com` in the NTP server box.
+39) Click `Add` then click `Next`.
+40) Click `Install Cluster`.
 
