@@ -27,4 +27,5 @@ Base Domain: example.com
 11) Open `Proxmox` and click on `pve`>`local (pve)`>`ISO Images`>`Download from URL`.
 12) Paste the `Discovery URL` you copied from Step #10, and give the image a name: `discovery.iso`.
 13) Click `Download`.
-14) 
+14) Go into your router's settings and look for `LAN Setup`>`Advanced`>`Address Reservation`.
+15) Fill in the `IP Address` and `MAC Address` of the `sno` OpenShift Cluster.
