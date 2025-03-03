@@ -46,4 +46,6 @@ Cores: 4
 26) In the `Memory` tab, type `32768`.
 27) Click `Next`.
 28) In the `Network` tab, paste the `MAC Address` from Step #14 (Router's settings).
-29) 
+29) Click `Next`.
+30) In the `Confirm` tab, Click `Finish` to complete the `Create VM` setup.
+31) 
