@@ -54,5 +54,12 @@ Cores: 4
 ```
 # The instance showing up may take a few minutes.
 ```
-
+34) In the same console, you'll need to change the hostname from `localhost` to `sno`.
+35) Click `Save` and then `Next`.
+```
+# Note: you might see NTP Warning, but keep going
+```
+36) Click `Next`.
+37) Choose your correct subnet in the `Available Subnets` dropdown.
+38) 
 
