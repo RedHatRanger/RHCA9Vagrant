@@ -76,4 +76,5 @@ Cores: 4
 ![image](https://github.com/user-attachments/assets/d6e4413b-d205-4595-b9c9-6952dcd53919)
 
 
-
+# Post Install Operations
+[Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=514s)
