@@ -64,4 +64,9 @@ Cores: 4
 38) Fix the NTP error by adding `time.apple.com` in the NTP server box.
 39) Click `Add` then click `Next`.
 40) Click `Install Cluster`.
+```
+# Note: While the Cluster installation is progressing, you will want to download the kubeconfig 
+```
+41) Click `Download kubeconfig`.
+42) 
 
