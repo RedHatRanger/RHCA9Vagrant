@@ -14,5 +14,6 @@ Base Domain: example.com
 ```
 5) Click `Next` to continue the setup.
 6) Click `Generate Discovery ISO`>`Full image file: Provision with physical media`.
-7) Switch to your terminal and run `cat ~/.ssh/id_rsa.pub` to grab your public SSH key.
-8) 
+7) Switch to your terminal and run `cat ~/.ssh/id_rsa.pub | pbcopy` to grab your public SSH key.
+8) Paste the public SSH key you copied in Step #7 to the onscreen text box.
+9) Click `Generate Discovery ISO`.
