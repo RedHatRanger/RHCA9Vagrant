@@ -29,3 +29,8 @@ Base Domain: example.com
 13) Click `Download`.
 14) Go into your router's settings and look for `LAN Setup`>`Advanced`>`Address Reservation`.
 15) Fill in the `IP Address` and `MAC Address` of the `sno` OpenShift Cluster.
+16) Switch back to `Proxmox`>`Create VM`.
+17) In the `General` tab, type `SNO` in the `Name` box.
+18) In the `OS` tab>`Use CD/DVD disc image file (iso):`>Click the `ISO Image` dropdown.
+19) Choose the `discovery.iso`.
+20) 
