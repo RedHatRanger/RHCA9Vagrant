@@ -45,4 +45,5 @@ Cores: 4
 25) Click `Next`.
 26) In the `Memory` tab, type `32768`.
 27) Click `Next`.
-28) 
+28) In the `Network` tab, paste the `MAC Address` from Step #14 (Router's settings).
+29) 
