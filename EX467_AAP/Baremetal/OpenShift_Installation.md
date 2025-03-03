@@ -31,6 +31,18 @@ Base Domain: example.com
 15) Fill in the `IP Address` and `MAC Address` of the `sno` OpenShift Cluster.
 16) Switch back to `Proxmox`>`Create VM`.
 17) In the `General` tab, type `SNO` in the `Name` box.
-18) In the `OS` tab>`Use CD/DVD disc image file (iso):`>Click the `ISO Image` dropdown.
-19) Choose the `discovery.iso`.
-20) 
+18) Click `Next`.
+19) In the `OS` tab>`Use CD/DVD disc image file (iso):`>Click the `ISO Image` dropdown.
+20) Choose the `discovery.iso`.
+21) Click `Next`.
+22) In the `Disks` tab>`Disk size (GiB):`, type `120`.
+23) Click `Next`.
+24) In the `CPU` tab:
+```
+Sockets: 2
+Cores: 4
+```
+25) Click `Next`.
+26) In the `Memory` tab, type `32768`.
+27) Click `Next`.
+28) 
