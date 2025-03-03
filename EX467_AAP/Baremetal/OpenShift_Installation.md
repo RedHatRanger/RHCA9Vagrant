@@ -72,4 +72,8 @@ Cores: 4
 ```
 # Download both for your local system and the RHEL system we will use later.
 ```
+43) Open up ports on your router `Port Forwarding`:
+![image](https://github.com/user-attachments/assets/d6e4413b-d205-4595-b9c9-6952dcd53919)
+
+
 
