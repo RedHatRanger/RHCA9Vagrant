@@ -17,3 +17,12 @@ Base Domain: example.com
 7) Switch to your terminal and run `cat ~/.ssh/id_rsa.pub | pbcopy` to grab your public SSH key.
 8) Paste the public SSH key you copied in Step #7 to the onscreen text box.
 9) Click `Generate Discovery ISO`.
+10) At this point, you have 2 options:
+```
+# Option A: Download the Discovery ISO
+# Option B: Copy the Discovery ISO URL (BEST)
+
+# Then you will go into your Proxmox server and upload the ISO
+```
+11) Open `Proxmox` and click on `pve`>`local (pve)`>`ISO Images`>`Download from URL`.
+12) Paste the `Discovery URL` you copied from Step #10, and give the image a name: `discovery.iso`.
