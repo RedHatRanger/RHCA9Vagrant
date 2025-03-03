@@ -25,4 +25,5 @@
 
 ### Research Tools:
 [Research Rabbit](https://www.researchrabbit.ai/) \
-[Paper Pal](https://paperpal.com)
+[Paper Pal](https://paperpal.com) \
+[Jenni AI](https://app.jenni.ai/) 
