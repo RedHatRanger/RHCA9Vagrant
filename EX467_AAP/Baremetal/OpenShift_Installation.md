@@ -162,3 +162,4 @@ Description:
 11) From the `Projects`>`Builds`>`Build Details`>`logs` you can see the output. \
 (In this example, OpenShift is pulling down Ryan Nix's code and building the Node.js container) \
 (Light Blue ring around your container means it is still building)
+12) Click on the little arrow on your app to open it in a web browser.
