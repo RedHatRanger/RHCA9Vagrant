@@ -156,4 +156,5 @@ Description:
 (OpenShift will automatically detect the type of container you need based on your app's source code in GitHub)
 6) Check the box for `Secure Route`.
 7) Choose `TLS termination`>`Edge` from the dropdown.
-8) 
+8) Choose `Insecure traffic`>`Redirect` from the dropdown.
+9) 
