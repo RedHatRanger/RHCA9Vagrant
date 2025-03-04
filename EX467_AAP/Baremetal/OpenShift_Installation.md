@@ -141,4 +141,19 @@ oc patch ingresscontroller.operator default \
 <br><br>
 # Deploy an Application
 
-1) 
+1) Try logging on with `HTPasswd` or whatever authentication you set up earlier.
+2) Click `Projects`>`Create Project` and create a test application:
+```
+Name: chat
+Display Name: chat
+Description:
+
+# Then click `Create`
+```
+3) Go to your `Projects`>`chat`.
+4) In the `chat`>`Project Details`, click `Add`>`Git Repository`>`Import from Git`.
+5) Type in the URL of your application from Git (if you have one for this chat app).
+(OpenShift will automatically detect the type of container you need based on your app's source code in GitHub)
+6) Check the box for `Secure Route`.
+7) Choose `TLS termination`>`Edge` from the dropdown.
+8) 
