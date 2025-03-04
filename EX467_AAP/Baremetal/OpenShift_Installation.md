@@ -1,7 +1,7 @@
 # Single-Node OpenShift Cluster on Proxmox:
 [Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=13s) by Ryan Nix
 
-1) Go to: `[https://console.redhat.com](https://console.redhat.com/openshift/assisted-installer/clusters/~new)`
+1) Go to: `https://console.redhat.com](https://console.redhat.com/openshift/assisted-installer/clusters/~new`
 2) Fill in the details:
 ```
 Cluster name: sno
