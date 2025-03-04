@@ -3,14 +3,13 @@
 
 1) Go to: `https://console.redhat.com`
 2) Click `OpenShift` on the left side panel.
-3) Click `Clusters`>`Create a Cluster`>`Datacenter`>`Create Cluster`.
-4) In the `Install OpenShift with the Assisted Installer`:
+3) Click `Clusters`>`Assisted Clusters`>`New Cluster`.
+5) In the `Install OpenShift with the Assisted Installer` screen, fill in the details:
 ```
 Cluster name: sno
 Base Domain: example.com
-
-# Check the box to install Single-Node OpenShift
-# Leave the OpenShift Version at the highest (Default option)
+*Check the box to install Single-Node OpenShift
+*Leave the OpenShift Version at the highest (Default option)
 ```
 5) Click `Next` to continue the setup.
 6) Click `Generate Discovery ISO`>`Full image file: Provision with physical media`.
