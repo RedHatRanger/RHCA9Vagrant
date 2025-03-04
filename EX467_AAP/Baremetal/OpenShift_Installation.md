@@ -1,76 +1,74 @@
 # Single-Node OpenShift Cluster on Proxmox:
 [Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=13s) by Ryan Nix
 
-1) Go to: `https://console.redhat.com`
-2) Click `OpenShift` on the left side panel.
-3) Click `Clusters`>`Assisted Clusters`>`New Cluster`.
-5) In the `Install OpenShift with the Assisted Installer` screen, fill in the details:
+1) Go to: `[https://console.redhat.com](https://console.redhat.com/openshift/assisted-installer/clusters/~new)`
+2) Fill in the details:
 ```
 Cluster name: sno
 Base Domain: example.com
 *Check the box to install Single-Node OpenShift (SNO)
 *Leave the OpenShift Version at the highest (Default option)
 ```
-6) Click `Generate Discovery ISO`>`Full image file: Provision with physical media`.
-7) Switch to your local machine's terminal and run `cat ~/.ssh/id_rsa.pub | pbcopy` to grab your public SSH key.
-8) Paste the public SSH key you copied in Step #7 to the onscreen text box.
-9) Click `Generate Discovery ISO`.
-10) At this point, you have 2 options:
+3) Click `Generate Discovery ISO`>`Full image file: Provision with physical media`.
+4) Switch to your local machine's terminal and run `cat ~/.ssh/id_rsa.pub | pbcopy` to grab your public SSH key.
+5) Paste the public SSH key you copied in Step #7 to the onscreen text box.
+6) Click `Generate Discovery ISO`.
+7) At this point, you have 2 options:
 ```
 # Option A: Download the Discovery ISO
 # Option B: Copy the Discovery ISO URL (BEST)
 
 # Then you will go into your Proxmox server and upload the ISO
 ```
-11) Open `Proxmox` and click on `pve`>`local (pve)`>`ISO Images`>`Download from URL`.
-12) Paste the `Discovery URL` you copied from Step #10, and give the image a name: `discovery.iso`.
-13) Click `Download`.
-14) Go into your router's settings and look for `LAN Setup`>`Advanced`>`Address Reservation`.
-15) Fill in the `IP Address` and `MAC Address` of the `sno` OpenShift Cluster.
-16) Switch back to `Proxmox`>`Create VM`.
-17) In the `General` tab, type `SNO` in the `Name` box.
+8) Open `Proxmox` and click on `pve`>`local (pve)`>`ISO Images`>`Download from URL`.
+9) Paste the `Discovery URL` you copied from Step #10, and give the image a name: `discovery.iso`.
+10) Click `Download`.
+11) Go into your router's settings and look for `LAN Setup`>`Advanced`>`Address Reservation`.
+12) Fill in the `IP Address` and `MAC Address` of the `sno` OpenShift Cluster.
+13) Switch back to `Proxmox`>`Create VM`.
+14) In the `General` tab, type `SNO` in the `Name` box.
+15) Click `Next`.
+16) In the `OS` tab>`Use CD/DVD disc image file (iso):`>Click the `ISO Image` dropdown.
+17) Choose the `discovery.iso`.
 18) Click `Next`.
-19) In the `OS` tab>`Use CD/DVD disc image file (iso):`>Click the `ISO Image` dropdown.
-20) Choose the `discovery.iso`.
-21) Click `Next`.
-22) In the `Disks` tab>`Disk size (GiB):`, type `120`.
-23) Click `Next`.
-24) In the `CPU` tab:
+19) In the `Disks` tab>`Disk size (GiB):`, type `120`.
+20) Click `Next`.
+21) In the `CPU` tab:
 ```
 Sockets: 2
 Cores: 4
 ```
-25) Click `Next`.
-26) In the `Memory` tab, type `32768`.
-27) Click `Next`.
-28) In the `Network` tab, paste the `MAC Address` from Step #14 (Router's settings).
-29) Click `Next`.
-30) In the `Confirm` tab, check the `Start after finish` box.
-31) Then click `Finish`.
-32) Now go to your Proxmox console to see the VM build progress on the `sno` machine.
-33) Once it's built, you can go to `https://console.redhat.com` to your `Clusters` to check if the `sno` instance is there.
+22) Click `Next`.
+23) In the `Memory` tab, type `32768`.
+24) Click `Next`.
+25) In the `Network` tab, paste the `MAC Address` from Step #14 (Router's settings).
+26) Click `Next`.
+27) In the `Confirm` tab, check the `Start after finish` box.
+28) Then click `Finish`.
+29) Now go to your Proxmox console to see the VM build progress on the `sno` machine.
+30) Once it's built, you can go to `https://console.redhat.com` to your `Clusters` to check if the `sno` instance is there.
 ```
 # The instance showing up may take a few minutes.
 ```
-34) In the same console, you'll need to change the hostname from `localhost` to `sno`.
-35) Click `Save` and then `Next`.
+31) In the same console, you'll need to change the hostname from `localhost` to `sno`.
+32) Click `Save` and then `Next`.
 ```
 # Note: you might see NTP Warning, but keep going
 ```
-36) Click `Next`.
-37) Choose your correct subnet in the `Available Subnets` dropdown.
-38) Fix the NTP error by adding `time.apple.com` in the NTP server box.
-39) Click `Add` then click `Next`.
-40) Click `Install Cluster`.
+33) Click `Next`.
+34) Choose your correct subnet in the `Available Subnets` dropdown.
+35) Fix the NTP error by adding `time.apple.com` in the NTP server box.
+36) Click `Add` then click `Next`.
+37) Click `Install Cluster`.
 ```
 # Note: While the Cluster installation is progressing, you will want to download the kubeconfig 
 ```
-41) Click `Download kubeconfig` to download that to your local system.
-42) Download the `OpenShift Client Software` from [here](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/4.9.9/). *Version is 4.9.9 currently.
+38) Click `Download kubeconfig` to download that to your local system.
+39) Download the `OpenShift Client Software` from [here](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/4.9.9/). *Version is 4.9.9 currently.
 ```
 # Download both for your local system and the RHEL system we will use later.
 ```
-43) Open up ports on your router `Port Forwarding`:
+40) Open up ports on your router `Port Forwarding`:
 ![image](https://github.com/user-attachments/assets/d6e4413b-d205-4595-b9c9-6952dcd53919)
 
 <br><br>
