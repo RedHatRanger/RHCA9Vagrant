@@ -100,4 +100,6 @@ oc patch configs.imageregistry.operator.openshift.io/cluster \
     --type merge \
     --patch '{"spec":{"managementState":"Managed"}}'
 ```
-7) 
+7) Switch back to the `OpenShift Console` (where you logged into it)>`Configuration`>`OAuth Details`.
+8) Click to add one of the `Identity Providers` from the dropdown.
+9)  
