@@ -159,6 +159,6 @@ Description:
 8) Choose `Insecure traffic`>`Redirect` from the dropdown.
 9) Click `Create`.
 10) Click `Topology` and then click on your new application to open it.
-11) From the `Projects`>`Builds`>`Build Details`>`logs` you can see the output.
-(In this example, OpenShift is pulling down Ryan Nix's code and building the Node.js container)
+11) From the `Projects`>`Builds`>`Build Details`>`logs` you can see the output. \
+(In this example, OpenShift is pulling down Ryan Nix's code and building the Node.js container) \
 (Light Blue ring around your container means it is still building)
