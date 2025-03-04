@@ -124,4 +124,9 @@ oc create configmap letsencrypt-ca-04092022 \
 oc patch proxy/cluster \
     --type=merge \
     --patch='{"spec":{"trustedCA":{"name":"letsencrypt-ca-04092022"}}}'
+
+oc create secret tls letsencrypt-ca-secret-04092022 \
+    --cert=/etc/letsencrypt/live/apps.sno.openshifthelp.com/fullchain.pem \
+    --key=/etc/letsencrypt/live/apps.sno.openshifthelp.com/privkey.pem \
+    -n openshift-ingress
 ```
