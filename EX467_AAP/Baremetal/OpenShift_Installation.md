@@ -6,8 +6,10 @@
 ```
 Cluster name: sno
 Base Domain: example.com
-*Check the box to install Single-Node OpenShift (SNO)
+OpenShift Version: 4.18.1 (or latest)
 *Leave the OpenShift Version at the highest (Default option)
+Number of Control Plane Nodes: 1 (Single Node OpenShift)
+*Set the DHCP or Static IP radio button as desired
 ```
 3) Click `Generate Discovery ISO`>`Full image file: Provision with physical media`.
 4) Switch to your local machine's terminal and run `cat ~/.ssh/id_rsa.pub | pbcopy` to grab your public SSH key.
