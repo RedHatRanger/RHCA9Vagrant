@@ -77,4 +77,6 @@ Cores: 4
 
 
 # Post Install Operations
-[Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=514s)
+[Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=514s) by Ryan Nix
+
+1) 
