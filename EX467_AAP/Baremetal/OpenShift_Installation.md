@@ -101,5 +101,16 @@ oc patch configs.imageregistry.operator.openshift.io/cluster \
     --patch '{"spec":{"managementState":"Managed"}}'
 ```
 7) Switch back to the `OpenShift Console` (where you logged into it)>`Configuration`>`OAuth Details`.
-8) Click to add one of the `Identity Providers` from the dropdown.
-9)  
+8) Click to add one of the `Identity Providers` from the dropdown (In this example he uses HTPasswd).
+9) Switch back to your terminal and still ssh'd in `sadmin@rhel` as root, run:
+```
+certbot -d '*.apps.sno.openshifthelp.com' --manual --preferred-challenges dns certonly
+```
+10) Enter the number `2` to replace the certificate, then follow the instructions to add the TXT DNS record.
+11) Press `Enter` to continue.
+12) You'll need to re-run this command:
+```
+certbot -d '*.apps.sno.openshifthelp.com' --manual --preferred-challenges dns certonly
+```
+13) Enter the number `2` to replace the certificate again.
+14) 
