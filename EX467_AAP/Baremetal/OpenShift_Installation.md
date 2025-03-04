@@ -1,4 +1,4 @@
-# Single-Node Implementation of OpenShift on Proxmox:
+# Single-Node OpenShift Cluster on Proxmox:
 [Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=13s) by Ryan Nix
 
 1) Go to: `https://console.redhat.com`
