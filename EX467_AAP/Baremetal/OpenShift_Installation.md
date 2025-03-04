@@ -157,4 +157,8 @@ Description:
 6) Check the box for `Secure Route`.
 7) Choose `TLS termination`>`Edge` from the dropdown.
 8) Choose `Insecure traffic`>`Redirect` from the dropdown.
-9) 
+9) Click `Create`.
+10) Click `Topology` and then click on your new application to open it.
+11) From the `Projects`>`Builds`>`Build Details`>`logs` you can see the output.
+(In this example, OpenShift is pulling down Ryan Nix's code and building the Node.js container)
+(Light Blue ring around your container means it is still building)
