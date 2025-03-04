@@ -89,5 +89,5 @@ oc get nodes
 ```
 3) Switch back to `https://console.redhat.com` and go to `Clusters`.
 4) Locate your cluster you created and click to open the console of the cluster.
-5) Type in the `Username` and `Password` that is provided for your cluster from the `console.redhat.com` site.
+5) Type in the `Username` (kubeadmin) and `Password` that is provided for your cluster from the `console.redhat.com` site.
 6) 
