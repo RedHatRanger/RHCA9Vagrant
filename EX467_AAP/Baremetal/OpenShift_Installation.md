@@ -75,7 +75,7 @@ Cores: 4
 43) Open up ports on your router `Port Forwarding`:
 ![image](https://github.com/user-attachments/assets/d6e4413b-d205-4595-b9c9-6952dcd53919)
 
-
+<br><br>
 # Post Install Operations
 [Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=514s) by Ryan Nix
 
@@ -129,4 +129,16 @@ oc create secret tls letsencrypt-ca-secret-04092022 \
     --cert=/etc/letsencrypt/live/apps.sno.openshifthelp.com/fullchain.pem \
     --key=/etc/letsencrypt/live/apps.sno.openshifthelp.com/privkey.pem \
     -n openshift-ingress
+
+oc patch ingresscontroller.operator default \
+    --type=merge -p \
+    '{"spec":{"defaultCertificate":{"name":"letsencrypt-ca-secret-04092022"}}}' \
+    -n openshift-ingress-operator
 ```
+15) Wait 5 minutes for the Single-Node OpenShift portal to come back up (the one you logged into earlier).
+16) Then check your `Overview` and you will now have a signed certificate.
+
+<br><br>
+# Deploy an Application
+
+1) 
