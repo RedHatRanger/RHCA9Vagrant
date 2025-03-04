@@ -113,4 +113,15 @@ certbot -d '*.apps.sno.openshifthelp.com' --manual --preferred-challenges dns ce
 certbot -d '*.apps.sno.openshifthelp.com' --manual --preferred-challenges dns certonly
 ```
 13) Enter the number `2` to replace the certificate again.
-14) 
+14) Run the following commnads:
+```
+oc whoami
+
+oc create configmap letsencrypt-ca-04092022 \
+    --from-file=ca-bundle.crt=/etc/letsencrypt/live/apps.sno.openshifthelp.com/fullchain.pem \
+    -n openshift-config
+
+oc patch proxy/cluster \
+    --type=merge \
+    --patch='{"spec":{"trustedCA":{"name":"letsencrypt-ca-04092022"}}}'
+```
