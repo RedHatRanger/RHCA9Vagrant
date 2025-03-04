@@ -1,7 +1,7 @@
 # Single-Node Implementation of OpenShift on Proxmox:
 [Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=13s) by Ryan Nix
 
-1) Goto: `https://console.redhat.com`
+1) Go to: `https://console.redhat.com`
 2) Click `OpenShift` on the left side panel.
 3) Click `Clusters`>`Create a Cluster`>`Datacenter`>`Create Cluster`.
 4) In the `Install OpenShift with the Assisted Installer`:
@@ -79,4 +79,15 @@ Cores: 4
 # Post Install Operations
 [Tutorial Video](https://www.youtube.com/watch?v=leJa9HmvdI0&t=514s) by Ryan Nix
 
-1) 
+1) On your DNS Server, be sure to add the Host A (IP-based) records and the CNAME (web address) records which would route different web addresses to your IP host.
+2) Switch back to the terminal of your local host and run:
+```
+export KUBECONFIG=~/Desktop/SNO\ Deployment/kubeconfig
+
+# Test that it is working with:
+oc get nodes
+```
+3) Switch back to `https://console.redhat.com` and go to `Clusters`.
+4) Locate your cluster you created and click to open the console of the cluster.
+5) Type in the `Username` and `Password` that is provided for your cluster from the `console.redhat.com` site.
+6) 
