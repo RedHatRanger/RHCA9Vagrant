@@ -90,4 +90,14 @@ oc get nodes
 3) Switch back to `https://console.redhat.com` and go to `Clusters`.
 4) Locate your cluster you created and click to open the console of the cluster.
 5) Type in the `Username` (kubeadmin) and `Password` that is provided for your cluster from the `console.redhat.com` site.
-6) 
+6) Switch over to your local machine's terminal and run:
+```
+ssh sadmin@rhel
+
+oc login --token=sha256-<redacted> --server=https://api.sno.openshift.com:6443
+
+oc patch configs.imageregistry.operator.openshift.io/cluster \
+    --type merge \
+    --patch '{"spec":{"managementState":"Managed"}}'
+```
+7) 
