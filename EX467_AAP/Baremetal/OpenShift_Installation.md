@@ -8,7 +8,7 @@
 ```
 Cluster name: sno
 Base Domain: example.com
-*Check the box to install Single-Node OpenShift
+*Check the box to install Single-Node OpenShift (SNO)
 *Leave the OpenShift Version at the highest (Default option)
 ```
 5) Click `Next` to continue the setup.
