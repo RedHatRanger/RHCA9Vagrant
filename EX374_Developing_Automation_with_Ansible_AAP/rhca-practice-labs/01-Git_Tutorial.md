@@ -1,6 +1,6 @@
 Tutorial Video Link [Here](https://www.youtube.com/watch?v=kQyDWocyqHw)
 
-# EX374 Practice Lab #1: Using Git with GitHub
+# Lab 01: Understanding and Use Git
 
 Here are the [EX374 Exam Objectives](https://www.redhat.com/en/services/training/red-hat-certified-specialist-developing-automation-ansible-automation-platform-exam?section=objectives):
 1. **Cloning a Git Repository** from a remote host (In this case, GitHub).
