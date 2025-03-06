@@ -6,7 +6,7 @@ Below is a concise lab guide for managing Ansible inventory files from a Git rep
 
 ## 1. Overview
 
-**Objectives**:
+Here are the [EX374 Exam Objectives](https://www.redhat.com/en/services/training/red-hat-certified-specialist-developing-automation-ansible-automation-platform-exam?section=objectives):
 1. Store your inventory files (with `group_vars` and `host_vars`) in a Git repo.
 2. Configure a Project in AAP that pulls this repo.
 3. Define a new Inventory in AAP linked to that Project.
