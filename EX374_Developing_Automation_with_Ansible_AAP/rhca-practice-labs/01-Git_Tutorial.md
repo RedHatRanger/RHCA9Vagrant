@@ -1,247 +1,202 @@
 Tutorial Video Link [Here](https://www.youtube.com/watch?v=kQyDWocyqHw)
 
-# Git 101 Tutorial
+# EX374 Practice Lab #1: Using Git with GitHub
 
-This guide provides comprehensive instructions for installing, configuring, and using Git on **Windows** and **RHEL 9** hosts. It also explains the Git workflow with a detailed description of file states and commands.
-
----
-
-## **1. What is Git?**
-Git is a distributed version control system (DVCS) that enables you to manage changes to files in a project collaboratively. Using Git provides many benefits:
-
-- You can review and restore earlier versions of files.
-- You can compare two versions of the same file to identify changes.
-- You can record a log of who made what changes, and when those changes were made.
-- Multiple users can collaboratively modify files, resolve conflicting changes, and merge the changes.
-
-Using Git, you can start by cloning an existing shared project from a remote repository. Cloning a project creates a complete copy of the original remote repository as a local repository. This local copy has the entire history of the files in Git, not just the latest snapshot of the project files.
+Here are the [EX374 Exam Objectives](https://www.redhat.com/en/services/training/red-hat-certified-specialist-developing-automation-ansible-automation-platform-exam?section=objectives):
+1. **Cloning a Git Repository** from a remote host (In this case, GitHub).
+2. **Creating, Modifying, and Pushing** files into Git.
 
 ---
 
-## **2. Installing Git**
+## 1. Overview
 
-### **For Windows Hosts:**
-1. Download the Git installer from [git-scm.com](https://git-scm.com/).
-2. Run the installer and follow these steps:
-   - Select default settings unless you need custom configurations.
-   - Ensure "Git Bash" and "Git GUI" are installed.
-   - Choose the recommended editor (default is Vim).
-   - Configure PATH to "Use Git from the command line and also from 3rd-party software."
-3. Verify installation:
+This lab helps you practice fundamental Git operations for the Red Hat EX374 exam. You will:
+
+1. Create or use an **existing GitHub repository**.
+2. **Clone** the repo locally.
+3. Create a **new branch**, add or change content (e.g., Ansible playbooks).
+4. **Commit** and **push** changes back to GitHub.
+5. Open and merge a **Pull Request** (optional but recommended).
+
+The steps mirror what you'd do on an internal Git platform (GitLab/Gitea) and align with the study materials plus Eddie Jennings’s approach.
+
+---
+
+## 2. Prerequisites
+
+1. **Git Installed** on your control node or workstation:
+
    ```bash
-   git --version
+   sudo dnf install -y git
    ```
 
-### **For RHEL 9 Hosts:**
-1. Open a terminal.
-2. Update the system packages:
+2. **GitHub Account**: Create one if you haven't at [github.com](https://github.com).
+
+3. **SSH Keys (Recommended) or HTTPS**:
+
+   - **Generate a new RSA 4096 key pair**:
+     ```bash
+     ssh-keygen -t rsa -b 4096
+     ```
+   - Copy the **public key** (\~/.ssh/id\_rsa.pub) into your GitHub user settings (**Settings** → **SSH and GPG keys** → **New SSH key**).
+
+   *(If you prefer HTTPS, you can skip SSH key generation.)*
+
+4. **Git Global Config**:
+
    ```bash
-   sudo dnf update -y
-   ```
-3. Install Git:
-   ```bash
-   sudo dnf install git -y
-   ```
-4. Verify installation:
-   ```bash
-   git --version
+   git config --global user.name "Your Name"
+   git config --global user.email "your_email@example.com"
    ```
 
 ---
-[Click Here to Access the Cheat Sheet at the Bottom of the Page](https://github.com/RedHatRanger/RHCA9Vagrant/blob/main/EX374_Developing_Automation_with_Ansible_AAP/rhca-practice-labs/01-Git_Tutorial.md#git-cheat-sheet)
+
+## 3. Create a GitHub Repository
+
+1. **On GitHub**, click the **+** (upper right) → **New Repository**.
+2. Fill in:
+   - Repository name: `ex374-git-lab` (example)
+   - Description: "EX374 practice repo"
+   - Choose **Public** or **Private**
+   - *Optionally* add a simple README.
+3. **Create Repository**.
+
 ---
 
-## **3. Configuring Git**
+## 4. Clone the Repository Locally
 
-After installation, set up your user identity for Git commits.
+1. **Navigate** to your development directory:
+   ```bash
+   mkdir -p ~/dev
+   cd ~/dev
+   ```
+2. **Clone** via SSH:
+   ```bash
+   git clone git@github.com:<your-username>/ex374-git-lab.git
+   cd ex374-git-lab
+   ```
+   *(If using HTTPS, the URL will be ******`https://github.com/<your-username>/ex374-git-lab.git`******)*
 
-### **Commands for Both Windows and RHEL 9:**
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your_email@example.com"
-git config --global alias.pr "pull --rebase"
-```
+---
 
-Verify the configuration:
-```bash
-git config --list
-```
+## 5. **(Optional) Enhance your Bash Prompt to Show Git Status**:
+   You can add a script that modifies your Bash prompt to display your current branch and changes. Add the following lines to your `~/.bashrc` (or `~/.bash_profile`):
 
-To enhance your Bash shell prompt to show Git status (optional):
-1. Add the following lines to your `~/.bashrc` file:
    ```bash
    source /usr/share/git-core/contrib/completion/git-prompt.sh
    export GIT_PS1_SHOWDIRTYSTATE=true
    export GIT_PS1_SHOWUNTRACKEDFILES=true
-   export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\$ '
+   export PS1='[\u@\h \W$(declare -F __git_ps1 &>/dev/null && __git_ps1 " (%s)")]\\$ '
    ```
-2. Reload the Bash configuration:
+
+   Then run:
    ```bash
    source ~/.bashrc
    ```
 ---
 
-## **4. Git Workflow Overview**
+## 6. Create and Modify Files
 
-### **File States in Git**
-1. **Modified**: You edited the copy of the file in the working tree, and it is different from the latest version in the repository.
-2. **Staged**: You added the modified file to the staging area, but the changes are not yet committed.
-3. **Committed**: You saved the changes to the local repository.
+1. **Create a Branch**
 
-Each file transitions through these states during the Git workflow:
-- **Edit** → **Stage** → **Commit** → **Push**.
-
-### **Basic Git Commands**
-
-#### **Step 1: Clone a Repository**
-Cloning creates a local copy of a remote repository:
-```bash
-git clone <repository-URL>
-```
-
-#### **Step 2: Edit Files**
-Use your preferred editor to modify files. Examples:
-- Windows: Use Notepad, VS Code, or Git Bash (`vim` or `nano`).
-- RHEL 9: Use `vim`, `nano`, or any preferred editor.
-
-#### **Step 3: Stage Changes**
-Add files to the staging area:
-```bash
-git add <file>
-```
-Add all files:
-```bash
-git add .
-```
-
-#### **Step 4: Commit Changes**
-Save changes to the local repository with a message:
-```bash
-git commit -m "Your commit message"
-```
-
-#### **Step 5: Push Changes**
-Upload changes to the remote repository:
-```bash
-git push
-```
-
-#### **Step 6: Pull Changes**
-Fetch and merge updates from the remote repository:
-```bash
-git pull
-```
-
----
-
-## **5. Advanced Git Usage**
-
-### **Branching and Merging**
-
-#### **Create a Branch:**
-```bash
-git branch feature-branch
-git checkout feature-branch
-```
-Or in one step:
-```bash
-git checkout -b feature-branch
-```
-
-#### **Merge a Branch:**
-Switch to the main branch and merge:
-```bash
-git checkout main
-git merge feature-branch
-```
-
-#### **Delete a Branch:**
-```bash
-git branch -d feature-branch
-```
-
-### **Undoing Changes**
-
-#### **Undo Changes Before Staging:**
-```bash
-git checkout -- <file>
-```
-
-#### **Unstage Changes:**
-```bash
-git reset <file>
-```
-
-#### **Revert a Commit:**
-```bash
-git revert <commit-hash>
-```
-
----
-
-## **6. Git Best Practices**
-
-### **Meaningful Commit Messages**
-- The first line should summarize the commit in under 50 characters.
-- Add a blank line and include more details if necessary.
-- Reference relevant issues or tickets.
-
-### **Avoid Committing Large Files**
-- Use `.gitignore` to exclude unnecessary files.
-- Example `.gitignore`:
-   ```
-   *.log
-   node_modules/
-   .env
-   ```
-
-### **Regularly Pull Updates**
-Keep your local repository synced with the remote repository to avoid conflicts:
-```bash
-git pull
-```
-
----
-
-## **7. Useful Git Commands**
-
-| Command                            | Description                                    |
-|------------------------------------|------------------------------------------------|
-| `git log`                          | View commit history                           |
-| `git status`                       | Check the current status of the repo          |
-| `git diff`                         | Show file changes not yet staged              |
-| `git clone <repository-URL>`       | Clone a repository to your machine            |
-| `git pull origin main`             | Pull the latest changes from GitHub           |
-| `git push origin main`             | Push changes to GitHub                        |
-| `git revert <commit-hash>`         | Undo changes in a specific commit             |
-
----
-
-## **8. Tips for Hosts**
-
-### **For RHEL 9:**
-- Use `screen` or `tmux` to keep sessions alive.
-- Install additional tools:
    ```bash
-   sudo dnf install vim-enhanced -y
-   ```
-- Set up SSH keys for authentication:
-   ```bash
-   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   git checkout -b exercise
    ```
 
-### **For Windows:**
-- Use **Git Bash** for a Unix-like experience.
-- Consider Visual Studio Code for its built-in Git integration.
-- Set up SSH keys:
+   This creates and switches to a new branch `exercise`.
+
+2. **Add or Update Files**
+
+   - Example: Create a simple Ansible playbook file, `apache-setup.yml`:
+     ```yaml
+     ---
+     - name: Install and configure Apache
+       hosts: web_servers
+       become: true
+
+       vars:
+         httpd_packages:
+           - httpd
+           - python3-mod_wsgi
+
+       tasks:
+         - name: Install Apache and mod_wsgi
+           package:
+             name: "{{ httpd_packages }}"
+             state: present
+
+         - name: Ensure Apache is running
+           service:
+             name: httpd
+             state: started
+             enabled: true
+     ```
+
+3. **Stage and Commit**:
+
    ```bash
-   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-   eval $(ssh-agent -s)
-   ssh-add ~/.ssh/id_rsa
+   git add apache-setup.yml
+   git commit -m "Add Apache setup playbook"
    ```
 
 ---
 
+## 7. Push and Merge
+
+1. **Push Your Branch** to GitHub:
+
+   ```bash
+   git push --set-upstream origin exercise
+   ```
+
+2. **Open a Pull Request**
+
+   - Go to your repository on GitHub.
+   - Switch from `main` to the newly pushed `exercise` branch.
+   - Click **Pull Request** → **Create Pull Request**.
+   - Add a short description, then finalize.
+
+3. **Merge** the Pull Request into `main`:
+
+   - You can merge via GitHub’s web interface.
+   - Optionally delete the `exercise` branch after merging.
+
+4. \*\*Sync Local \*\***`main`**
+
+   ```bash
+   git checkout main
+   git pull origin main
+   ```
+
+---
+
+## 8. Verify and Cleanup
+
+1. **Confirm** new file(s) exist on `main` branch in both your local repo and on GitHub.
+2. **Remove** or keep the `exercise` branch locally:
+   ```bash
+   git branch -d exercise
+   ```
+3. (Optional) **Test** the playbook if you have an Ansible environment ready:
+   ```bash
+   ansible-playbook apache-setup.yml --check
+   ```
+
+---
+
+## 9. Conclusion
+
+You have now:
+
+1. Created or selected a GitHub repository.
+2. Cloned it locally.
+3. Worked on a separate branch to add an Ansible playbook.
+4. Pushed those changes and merged via a Pull Request.
+
+This fulfills the EX374 objectives to **understand and use Git**, **clone a repo**, and **modify/push files**. Use these steps as a foundation for more advanced workflows, such as adding roles, hooking into CI/CD, or configuring additional branches.
+
+
+<br><br><br><br>
 ## Git Cheat Sheet
 ![image](https://github.com/user-attachments/assets/1dad6084-b047-431f-8f64-291c2da4780e)
 
@@ -253,4 +208,3 @@ And this one...
 ![image](https://github.com/user-attachments/assets/1ef44904-5c8d-4505-a2f2-6a9c9de1e59f)
 
 (Image subject to @Copyright by: Danny Adams https://dev.to/doabledanny/git-cheat-sheet-50-commands-free-pdf-and-poster-4gcn/comments)
-
