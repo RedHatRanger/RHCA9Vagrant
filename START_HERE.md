@@ -46,7 +46,9 @@ sudo subscription-manager repos \
 --enable=rhel-9-for-x86_64-supplementary-rpms \
 --enable=rhel-9-for-x86_64-idm-rpms
 
+# Verify:
 subscription-manager repos --list
+subscription-manager repos --list-enabled
 ```
 #### Install Necessary Packages:
 ```bash
