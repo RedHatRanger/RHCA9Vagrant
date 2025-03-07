@@ -20,8 +20,8 @@ Set the static IP and hostname:
 ```bash
 yum install vim bash-completion
 hostnamectl set-hostname ipa.example.com
-nmcli con mod eth0 ipv4.addresses 192.168.1.201/24 ipv4.gateway 192.168.1.254 ipv4.dns 192.168.1.201 ipv4.method manual
-nmcli con up eth0
+nmcli con mod ens18 ipv4.addresses 192.168.1.201/24 ipv4.gateway 192.168.1.254 ipv4.dns 192.168.1.201 ipv4.dns 8.8.8.8 ipv4.method manual
+nmcli con up ens18
 
 # OR
 nmtui
