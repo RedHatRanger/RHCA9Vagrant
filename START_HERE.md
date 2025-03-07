@@ -41,7 +41,6 @@ echo "192.168.1.201  ipa.example.com  ipa" >> /etc/hosts
 ```bash
 yum update -y
 subscription-manager attach --auto
-subscription-manager repos --enable=rhel-9-for-x86_64-idm-rpms
 subscription-manager repos --enable=rhel-9-for-x86_64-supplementary-rpms
 
 # Verify:
@@ -55,9 +54,13 @@ systemctl enable --now qemu-guest-agent
 
 #### Configure Firewall and SELinux:
 ```bash
-firewall-cmd --add-service={dns,freeipa-ldap,freeipa-ldaps,freeipa-replication,kerberos,kpasswd,ntp,http,https} --permanent
+firewall-cmd --add-service={dns,freeipa-4,freeipa-ldap,freeipa-ldaps,freeipa-replication,kerberos,kpasswd,ntp,http,https} --permanent
 firewall-cmd --reload
 
+# Verify:
+firewall-cmd --list-all
+
+# Configure SELinux:
 setenforce 1
 sed -i 's/^SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
 ```
