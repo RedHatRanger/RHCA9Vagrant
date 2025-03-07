@@ -26,7 +26,7 @@ nmcli con up eth0
 # OR
 nmtui
 ```
-![image](https://github.com/user-attachments/assets/88cb2cb6-c87a-4df5-9e3f-52c0db54fb37)
+![image](https://github.com/user-attachments/assets/faa3aaea-5c5b-458c-90a4-5a5862977fb5)
 
 Update `/etc/hosts`:
 ```bash
