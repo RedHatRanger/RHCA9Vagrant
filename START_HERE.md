@@ -48,23 +48,23 @@ sudo subscription-manager repos \
 ```
 #### Install Necessary Packages:
 ```bash
-sudo dnf install -y @idm:DL1 vim bash-completion  qemu-guest-agent
-sudo systemctl enable --now qemu-guest-agent
+yum install -y @idm:DL1 vim bash-completion  qemu-guest-agent
+systemctl enable --now qemu-guest-agent
 ```
 
 #### Configure Firewall and SELinux:
 ```bash
-sudo firewall-cmd --add-service={dns,freeipa-ldap,freeipa-ldaps,freeipa-replication,kerberos,kpasswd,ntp,http,https} --permanent
-sudo firewall-cmd --reload
+firewall-cmd --add-service={dns,freeipa-ldap,freeipa-ldaps,freeipa-replication,kerberos,kpasswd,ntp,http,https} --permanent
+firewall-cmd --reload
 
-sudo setenforce 1
-sudo sed -i 's/^SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
+setenforce 1
+sed -i 's/^SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
 ```
 
 #### Configure IdM Server with DNS:
 Run:
 ```bash
-sudo ipa-server-install --setup-dns
+ipa-server-install --setup-dns
 ```
 
 Provide the following when prompted:
@@ -91,19 +91,19 @@ Log in with your IPA `admin` credentials.
 #### Client Integration (optional):
 On clients:
 ```bash
-sudo dnf install ipa-client
-sudo ipa-client-install --domain=example.com --realm=EXAMPLE.COM --server=ipa.example.com --mkhomedir
+yum install -y ipa-client
+ipa-client-install --domain=example.com --realm=EXAMPLE.COM --server=ipa.example.com --mkhomedir
 ```
 
 #### Maintenance and Monitoring:
 - Regular updates:
 ```bash
-sudo dnf update -y
+yum update -y
 ```
 
 - Backup IdM:
 ```bash
-sudo ipa-backup
+ipa-backup
 ```
 
 - Check logs and status:
