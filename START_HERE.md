@@ -12,7 +12,12 @@
 #### OS Installation:
 
 - Complete installation using RHEL ISO
-- Set root password and optionally create an admin user.
+- Set `root password` and create a `rhel` user which will be the main administrator for this lab.
+
+#### Give root privileges to the rhel user you created in the setup
+```bash
+echo "rhel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/rhel
+```
 
 #### Configure Network and Hostname:
 
@@ -30,11 +35,7 @@ nmtui
 
 Update `/etc/hosts`:
 ```bash
-vim /etc/hosts
-```
-Add:
-```
-192.168.1.201 ipa.example.com ipa
+echo "192.168.1.201  ipa.example.com  ipa" >> /etc/hosts
 ```
 
 #### Enable Required Repositories:
