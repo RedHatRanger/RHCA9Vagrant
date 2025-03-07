@@ -1,4 +1,4 @@
-### Complete Instructions to Install and Configure Red Hat IdM on Proxmox VM
+### Complete Instructions to Install and Configure Red Hat IdM in a Proxmox VM
 
 #### VM Setup on Proxmox:
 
@@ -23,7 +23,6 @@ echo "rhel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/rhel
 
 Set the static IP and hostname:
 ```bash
-yum install vim bash-completion
 hostnamectl set-hostname ipa.example.com
 nmcli con mod ens18 ipv4.addresses 192.168.1.201/24 ipv4.gateway 192.168.1.254 ipv4.dns 192.168.1.201 ipv4.dns 8.8.8.8 ipv4.method manual
 nmcli con up ens18
@@ -40,16 +39,16 @@ echo "192.168.1.201  ipa.example.com  ipa" >> /etc/hosts
 
 #### Enable Required Repositories:
 ```bash
-sudo dnf update -y
-sudo subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms \
+sudo yum update -y
+sudo subscription-manager repos \
+--enable=rhel-9-for-x86_64-baseos-rpms \
 --enable=rhel-9-for-x86_64-appstream-rpms \
 --enable=rhel-9-for-x86_64-supplementary-rpms \
 --enable=rhel-9-for-x86_64-idm-rpms
 ```
-
 #### Install Necessary Packages:
 ```bash
-sudo dnf install -y @idm:DL1 bash-completion qemu-guest-agent
+sudo dnf install -y @idm:DL1 vim bash-completion  qemu-guest-agent
 sudo systemctl enable --now qemu-guest-agent
 ```
 
