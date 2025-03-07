@@ -39,12 +39,10 @@ echo "192.168.1.201  ipa.example.com  ipa" >> /etc/hosts
 
 #### Enable Required Repositories:
 ```bash
-sudo yum update -y
-sudo subscription-manager repos \
---enable=rhel-9-for-x86_64-baseos-rpms \
---enable=rhel-9-for-x86_64-appstream-rpms \
---enable=rhel-9-for-x86_64-supplementary-rpms \
---enable=rhel-9-for-x86_64-idm-rpms
+yum update -y
+subscription-manager attach --auto
+subscription-manager repos --enable=rhel-9-for-x86_64-idm-rpms
+subscription-manager repos --enable=rhel-9-for-x86_64-supplementary-rpms
 
 # Verify:
 subscription-manager repos --list
