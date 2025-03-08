@@ -49,8 +49,7 @@ subscription-manager repos --list-enabled
 ```
 #### Install Necessary Packages:
 ```bash
-dnf install ipa-server ipa-server-dns vim bash-completion  qemu-guest-agent
-systemctl enable --now qemu-guest-agent
+yum -y install ipa-server ipa-server-dns vim bash-completion
 ```
 
 #### Configure Firewall and SELinux:
