@@ -74,6 +74,9 @@ ipa-server-install --setup-dns
 Provide the following when prompted:
 - **Hostname:** `ipa.example.com`
 - **Domain:** `example.com`
+- **Realm name**: `EXAMPLE.COM`
+- **Directory Manager password:** `RedHatRanger201@@`
+- **Directory Manager password:** `RedHatRanger201@@`
 - **IP Address:** `192.168.1.201`
 - **Forwarder (DNS):** (Your network's DNS or external DNS, e.g., `8.8.8.8`)
 - **Forwarding policy:** forward only
