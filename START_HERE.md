@@ -78,6 +78,9 @@ Provide the following when prompted:
 - **Realm name**: `LAB.EXAMPLE.COM`
 - **Directory Manager password:** `RedHatRanger201@@`
 - **Directory Manager password:** `RedHatRanger201@@`
+- Do you want to configure DNS forwarders? [yes]: `yes`
+- Do you want to configure these servers as DNS forwarders? [yes]: `yes`
+- Enter an IP address for a DNS forwarder, or press Enter to skip: `(press ENTER)`
 - **IP Address:** `192.168.1.201`
 - **Forwarder (DNS):** (Your network's DNS or external DNS, e.g., `8.8.8.8`)
 - **Forwarding policy:** forward only
