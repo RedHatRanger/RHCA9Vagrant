@@ -24,7 +24,7 @@ echo "rhel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/rhel
 Set the static IP and hostname:
 ```bash
 hostnamectl set-hostname ipa.lab.example.com
-nmcli con mod ens18 ipv4.addresses 192.168.1.201/24 ipv4.gateway 192.168.1.254 ipv4.dns 192.168.1.201 ipv4.dns 8.8.8.8 ipv4.method manual
+nmcli con mod ens18 ipv4.addresses 192.168.1.201/24 ipv4.gateway 192.168.1.254 ipv4.dns 8.8.8.8 ipv4.dns 8.8.4.4 ipv4.method manual
 nmcli con up ens18
 
 # OR
