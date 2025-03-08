@@ -30,7 +30,7 @@ nmcli con up ens18
 # OR
 nmtui
 ```
-![image](https://github.com/user-attachments/assets/faa3aaea-5c5b-458c-90a4-5a5862977fb5)
+![image](https://github.com/user-attachments/assets/c54c3d06-7561-483b-b708-bda5c4319d8e)
 
 Update `/etc/hosts`:
 ```bash
