@@ -94,7 +94,7 @@ ipa status
 
 Access Web UI:
 ```
-https://ipa.example.com
+https://ipa.lab.example.com
 ```
 
 Log in with your IPA `admin` credentials.
@@ -103,7 +103,7 @@ Log in with your IPA `admin` credentials.
 On clients:
 ```bash
 yum install -y ipa-client
-ipa-client-install --domain=example.com --realm=EXAMPLE.COM --server=ipa.example.com --mkhomedir
+ipa-client-install --domain=lab.example.com --realm=LAB.EXAMPLE.COM --server=ipa.lab.example.com --mkhomedir
 ```
 
 #### Maintenance and Monitoring:
