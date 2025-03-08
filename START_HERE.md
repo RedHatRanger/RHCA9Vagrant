@@ -2,7 +2,7 @@
 
 #### VM Setup on Proxmox:
 
-- **Name:** `ipa.example.com`
+- **Name:** `ipa.lab.example.com`
 - **ISO:** Red Hat Enterprise Linux ISO
 - **RAM:** Minimum **4 GB** (Recommended: **8 GB+**)
 - **CPU:** Minimum **2 cores** (Recommended: **4 cores+**)
@@ -23,7 +23,7 @@ echo "rhel        ALL=(ALL)       NOPASSWD: ALL" > /etc/sudoers.d/rhel
 
 Set the static IP and hostname:
 ```bash
-hostnamectl set-hostname ipa.example.com
+hostnamectl set-hostname ipa.lab.example.com
 nmcli con mod ens18 ipv4.addresses 192.168.1.201/24 ipv4.gateway 192.168.1.254 ipv4.dns 192.168.1.201 ipv4.dns 8.8.8.8 ipv4.method manual
 nmcli con up ens18
 
@@ -34,7 +34,7 @@ nmtui
 
 Update `/etc/hosts`:
 ```bash
-echo "192.168.1.201  ipa.example.com  ipa" >> /etc/hosts
+echo "192.168.1.201 ipa.lab.example.com ipa" >> /etc/hosts
 ```
 
 #### Enable Required Repositories:
@@ -68,13 +68,14 @@ sed -i 's/^SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
 #### Configure IdM Server with DNS:
 Run:
 ```bash
-ipa-server-install --setup-dns
+ipa-server-install
 ```
 
 Provide the following when prompted:
-- **Hostname:** `ipa.example.com`
-- **Domain:** `example.com`
-- **Realm name**: `EXAMPLE.COM`
+- Do you want to configure integrated DNS (BIND)? [no]: yes
+- **Hostname:** `ipa.lab.example.com`
+- **Domain:** `lab.example.com`
+- **Realm name**: `LAB.EXAMPLE.COM`
 - **Directory Manager password:** `RedHatRanger201@@`
 - **Directory Manager password:** `RedHatRanger201@@`
 - **IP Address:** `192.168.1.201`
