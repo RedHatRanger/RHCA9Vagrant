@@ -41,14 +41,15 @@ echo "192.168.1.201  ipa.example.com  ipa" >> /etc/hosts
 ```bash
 yum update -y
 subscription-manager attach --auto
-subscription-manager repos --enable=rhel-9-for-x86_64-supplementary-rpms
+subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms
+subscription-manager repos --enable=rhel-9-for-x86_64-appstream-rpms
 
 # Verify:
 subscription-manager repos --list-enabled
 ```
 #### Install Necessary Packages:
 ```bash
-yum install -y @idm:DL1 vim bash-completion  qemu-guest-agent
+dnf install ipa-server ipa-server-dns vim bash-completion  qemu-guest-agent
 systemctl enable --now qemu-guest-agent
 ```
 
