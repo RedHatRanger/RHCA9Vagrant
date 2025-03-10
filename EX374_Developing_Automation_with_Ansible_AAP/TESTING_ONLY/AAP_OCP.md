@@ -1,5 +1,9 @@
+### To Tell who has the cluster-admin role
+```bash
+oc get clusterrolebindings cluster-admin -o yaml
+```
+ 
 ### Save THIS as `app.yaml` and run as `oc apply -f app.yaml` to stand up AAP on an OpenShift Cluster:
-
 ```yaml
 ---
 apiVersion: operators.coreos.com/v1
