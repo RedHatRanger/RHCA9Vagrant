@@ -429,3 +429,200 @@ Note
 Instead of using the --eei option, you can create an ansible-navigator.yml
 configuration file to define the automation execution environment to use by default.
 A later chapter describes that configuration file in more detail.
+
+98-102 LAB
+Guided Exercise
+Selecting an Execution Environment
+In this exercise, you ensure that the execution environments you need are installed on your
+development workstation and use them to run playbooks.
+Outcomes
+• Identify the automation execution environment that includes a specific Ansible Content
+Collection.
+• Run a playbook using that automation execution environment.
+Before You Begin
+As the student user on the workstation machine, use the lab command to prepare your
+system for this exercise.
+This command creates an Ansible project in the /home/student/manage-selecting/
+directory.
+[student@workstation ~]$ lab start manage-selecting
+Instructions
+1. Identify the Ansible Content Collection that is required to run the prebuilt playbook.
+1.1. From a terminal, change to the /home/student/manage-selecting/ directory
+and review the acl_info.yml playbook.
+[student@workstation ~]$ cd ~/manage-selecting
+[student@workstation manage-selecting]$ cat acl_info.yml
+---
+- name: Retrieving ACLs using the ansible.posix collection
+hosts: web_servers
+gather_facts: false
+tasks:
+- name: Obtain the ACLs for /webserver_data directory
+ansible.posix.acl:
+path: /webserver_data/
+register: acl_info
+- name: Print the ACLs obtained for /webserver_data directory
+ansible.builtin.debug:
+var: acl_info['acl']
+1.2. Identify the modules that the acl_info.yml playbook uses:
+• ansible.posix.acl
+98 DO374-RHAAP2.2-en-1-20230131
+Chapter 2 | Managing Content Collections and Execution Environments
+• ansible.builtin.debug
+To successfully run the playbook, you need the ansible.posix.acl module, which
+is part of the ansible.posix Ansible Content Collection.
+Note
+The ansible.builtin.debug module is part of the ansible.builtin
+collection that is included in the ansible-core RPM package.
+2. Find the automation execution environment that includes the ansible.posix Ansible
+Content Collection.
+2.1. Use the podman login command to log in to the classroom private automation hub
+at hub.lab.example.com.
+This step simulates logging in to registry.redhat.io, but uses the private
+automation hub in the classroom environment. That private automation hub
+includes the three automation execution environments provided by Red Hat Ansible
+Automation Platform 2.
+[student@workstation manage-selecting]$ podman login hub.lab.example.com
+Username: student
+Password: redhat123
+Login Succeeded!
+2.2. Use the ansible-navigator images command to pull the minimal automation
+execution environment and analyze it.
+[student@workstation manage-selecting]$ ansible-navigator images \
+> --eei hub.lab.example.com/ee-minimal-rhel8
+------------------------------------------------------------------------------
+Execution environment image and pull policy overview
+------------------------------------------------------------------------------
+Execution environment image name: hub.lab.example.com/ee-minimal-rhel8:latest
+Execution environment image tag: latest
+Execution environment pull arguments: None
+Execution environment pull policy: tag
+Execution environment pull needed: True
+...output omitted...
+After a few seconds, automation content navigator displays output that lists the eeminimal-
+rhel8 automation execution environment.
+Image Tag Execution environment ...
+0|ee-minimal-rhel8 latest True ...
+2.3. Type 0 to inspect this automation execution environment, and then type 2 to select
+the Ansible version and collections option.
+DO374-RHAAP2.2-en-1-20230131 99
+Chapter 2 | Managing Content Collections and Execution Environments
+Image: ee-minimal-rhel8:latest (primary) Description
+0│Image information Information collected from image...
+1│General information OS and python version information
+2│Ansible version and collections Information about ansible and an...
+3│Python packages Information about python and pyt...
+4│Operating system packages Information about operating syst...
+5│Everything All image information
+2.4. The resulting output indicates that the minimal automation execution environment
+does not contain any additional Ansible Content Collections.
+Image: ee-minimal-rhel8:latest (primary) (Information about ansible and ...
+0│---
+1│ansible:
+2│ collections:
+3│ details: {}
+4| errors:
+5| - |-
+6| ERROR! - None of the provided paths were usable. Please specify a valid ...
+7| version:
+8| details: ansible [core 2.13.4]
+Type :q and then press Enter to exit the ansible-navigator command. The eeminimal-
+rhel8 automation execution environment is not useful for running this
+playbook.
+2.5. Use the ansible-navigator command to pull down and inspect the supported
+automation execution environment.
+[student@workstation manage-selecting]$ ansible-navigator images \
+> --eei hub.lab.example.com/ee-supported-rhel8
+--------------------------------------------------------------------------------
+Execution environment image and pull policy overview
+--------------------------------------------------------------------------------
+Execution environment image name: hub.lab.example.com/ee-supported-rhel8:...
+Execution environment image tag: latest
+Execution environment pull arguments: None
+Execution environment pull policy: tag
+Execution environment pull needed: True
+...output omitted...
+2.6. Automation content navigator shows both automation execution environments.
+Type 1 to inspect the supported one and then type the number for the Ansible
+version and collections entry.
+NAME Tag Execution environment ...
+0|ee-minimal-rhel8 latest True ...
+1|ee-supported-rhel8 latest True ...
+2.7. The resulting output indicates that the supported automation execution environment
+contains the ansible.posix Ansible Content Collection.
+100 DO374-RHAAP2.2-en-1-20230131
+Chapter 2 | Managing Content Collections and Execution Environments
+Image: ee-supported-rhel8:latest (primary) (Information about ansible and ...
+0│---
+1│ansible:
+2│ collections:
+3│ details:
+4| amazon.aws: 3.2.0
+5│ ansible.controller: 4.2.1
+6│ ansible.netcommon: 3.1.1
+7│ ansible.network: 1.2.0
+8│ ansible.posix: 1.3.0
+9│ ansible.security: 1.0.0
+...output omitted...
+2.8. Type :q and then press Enter to exit the ansible-navigator command.
+The ee-supported-rhel8 automation execution environment contains the
+ansible.posix Ansible Content Collection that you need. You can run this
+playbook using this automation execution environment.
+3. Use automation content navigator to run the acl_info.yml playbook.
+3.1. Demonstrate that the minimal automation execution environment does not work
+with the acl_info.yml playbook because it does not include the ansible.posix
+collection. Use the ansible-navigator command to run the acl_info.yml
+playbook using the minimal automation execution environment.
+As expected, the playbook cannot resolve the ansible.posix.acl module,
+causing it to fail.
+[student@workstation manage-selecting]$ ansible-navigator run acl_info.yml \
+> -m stdout --eei ee-minimal-rhel8 --pp missing
+ERROR! couldn't resolve module/action 'ansible.posix.acl'. This often indicates a
+misspelling, missing collection, or incorrect module path.
+The error appears to be in '/home/student/manage-selecting/acl_info.yml': line 7,
+column 7, but may be elsewhere in the file depending on the exact syntax problem.
+The offending line appears to be:
+tasks:
+- name: Obtain the ACLs for /webserver_data directory
+^ here
+3.2. Use the ansible-navigator command to run the acl_info.yml playbook
+using the ee-supported-rhel8:latest automation execution environment. This
+automation execution environment contains the ansible.posix collection and the
+command succeeds.
+[student@workstation manage-selecting]$ ansible-navigator run acl_info.yml \
+> -m stdout --eei ee-supported-rhel8 --pp missing
+PLAY [Retrieving ACLs using the ansible.posix collection] **********************
+TASK [Obtain the ACLs for /webserver_data directory] ***************************
+DO374-RHAAP2.2-en-1-20230131 101
+Chapter 2 | Managing Content Collections and Execution Environments
+ok: [serverc.lab.example.com]
+ok: [serverb.lab.example.com]
+TASK [Print the ACLs obtained for /webserver_data directory] *******************
+ok: [serverc.lab.example.com] => {
+"acl_info['acl']": [
+"user::rwx",
+"group::r-x",
+"other::r-x",
+"default:user::rwx",
+"default:group::r-x",
+"default:mask::rwx",
+"default:other::r-x"
+]
+}
+ok: [serverb.lab.example.com] => {
+"acl_info['acl']": [
+"user::rwx",
+"group::r-x",
+"other::r-x",
+"default:user::rwx",
+"default:group::r-x",
+"default:mask::rwx",
+"default:other::r-x"
+]
+}
+PLAY RECAP *********************************************************************
+serverb.lab.example.com : ok=2 changed=0 unreachable=0 failed=0 ...
+serverc.lab.example.com : ok=2 changed=0 unreachable=0 failed=0 ...
+Finish
+On the workstation machine, change to the student user home directory and use the lab
+command to complete this exercise. This step is important to ensure that resources from previous
+exercises do not impact upcoming exercises.
