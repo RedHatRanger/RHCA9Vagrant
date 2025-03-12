@@ -381,3 +381,18 @@ An automation execution environment consists of the following components:
 • Ansible Runner to run your playbooks
 Automation execution environments are prepared by the execution environment builder
 (ansible-builder), and can be pushed to any container registry.
+
+95
+The minimal automation execution environment only includes the ansible.builtin Ansible
+Content Collection. You usually reserve it as a starting point to build custom automation execution
+environments.
+The supported automation execution environment includes some collections that Red Hat
+supports. Automation content navigator and automation controller use the supported automation
+execution environment by default. Use this automation execution environment with your new
+playbooks.
+Inspecting Automation Execution Environments
+Use automation content navigator to list and inspect the automation execution environments
+available on the system. To do so, run the ansible-navigator images command:
+DO374-RHAAP2.2-en-1-20230131 95
+Chapter 2 | Managing Content Collections and Execution Environments
+[user@host ~]$ ansible-navigator images
