@@ -358,3 +358,26 @@ Finish
 On the workstation machine, change to the student user home directory and use the lab
 command to complete this exercise. This step is important to ensure that resources from previous
 exercises do not impact upcoming exercises.
+
+94
+Selecting an Execution Environment
+Objectives
+Identify the automation execution environments provided by Red Hat and select the correct one
+for your use case.
+Automation Execution Environments
+An automation execution environment is a container image that includes Ansible Content
+Collections, their software dependencies, and a minimal Ansible engine that can run your
+playbooks.
+By using an automation execution environment, you can use the same portable environment to
+develop your Ansible Playbooks on one system and run them on another. This streamlines and
+simplifies the development process and helps to ensure predictable, reproducible results.
+The automation execution environment is where your Ansible Playbook runs. You normally use a
+tool such as ansible-navigator to run a playbook, but the playbook runs inside the container
+rather than directly on your system.
+An automation execution environment consists of the following components:
+• Ansible Core (or Ansible)
+• Ansible Content Collections to supplement Ansible Core
+• Python and any other dependencies of Ansible Core and the included collections
+• Ansible Runner to run your playbooks
+Automation execution environments are prepared by the execution environment builder
+(ansible-builder), and can be pushed to any container registry.
