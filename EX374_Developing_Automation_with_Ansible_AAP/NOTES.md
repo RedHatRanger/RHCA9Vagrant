@@ -626,3 +626,248 @@ Finish
 On the workstation machine, change to the student user home directory and use the lab
 command to complete this exercise. This step is important to ensure that resources from previous
 exercises do not impact upcoming exercises.
+
+102-104 LAB QUIZ
+Instructions
+1. Change into the /home/student/manage-review/ directory and review the
+cockpit.yml playbook. Make note of the Ansible Content Collections that the playbook
+requires.
+2. Use the ansible-navigator command to inspect the automation execution environment
+images available on your local system. Determine which one you need to run the
+cockpit.yml playbook.
+3. Run the cockpit.yml playbook by using the ansible-navigator command with the
+correct automation execution environment image.
+4. Log in to the web console at https://servera.lab.example.com:9090 to confirm that
+the playbook correctly configured the web console. Accept the insecure TLS certificate and
+then log in as the student user. Use student as the password.
+5. Review the create_samples_db.yml playbook. Make note of the collections that it
+requires. Find those collections in the private automation hub.
+You can access the private automation hub web UI at https://hub.lab.example.com.
+Use student as the username and redhat123 as the password.
+6. Configure the /home/student/manage-review/ansible.cfg file so that the
+ansible-galaxy command installs collections from private automation hub.
+DO374-RHAAP2.2-en-1-20230131 103
+Chapter 2 | Managing Content Collections and Execution Environments
+7. Create the /home/student/manage-review/collections/ directory. In this directory,
+install any collections that the create_samples_db.yml playbook requires.
+8. Use the ansible-navigator command to run the create_samples_db.yml playbook.
+9. Confirm that the playbook correctly configured a MariaDB database on the serverb
+machine. You can confirm that the playbook created the samples database by running the
+sudo mysql -e "SHOW DATABASES" command. The password for the student user is
+student.
+
+105-112
+LAB SOLUTION:
+Managing Content Collections and
+Execution Environments
+In this lab, you run a playbook that needs an Ansible Content Collection in a particular
+execution environment, and another playbook that needs an Ansible Content Collection that
+is not provided by an execution environment.
+Outcomes
+• Identify Ansible Content Collections inside automation execution environment images.
+• Run a playbook that requires a collection from an automation execution environment.
+• Install a collection from automation hub.
+• Run a playbook that requires a collection from automation hub.
+Before You Begin
+As the student user on the workstation machine, use the lab command to prepare your
+system for this exercise.
+This command creates the /home/student/manage-review/ directory on the
+workstation machine and obtains the files necessary to complete this lab.
+[student@workstation ~]$ lab start manage-review
+Instructions
+1. Change into the /home/student/manage-review/ directory and review the
+cockpit.yml playbook. Make note of the Ansible Content Collections that the playbook
+requires.
+1.1. Change into the /home/student/manage-review/ directory.
+[student@workstation ~]$ cd ~/manage-review/
+1.2. Review the cockpit.yml playbook.
+[student@workstation manage-review]$ cat cockpit.yml
+---
+- name: Deploy cockpit
+hosts: servera.lab.example.com
+become: true
+tasks:
+- name: Ensure cockpit is installed
+ansible.builtin.yum:
+DO374-RHAAP2.2-en-1-20230131 105
+Chapter 2 | Managing Content Collections and Execution Environments
+name: cockpit
+state: present
+- name: Ensure the cockpit service is started and enabled
+ansible.builtin.systemd:
+name: cockpit
+state: started
+enabled: true
+- name: Ensure Cockpit network traffic is allowed
+ansible.posix.firewalld:
+service: cockpit
+permanent: true
+state: enabled
+immediate: true
+Notice that the ansible.posix.firewalld module requires the ansible.posix
+collection.
+2. Use the ansible-navigator command to inspect the automation execution environment
+images available on your local system. Determine which one you need to run the
+cockpit.yml playbook.
+2.1. List the available automation execution environment images.
+[student@workstation manage-review]$ ansible-navigator images
+Image Tag Execution environment Created Size
+0│ee-minimal-rhel8 latest True 3 months ago 294 MB
+1│ee-supported-rhel8 latest True 3 months ago 1.68 GB
+Type 1 to select the ee-supported-rhel8 image.
+2.2. The TUI displays information about the ee-supported-rhel image.
+Image: ee-supported-rhel8:latest Description
+0│Image information Information collected from image inspection
+1│General information OS and python version information
+2│Ansible version and collections Information about ansible and ansible ...
+3│Python packages Information about python and python packages
+4│Operating system packages Information about operating system packages
+5│Everything All image information
+Type 2 to view the collections available in the ee-supported-rhel8 image.
+2.3. Notice that the ee-supported-rhel8 image provides the ansible.posix
+collection that you need to run the cockpit.yml playbook.
+Image: ee-supported-rhel8:latest (Information about ansible and ansible
+collections)
+0│---
+1│ansible:
+2│ collections:
+3│ details:
+4│ amazon.aws: 3.2.0
+5│ ansible.controller: 4.2.1
+106 DO374-RHAAP2.2-en-1-20230131
+Chapter 2 | Managing Content Collections and Execution Environments
+6│ ansible.netcommon: 3.1.1
+7│ ansible.network: 1.2.0
+8│ ansible.posix: 1.3.0
+9│ ansible.security: 1.0.0
+10│ ansible.utils: 2.6.1
+...output omitted...
+Type :q and then press Enter to exit the ansible-navigator command.
+3. Run the cockpit.yml playbook by using the ansible-navigator command with the
+correct automation execution environment image.
+3.1. Use the ansible-navigator run command with the ee-supported-rhel8
+image to run the cockpit.yml playbook.
+[student@workstation manage-review]$ ansible-navigator run cockpit.yml \
+> --eei ee-supported-rhel8
+...output omitted...
+Press Esc to exit the ansible-navigator command after the playbook run is
+complete.
+4. Log in to the web console at https://servera.lab.example.com:9090 to confirm that
+the playbook correctly configured the web console. Accept the insecure TLS certificate and
+then log in as the student user. Use student as the password.
+4.1. Open a web browser on the workstation machine and navigate to https://
+servera.lab.example.com:9090.
+Figure 2.3: Accessing the web console login page
+4.2. Log in with student as the username and student as the password. The playbook
+correctly configured the web console if the login process is successful.
+DO374-RHAAP2.2-en-1-20230131 107
+Chapter 2 | Managing Content Collections and Execution Environments
+Figure 2.4: Accessing the Overview page
+5. Review the create_samples_db.yml playbook. Make note of the collections that it
+requires. Find those collections in the private automation hub.
+You can access the private automation hub web UI at https://hub.lab.example.com.
+Use student as the username and redhat123 as the password.
+5.1. Review the create_samples_db.yml playbook.
+[student@workstation manage-review]$ cat create_samples_db.yml
+---
+- name: Create samples database
+hosts: serverb.lab.example.com
+become: true
+tasks:
+- name: Ensure MariaDB is installed
+ansible.builtin.yum:
+name:
+- mariadb
+- mariadb-server
+state: present
+- name: Ensure the mariadb service is started and enabled
+ansible.builtin.systemd:
+name: mariadb
+state: started
+enabled: true
+- name: Ensure the samples database exists
+community.mysql.mysql_db:
+name: samples
+state: present
+108 DO374-RHAAP2.2-en-1-20230131
+Chapter 2 | Managing Content Collections and Execution Environments
+Notice that the playbook requires the community.mysql collection.
+5.2. Open a web browser and navigate to https://hub.lab.example.com. Use
+student as the username and redhat123 as the password.
+Navigate to Collections > Collections. Change the Filter by repository selection to
+Community and search for mysql.
+Figure 2.5: Searching collections
+5.3. Click the mysql collection to obtain the ansible-galaxy installation command.
+DO374-RHAAP2.2-en-1-20230131 109
+Chapter 2 | Managing Content Collections and Execution Environments
+Figure 2.6: Retrieving the command to install a collection
+6. Configure the /home/student/manage-review/ansible.cfg file so that the
+ansible-galaxy command installs collections from private automation hub.
+6.1. From the private automation hub web UI, navigate to Collections > Repository
+Management. Use the CLI configuration section from the community repository to
+construct the /home/student/manage-review/ansible.cfg file.
+Figure 2.7: Listing the private automation hub repositories
+6.2. Add the repository configurations to the /home/student/manage-review/
+ansible.cfg file.
+110 DO374-RHAAP2.2-en-1-20230131
+Chapter 2 | Managing Content Collections and Execution Environments
+[defaults]
+inventory = ./inventory
+remote_user = devops
+[galaxy]
+server_list = community_repo
+[galaxy_server.community_repo]
+url=https://hub.lab.example.com/api/galaxy/content/community/
+token=<put your token here>
+6.3. From the private automation hub web UI, navigate to Collections > API token
+management and then click Load token. Click the Copy to clipboard icon.
+Figure 2.8: Generating a token
+6.4. Edit the /home/student/manage-review/ansible.cfg file and then paste the
+token from the clipboard as the value for the token parameters. Your token is different
+from the one displayed in the following example.
+[defaults]
+inventory = ./inventory
+remote_user = devops
+[galaxy]
+server_list = community_repo
+[galaxy_server.community_repo]
+url=https://hub.lab.example.com/api/galaxy/content/community/
+token=865d4517fe18135059d5c093321aac0959041720
+7. Create the /home/student/manage-review/collections/ directory. In this directory,
+install any collections that the create_samples_db.yml playbook requires.
+7.1. Create the /home/student/manage-review/collections/ directory.
+[student@workstation manage-review]$ mkdir collections
+DO374-RHAAP2.2-en-1-20230131 111
+Chapter 2 | Managing Content Collections and Execution Environments
+7.2. Install the community.mysql collection into the /home/student/managereview/
+collections/ directory.
+[student@workstation manage-review]$ ansible-galaxy collection install \
+> community.mysql -p collections/
+...output omitted...
+8. Use the ansible-navigator command to run the create_samples_db.yml playbook.
+8.1. Use the ansible-navigator run command to run the playbook.
+[student@workstation manage-review]$ ansible-navigator run create_samples_db.yml
+...output omitted...
+Press Esc to exit the ansible-navigator command after the playbook run is
+complete.
+9. Confirm that the playbook correctly configured a MariaDB database on the serverb
+machine. You can confirm that the playbook created the samples database by running the
+sudo mysql -e "SHOW DATABASES" command. The password for the student user is
+student.
+9.1. Connect to serverb as the student user.
+[student@workstation manage-review]$ ssh serverb
+...output omitted...
+[student@serverb ~]$
+9.2. Confirm that the samples database exists.
+[student@serverb ~]$ sudo mysql -e "SHOW DATABASES"
+[sudo] password for student: student
++--------------------+
+| Database |
++--------------------+
+| information_schema |
+| mysql |
+| performance_schema |
+| samples |
++--------------------+
+9.3. Log out of the serverb machine.
+[student@serverb ~]$ logout
