@@ -67,3 +67,27 @@ Ansible Content Collections in your current automation execution environment. Th
 does not include any collections that your Ansible project brings into the automation
 execution environment when a playbook in the project is run.
 Neither command lists the ansible.builtin collection, which is always available.
+
+84-85
+Installing Collections from Private Automation Hub
+Configuring ansible-galaxy to get content from a private automation hub is similar to how it is
+configured to use automation hub. The following example includes a new section that configures
+ansible-galaxy to use a private automation hub installed on hub.example.com.
+...output omitted...
+[galaxy]
+server_list = my_hub, automation_hub, galaxy
+[galaxy_server.my_hub]
+url=https://hub.example.com/api/galaxy/content/rh-certified/
+token=e8e4...b0c2
+[galaxy_server.automation_hub]
+url=https://console.redhat.com/api/automation-hub/
+auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openidconnect/
+token
+[galaxy_server.galaxy]
+url=https://galaxy.ansible.com/
+Notice that you do not need the auth_url directive for private automation hub.
+Use the private automation hub web UI to retrieve the URL and generate the token.
+Navigate to Collections > Repository Management to retrieve the URL. Private automation hub
+can host collections that you have synchronized from automation hub, from Ansible Galaxy, or that
+you have created for your teams. Select the URL corresponding to the type of collection you want
+to install.
