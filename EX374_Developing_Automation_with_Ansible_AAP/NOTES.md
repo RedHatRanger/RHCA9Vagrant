@@ -396,3 +396,36 @@ available on the system. To do so, run the ansible-navigator images command:
 DO374-RHAAP2.2-en-1-20230131 95
 Chapter 2 | Managing Content Collections and Execution Environments
 [user@host ~]$ ansible-navigator images
+
+96-97
+Using Automation Execution Environments with
+Automation Content Navigator
+The ansible-navigator run command runs your playbooks in an automation execution
+environment.
+This command uses the supported automation execution environment by default, but you can use
+the --execution-environment-image (or --eei) option to specify a different environment.
+The following example shows how to run a playbook using the compatibility automation execution
+environment:
+[user@host ~]$ ansible-navigator run oldplaybook.yml --eei \
+> registry.redhat.io/ansible-automation-platform-22/ee-29-rhel8:latest
+If the container image is already available on your system, then you can use its short image name:
+--eei ee-29-rhel8:latest in the preceding example.
+If the container image is not already available on your system, ansible-navigator tries to
+pull it from the container registry. Use the podman login command to ensure that you are
+authenticated to the registry. In the preceding example, at the beginning of your session, run the
+podman login registry.redhat.io command and provide your Customer Portal credentials
+to authenticate to the registry.
+You can control how ansible-navigator pulls container images by using the --pull-policy
+(or --pp) option with one of the following arguments:
+96 DO374-RHAAP2.2-en-1-20230131
+Chapter 2 | Managing Content Collections and Execution Environments
+Option Description
+always Always pulls the image.
+missing Only pulls the image if it is not already available locally.
+never Never pulls the image.
+tag Pulls the image if the image tag is latest or if it is not already available
+locally (the default).
+Note
+Instead of using the --eei option, you can create an ansible-navigator.yml
+configuration file to define the automation execution environment to use by default.
+A later chapter describes that configuration file in more detail.
