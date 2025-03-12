@@ -871,3 +871,30 @@ student.
 +--------------------+
 9.3. Log out of the serverb machine.
 [student@serverb ~]$ logout
+
+114
+## Chapter 2 Summary:
+Summary
+• You can use the ansible-navigator doc --mode stdout command to access the
+module documentation provided by Ansible Content Collections that are available to your
+automation execution environment.
+• You can use the ansible-navigator images command to inspect automation execution
+environments and to list the collections and other resources and collection dependencies
+provided by an automation execution environment's container image.
+• Ansible Playbooks should use fully qualified collection names (FQCNs) to refer to modules,
+roles, and plug-ins provided by Ansible Content Collections.
+• The ansible-galaxy collection install command installs Ansible Content Collections
+on the local system. The --collections-path (or -p) option specifies the installation
+directory.
+• You can use the collections/requirements.yml file to list the Ansible Content
+Collections that are required for the project.
+• Automation execution environments can access the Ansible Content Collections that are
+installed in the collections/ subdirectory in the directory that contains the playbook.
+• The ee-supported-rhel8 automation execution environment is used by default by
+automation content navigator and automation controller, and includes selected Red Hat
+Certified Ansible Content Collections in addition to the ansible.builtin collection.
+• The ee-minimal-rhel8 automation execution environment only provides the
+ansible.builtin Ansible Content Collection, but you can also use Ansible Content
+Collections from your project's collections/ directory.
+• You can use the ee-29-rhel8 automation execution environment for playbooks that require
+Ansible 2.9.
