@@ -42,3 +42,28 @@ command.
 80 DO374-RHAAP2.2-en-1-20230131
 Chapter 2 | Managing Content Collections and Execution Environments
 [user@host ~]$ ansible-galaxy collection install -r requirements.yml
+
+81-82
+You can also use the ansible-galaxy collection list command to list the collections
+available in the directories specified by your current collections_paths Ansible configuration
+directive on your control node. It does not list collections that you might have installed in
+directories not specified by that directive.
+[user@host ~]$ ansible-galaxy collection list
+# /home/user/.ansible/collections/ansible_collections
+Collection Version
+---------------- ------
+ansible.posix 1.3.0
+community.crypto 1.9.5
+community.dns 1.2.0
+community.mysql 2.1.0
+redhat.insights 1.0.7
+
+The ansible-galaxy collection list command lists the Ansible Content
+Collections installed in the directory specified by the collections_paths
+directive on the control node. This might include collections installed in your Ansible
+project directory, if that location is listed in your collections_paths directive.
+You must use the ansible-navigator collections command to list the
+Ansible Content Collections in your current automation execution environment. This
+does not include any collections that your Ansible project brings into the automation
+execution environment when a playbook in the project is run.
+Neither command lists the ansible.builtin collection, which is always available.
