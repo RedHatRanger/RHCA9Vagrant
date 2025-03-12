@@ -91,3 +91,13 @@ Navigate to Collections > Repository Management to retrieve the URL. Private aut
 can host collections that you have synchronized from automation hub, from Ansible Galaxy, or that
 you have created for your teams. Select the URL corresponding to the type of collection you want
 to install.
+
+86
+The community repository uses the collections that you have synchronized from Ansible
+Galaxy.
+The published repository uses custom collections that you have installed and approved.
+The rh-certified repository uses the collections that you have synchronized from automation
+hub.
+To generate a token, either click Get token on the Repo Management page or navigate to
+Collections > API token management and then click Load token.
+Installing and deploying private automation hub is beyond the scope of this course.
