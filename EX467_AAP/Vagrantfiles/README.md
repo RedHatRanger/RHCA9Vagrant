@@ -21,8 +21,8 @@ Result
 4 RHEL 9 VMs spin up:
 
 1. controller (2 vCPUs, 4 GB RAM)
-2. node1 (1 vCPU, 2 GB RAM, plus Podman container on port 8080)
-3. db (1 vCPU, 2 GB RAM)
+2. node1 (1 vCPU, 2 GB RAM)
+3. node2 (1 vCPU, 2 GB RAM)
 4. hub (1 vCPU, 2 GB RAM)
 
 
