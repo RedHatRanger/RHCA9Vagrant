@@ -1,116 +1,119 @@
 ---
-# ansible-playbook -i inventory 01_prepare_nodes.yml
+# 01_prepare_nodes.yml
 - name: Prepare all nodes for AAP
   hosts: all
   become: true
+  vars:
+    ansible_user: rhel
+    common_packages:
+      - python3
+      - python3-pip
+      - git
+      - vim
+      - wget
+      - curl
+      - sudo
+      - podman
+      - firewalld
+    fw_services:
+      - http
+      - https
+      - ssh
+      - postgresql
+    hosts_entries:
+      - ip: "192.168.1.201"
+        name: "controller.lab.example.com"
+      - ip: "192.168.1.211"
+        name: "node1.lab.example.com"
+      - ip: "192.168.1.212"
+        name: "node2.lab.example.com"
   tasks:
-    # Install required packages
-    - name: Install required packages
-      ansible.builtin.yum:
-        name:
-          - python3
-          - python3-pip
-          - git
-          - vim
-          - wget
-          - curl
-          - sudo
-          - podman
-          - firewalld
+    - name: Install common packages
+      yum:
+        name: "{{ common_packages }}"
         state: present
 
-    # Enable and start firewalld
-    - name: Enable and start firewalld
-      ansible.builtin.service:
+    - name: Ensure firewalld is running
+      service:
         name: firewalld
         state: started
         enabled: true
 
-    # Configure firewalld rules
-    - name: Configure firewalld for AAP
-      ansible.builtin.firewalld:
-        service: "{{ item }}"
+    - name: Open required services in firewalld
+      firewalld:
+        service: "{{ fw_services }}"
         permanent: true
         state: enabled
-      with_items:
-        - http
-        - https
-        - ssh
-        - postgresql
+      notify: reload firewalld
 
-    # Update /etc/hosts
-    - name: Update /etc/hosts for hostname resolution
-      ansible.builtin.lineinfile:
+    - name: Add entries to /etc/hosts
+      lineinfile:
         path: /etc/hosts
-        line: "{{ item }}"
-        state: present
-      with_items:
-        - "192.168.56.10 db.local"
-        - "192.168.56.11 pah.local"
-        - "192.168.56.12 controller.local"
-        - "192.168.56.13 worker.local"
+        create: yes
+        line: "{{ item.ip }} {{ item.name }}"
+      loop: "{{ hosts_entries }}"
 
-    # Create the rhel user
-    - name: Create the rhel user
-      ansible.builtin.user:
-        name: rhel
-        password: "{{ 'redhat' | password_hash('sha512') }}"
+    - name: Ensure the rhel user exists
+      user:
+        name: "{{ ansible_user }}"
         shell: /bin/bash
         groups: wheel
         append: true
+        password: "{{ 'redhat' | password_hash('sha512') }}"
 
-    # Add rhel user to sudoers
-    - name: Add rhel user to sudoers
-      ansible.builtin.lineinfile:
-        path: /etc/sudoers
-        line: "rhel ALL=(ALL) NOPASSWD:ALL"
-        state: present
+    - name: Allow rhel user passwordless sudo
+      lineinfile:
+        path: /etc/sudoers.d/99_rhel
+        create: yes
+        line: "{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL"
+        validate: 'visudo -cf %s'
 
-- name: Set up SSH keys for passwordless authentication
-  hosts: controller
+- name: Configure SSH key auth from controller
+  hosts: controller.lab.example.com
   become: true
+  vars:
+    ansible_user: rhel
   tasks:
-    # Generate SSH key pair for rhel
-    - name: Generate an SSH key pair for rhel if it doesn't exist
-      ansible.builtin.command:
-        cmd: ssh-keygen -t rsa -b 2048 -f /home/rhel/.ssh/id_rsa -q -N ""
-        creates: /home/rhel/.ssh/id_rsa
-      become_user: rhel
-
-    # Retrieve the public SSH key
-    - name: Retrieve the public SSH key for rhel
-      ansible.builtin.slurp:
-        src: /home/rhel/.ssh/id_rsa.pub
-      register: ssh_public_key
-      become_user: rhel
-
-- name: Distribute SSH public key to managed nodes
-  hosts: all:!controller
-  become: true
-  tasks:
-    # Ensure .ssh directory exists
-    - name: Ensure .ssh directory exists for rhel user
-      ansible.builtin.file:
-        path: /home/rhel/.ssh
-        state: directory
-        mode: '0700'
-        owner: rhel
-        group: rhel
-
-    # Add the controller's public key to authorized_keys
-    - name: Add the controller's public key to authorized_keys
-      ansible.builtin.copy:
-        dest: /home/rhel/.ssh/authorized_keys
-        content: "{{ ssh_public_key['content'] | b64decode }}"
+    - name: Generate key-pair (if absent)
+      openssh_keypair:
+        path: /home/{{ ansible_user }}/.ssh/id_rsa
+        type: rsa
+        size: 2048
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
         mode: '0600'
-        owner: rhel
-        group: rhel
+      register: keypair
+      changed_when: keypair.changed
 
-    # Set correct permissions for .ssh directory
-    - name: Set correct permissions for .ssh directory
-      ansible.builtin.file:
-        path: /home/rhel/.ssh
+    - name: Fetch public key
+      slurp:
+        src: /home/{{ ansible_user }}/.ssh/id_rsa.pub
+      register: pubkey
+
+- name: Distribute controller public key to all nodes
+  hosts: all:!controller.lab.example.com
+  become: true
+  vars:
+    ansible_user: rhel
+    ssh_pub: "{{ pubkey.content | b64decode }}"
+  tasks:
+    - name: Ensure .ssh directory exists
+      file:
+        path: /home/{{ ansible_user }}/.ssh
         state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
         mode: '0700'
-        owner: rhel
-        group: rhel
+
+    - name: Install controller’s public key
+      copy:
+        dest: /home/{{ ansible_user }}/.ssh/authorized_keys
+        content: "{{ ssh_pub }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0600'
+
+  handlers:
+    - name: reload firewalld
+      firewalld:
+        state: reloaded
