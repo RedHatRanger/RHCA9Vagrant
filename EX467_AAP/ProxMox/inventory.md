@@ -1,4 +1,4 @@
-```yaml
+```
 # Instructions for setup by Luca Berton: https://www.youtube.com/watch?v=NlG8RGY3P8s
 # COPY TO YOUR HOST AND RENAME IT 'inventory'.  Then, use it with the AAP Setup Bundle's install.sh script.  
 # inventory for single-node AAP 2.4 lab setup (all services on one VM)
